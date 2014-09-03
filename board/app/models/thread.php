@@ -24,7 +24,7 @@ class Thread extends AppModel
 		$threads=array();
 	
 		$db = DB::conn();
-		$rows = $db->rows('SELECT * FROM thread');
+		$rows = $db->rows('SELECT * FROM thread ORDER BY created DESC');
 		foreach ($rows as $row){
 			$threads[] = new Thread($row);
 		}
@@ -79,4 +79,5 @@ class Thread extends AppModel
 			array($this->id,$comment->username,$comment->body)
 		);
 	}
+
 }
