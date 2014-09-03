@@ -6,8 +6,7 @@
 		<a href="<?php eh(url('thread/view',array('thread_id' => $v->id)))?>">
 			<b><?php eh($v->title) ?></b>
 		</a>
-		<br /><?php eh($v->username) ?>	
-		<br /><?php eh($v->created) ?>
+		<br /><pre><?php eh($v->username) ?>&#9;<?php eh($v->created) ?></pre>
 	</li>
 	<?php endforeach ?>
 </ul>
