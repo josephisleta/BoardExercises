@@ -1,5 +1,8 @@
+<a href="<?php eh(url('thread/index')) ?>">
+	&larr; Back to home
+</a>
 <h1>Create a thread</h1>
-                
+
 <?php if ($thread->hasError() || $comment->hasError()): ?>
 	<div class="alert alert-block">
 

@@ -1,3 +1,6 @@
+<a href="<?php eh(url('thread/view',array('thread_id' => $thread->id))) ?>">
+	&larr; Back to thread
+</a>
 <h2><?php eh($thread->title) ?></h2>
      
 <?php if ($comment->hasError()): ?>

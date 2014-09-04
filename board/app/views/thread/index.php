@@ -2,13 +2,11 @@
 	<em>You are logged in as <?php eh($_SESSION['username'])?></em>
 	<a class="btn btn-danger" href="<?php eh(url('user/logout')) ?>">Logout</a><br /><br />
 </div>
-
-
-
+<hr>
 <div>
 	<a class="btn btn-large" href="<?php eh(url('thread/create')) ?>"><em>Create new thread?</em></a>
 </div>
-
+<hr>
 <div>
 <table class="table table-condensed table-striped table-hover">
 	<th>Title</th>

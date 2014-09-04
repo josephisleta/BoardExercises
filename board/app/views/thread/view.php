@@ -1,5 +1,6 @@
-<a class="btn btn-large btn-primary" href="<?php eh(url('thread/index')) ?>">Home</a>
-
+<a href="<?php eh(url('thread/index')) ?>">
+	&larr; Back to home
+</a>
 <h1><?php eh($thread->title) ?></h1>
 
 <?php foreach ($comments as $k => $v): ?>
