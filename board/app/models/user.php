@@ -6,6 +6,8 @@ class User extends AppModel
 	const MIN_PASSWORD_LENGTH = 6;
 	const MAX_PASSWORD_LENGTH = 20;
 
+	private $is_failed_login = false;
+
 	public $validation = array(
 		'username' => array(
 			'length' => array(
@@ -60,5 +62,22 @@ class User extends AppModel
 		$db = DB::conn();
 		$db->insert('user', $params);
 		
+	}
+
+	public function authenticate($username, $pword)
+	{
+		$query = "SELECT id, username, name FROM user WHERE username = ? AND pword = ?";
+		$db = DB::conn();
+		$row = $db->row($query, array($username, $pword));
+		if (!$row) {
+			$this->is_failed_login = true;
+			throw new UserNotFoundException('user not found');
+		}
+		return $row;
+	}
+
+	public function isFailedLogin()
+	{
+		return $this->is_failed_login;
 	}
 }

@@ -1,4 +1,3 @@
-<a class="btn btn-large btn-primary" href="<?php eh(url('thread/index')) ?>">Back to Home</a><br />
 <h1>User Registration</h1>
 
 <?php if ($user->hasError()): ?>
@@ -54,3 +53,8 @@
 	<input type="hidden" name="page_next" value="register_end">
 	<button type="submit" class="btn btn-primary">Register</button>
 </form>
+
+<div>
+	<em>Already have an account?</em>
+	<a class="btn btn-danger" href="<?php eh(url('user/login')) ?>">Login</a>
+</div>

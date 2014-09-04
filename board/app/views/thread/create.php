@@ -5,24 +5,24 @@
 
 	<h4 class="alert-heading">Validation error!</h4>
 	
-	<?php if (!empty($thread->validation_errors[’title’][’length’])): ?>    
+	<?php if (!empty($thread->validation_errors['title']['length'])): ?>
 		<div><em>Title</em> must be between
-			<?php eh($thread->validation[’title’][’length’][1]) ?> and
-			<?php eh($thread->validation[’title’][’length’][2]) ?> characters in length.
+			<?php eh($thread->validation['title']['length'][1]) ?> and
+			<?php eh($thread->validation['title']['length'][2]) ?> characters in length.
 		</div>
 	<?php endif ?>
-
-	<?php if (!empty($comment->validation_errors[’username’][’length’])): ?>                
-		<div><em>Your name</em> must be between    
-			<?php eh($comment->validation[’username’][’length’][1]) ?> and
-			<?php eh($comment->validation[’username’][’length’][2]) ?> characters in length.
+	
+	<?php if (!empty($comment->validation_errors['username']['length'])): ?>
+		<div><em>Your name</em> must be between
+			<?php eh($comment->validation['username']['length'][1]) ?> and
+			<?php eh($comment->validation['username']['length'][2]) ?> characters in length.
 		</div>
 	<?php endif ?>
-
-	<?php if (!empty($comment->validation_errors[’body’][’length’])): ?>                   
+	
+	<?php if (!empty($comment->validation_errors['body']['length'])): ?>
 		<div><em>Comment</em> must be between
-			<?php eh($comment->validation[’body’][’length’][1]) ?> and
-			<?php eh($comment->validation[’body’][’length’][2]) ?> characters in length.
+			<?php eh($comment->validation['body']['length'][1]) ?> and
+			<?php eh($comment->validation['body']['length'][2]) ?> characters in length.
 		</div>
 	<?php endif ?>
 
@@ -30,7 +30,7 @@
 <?php endif ?>
 
                     
-<form class="well" method="post" action="<?php eh(url('thread/create')) ?>">
+<form class="well" method="post" action="<?php eh(url('')) ?>">
 	<label>Title</label>
 	<input type="text" class="span2" name="title" value="<?php eh(Param::get('title')) ?>">
 	<label>Your name</label>

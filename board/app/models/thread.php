@@ -2,9 +2,13 @@
 
 class Thread extends AppModel
 {
+	public $id;
+	public $title;
 
 	public $validation = array(
-					'title' => array('length'=>array('validate_between',1,30,),
+					'title' => array(
+						'length'=>array(
+							'validate_between',1,30,),
 							),
 				);	
 
@@ -22,9 +26,10 @@ class Thread extends AppModel
 	public static function getAll()
 	{
 		$threads=array();
-	
+		
 		$db = DB::conn();
 		$rows = $db->rows('SELECT * FROM thread ORDER BY created DESC');
+
 		foreach ($rows as $row){
 			$threads[] = new Thread($row);
 		}
@@ -37,8 +42,8 @@ class Thread extends AppModel
 		
 		$db = DB::conn();
 		$rows = $db->rows(
-		'SELECT * FROM comment WHERE thread_id = ? ORDER BY created ASC',
-		array($this->id)
+					'SELECT * FROM comment WHERE thread_id = ? ORDER BY created ASC',
+					array($this->id)
 		);
 		
 		foreach ($rows as $row){
@@ -49,35 +54,45 @@ class Thread extends AppModel
 
 	public function create(Comment $comment)
 	{
-		$this->validate();
-		$comment->validate();
-
-		if ($this->hasError() || $comment->hasError()) {
-			throw new ValidationException('invalid thread or comment');
-		}
+		$params = array(
+			"username" => $comment->username,
+			"title" => $this->title,
+			"created" => date('Y-m-d H:i:s')
+		);
 		$db = DB::conn();
+		try{
+			$db->begin();
 
-		$db->begin();
-		$db->query('INSERT INTO thread SET title = ?, username = ?, created = NOW()', array($this->title,$comment->username));
-		$this->id = $db->lastInsertId();
-	
-		// write first comment at the same time
-		$this->write($comment);
+			$this->validate();
+			$comment->validate();
 
-		$db->commit();
-	}	
+			if ($this->hasError() || $comment->hasError()) {
+				throw new ValidationException('invalid thread or comment');
+			}
+			$db->insert('thread', $params);
+			$this->id = $db->lastInsertId();
+			$this->write($comment);
+
+			$db->commit();
+		}catch(ValidationException $e) {
+			$db->rollback();
+			throw $e;
+		}
+	}
 
 	public function write(Comment $comment)
 	{
-		if(!$comment->validate()){
+		$params = array(
+			"thread_id" => $this->id,
+			"username" => $comment->username,
+			"body" => $comment->body,
+			
+		);
+
+		if (!$comment->validate()) {
 			throw new ValidationException('invalid comment');
 		}
-		else
 		$db = DB::conn();
-		$db->query(
-			'INSERT INTO comment SET thread_id = ?, username = ?, body = ?, created = NOW()',
-			array($this->id,$comment->username,$comment->body)
-		);
+		$db->insert('comment', $params);
 	}
-
 }

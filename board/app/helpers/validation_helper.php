@@ -21,3 +21,27 @@ function email_valid($email)
 {
 	return filter_var($email, FILTER_VALIDATE_EMAIL);
 }
+
+function is_logged_in()
+{
+	if(!isset($_SESSION['username']))
+	{
+		return false;
+	}
+	return true;
+}
+
+function redirect($controller)
+{
+	switch ($controller) {
+		case 'thread':
+			header('Location: /thread/index');
+			break;
+		case 'user':
+			header('Location: /user/login');
+			break;
+		default:
+			header('Location: /user/login');
+			break;
+	}
+}

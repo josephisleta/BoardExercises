@@ -1,5 +1,10 @@
 <h1>Board Exercise</h1>
+<div>
+	<em>Create new thread?</em>
+	<a class="btn btn-large btn-primary" href="<?php eh(url('thread/create')) ?>">Create</a>
+</div>
 
+<div>
 <ul>
 	<?php foreach ($threads as $v): ?>
 	<li>
@@ -10,6 +15,4 @@
 	</li>
 	<?php endforeach ?>
 </ul>
-
-<a class="btn btn-large btn-primary" href="<?php eh(url('thread/create')) ?>">Create</a>
-<a class="btn btn-large btn-primary" href="<?php eh(url('user/register')) ?>">Register</a>
+</div>

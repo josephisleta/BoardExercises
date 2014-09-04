@@ -1,4 +1,5 @@
 <a class="btn btn-large btn-primary" href="<?php eh(url('thread/index')) ?>">Home</a>
+
 <h1><?php eh($thread->title) ?></h1>
 
 <?php foreach ($comments as $k => $v): ?>
@@ -10,15 +11,12 @@
 	<div>
 		<?php echo readable_text($v->body) ?>
 	</div>
-	
 </div>
-
-
 <?php endforeach ?>
 
 <hr>
 
-<form class="well" method="post" action="<?php eh(url('thread/write')) ?>">
+<form class="well" method="POST" action="<?php eh(url('thread/write')) ?>">
 	<label>Your name</label>
 	<input type="text" class="span2" name="username" value="<?php eh(Param::get('username')) ?>">
 	<label>Comment</label>

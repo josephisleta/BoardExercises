@@ -13,6 +13,7 @@ class ThreadController extends AppController
 	{
 		$thread = new Thread;
 		$comment = new Comment;
+		//$username = $_SESSION['username'];
 		$page = Param::get('page_next','create');
 
 		switch($page){
@@ -44,7 +45,6 @@ class ThreadController extends AppController
 
 		$this->set(get_defined_vars());
 	}
-
 	public function write()
 	{
 		$thread = Thread::get(Param::get('thread_id'));
