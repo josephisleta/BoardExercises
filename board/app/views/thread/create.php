@@ -33,8 +33,9 @@
 <form class="well" method="post" action="<?php eh(url('')) ?>">
 	<label>Title</label>
 	<input type="text" class="span2" name="title" value="<?php eh(Param::get('title')) ?>">
-	<label>Your name</label>
-	<input type="text" class="span2" name="username" value="<?php eh(Param::get('username')) ?>">
+	
+	<input type="hidden" class="span2" name="username" value="<?php eh($_SESSION['username']) ?>">
+
 	<label>Comment</label>
 	<textarea name="body"><?php eh(Param::get('body')) ?></textarea>
 	<br />

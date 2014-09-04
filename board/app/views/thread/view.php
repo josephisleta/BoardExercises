@@ -17,11 +17,12 @@
 <hr>
 
 <form class="well" method="POST" action="<?php eh(url('thread/write')) ?>">
-	<label>Your name</label>
-	<input type="text" class="span2" name="username" value="<?php eh(Param::get('username')) ?>">
+	<input type="hidden" class="span2" name="username" value="<?php eh($_SESSION['username']) ?>">
+	
 	<label>Comment</label>
 	<textarea name="body"><?php eh(Param::get('body')) ?></textarea>
 	<br />
+	
 	<input type="hidden" name="thread_id" value="<?php eh($thread->id) ?>">
 	<input type="hidden" name="page_next" value="write_end">
 	<button type="submit" class="btn btn-primary">Submit</button>
