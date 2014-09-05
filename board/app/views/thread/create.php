@@ -1,3 +1,9 @@
+<div style="float:right;">
+	<p><em>You are logged in as :</em>
+		<?php eh($_SESSION['username'])?>
+		<a class="btn btn-mini btn-danger" href="<?php eh(url('user/logout')) ?>">Logout</a>
+	</p>
+</div>
 <a href="<?php eh(url('thread/index')) ?>">
 	&larr; Back to home
 </a>

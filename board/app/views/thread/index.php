@@ -10,7 +10,7 @@
 </div>
 <hr>
 
-<div style="height:450px;">
+<div style="height:450px; background-color:#E0FFFF;">
 	<table class="table">
 		<th style="width:600px;">Title</th>
 		<th style="width:150px;">Created by</th>
