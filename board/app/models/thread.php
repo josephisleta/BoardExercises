@@ -26,8 +26,7 @@ class Thread extends AppModel
 	public static function getAll()
 	{
 		$threads=array();
-		$table = 'thread';
-		$limit = Thread::countRow($table);
+		$limit = Thread::countRowThread();
 		$limits = new Pagination();
 		$limit_query = $limits::setLimit($limit);
 		$db = DB::conn();
@@ -43,8 +42,12 @@ class Thread extends AppModel
 	{
 		$comments = array();
 
+		$limit = Thread::countRowComment($this->id);
+		$limits = new Pagination();
+		$limit_query = $limits::setLimit($limit);
+
 		$db = DB::conn();
-		$rows = $db->rows("SELECT * FROM comment WHERE thread_id = ? ORDER BY created ASC",array($this->id));
+		$rows = $db->rows("SELECT * FROM comment WHERE thread_id = ? ORDER BY created ASC $limit_query",array($this->id));
 		
 		foreach ($rows as $row){
 			$comments[] = new Comment($row);
@@ -95,10 +98,17 @@ class Thread extends AppModel
 		$db->insert('comment', $params);
 	}
 
-	public static function countRow($table)
+	public static function countRowThread()
 	{
 		$db= DB::conn();
-		$total = $db->value("SELECT count(id) FROM $table");
+		$total = $db->value("SELECT count(id) FROM thread");
+		return $total;
+	}
+
+	public static function countRowComment($id)
+	{
+		$db= DB::conn();
+		$total = $db->value("SELECT count(id) FROM comment WHERE thread_id = ?",array($id));
 		return $total;
 	}
 }

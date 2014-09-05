@@ -6,8 +6,8 @@ class ThreadController extends AppController
 		if(is_logged_in() === false) {
 			redirect($url = 'not_logged_in');
 		}
-		$table = 'thread';
-		$total_thread = Thread::countRow($table);
+
+		$total_thread = Thread::countRowThread();
 		$page = new Pagination();
 		$pagination = $page::setControls($total_thread);
 		$threads = Thread::getAll($pagination['maximum']);
@@ -52,10 +52,14 @@ class ThreadController extends AppController
 		if(is_logged_in() === false) {
 			redirect($url = 'not_logged_in');
 		}
-
-		$table = 'comment';
-
 		$thread = Thread::get(Param::get('thread_id'));
+
+		$total_thread = Thread::countRowComment(Param::get('thread_id'));
+		$page = new Pagination();
+		$pagination = $page::setControls($total_thread);
+		$threads = Thread::getAll($pagination['maximum']);
+
+
 		$comments = $thread->getComments();
 
 		$this->set(get_defined_vars());

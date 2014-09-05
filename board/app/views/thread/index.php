@@ -12,9 +12,9 @@
 
 <div style="height:450px;">
 	<table class="table">
-		<th>Title</th>
-		<th>Created by</th>
-		<th>Date Created</th>
+		<th style="width:600px;">Title</th>
+		<th style="width:150px;">Created by</th>
+		<th style="width:150px;">Date Created</th>
 		<?php foreach ($threads as $v): ?>
 			<tr>
 				<td><a href="<?php eh(url('thread/view',array('thread_id' => $v->id)))?>"><?php eh($v->title) ?></a></td>

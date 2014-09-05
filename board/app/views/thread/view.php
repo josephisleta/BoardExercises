@@ -23,6 +23,9 @@
 	</div>
 	<?php endforeach ?>
 </table>
+<div style="float:right;">
+	<?php echo $pagination['control'];?>
+</div>
 
 <hr>
 
