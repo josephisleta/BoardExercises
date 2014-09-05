@@ -1,19 +1,28 @@
+<div style="float:right;">
+	<p><em>You are logged in as :</em>
+		<?php eh($_SESSION['username'])?>
+		<a class="btn btn-mini btn-danger" href="<?php eh(url('user/logout')) ?>">Logout</a>
+	</p>
+</div>
+
 <a href="<?php eh(url('thread/index')) ?>">
 	&larr; Back to home
 </a>
-<h1><?php eh($thread->title) ?></h1>
 
-<?php foreach ($comments as $k => $v): ?>
-<div class="comment">
-	<div class="meta">
-		<?php eh($k + 1) ?>: <?php eh($v->username) ?> <?php eh($v->created) ?>
+<h1><?php eh($thread->title) ?></h1>
+<table class="table">
+	<?php foreach ($comments as $k => $v): ?>
+	<div class="comment">
+		<tr>
+			<td><div class="meta" style="text-align:left; font-size:21px;"><?php eh($v->username) ?></td>
+			<td style="text-align:right; font-size:12px"><?php eh($v->created) ?></div></td>
+		</tr>
+		<tr>
+			<td colspan=2 style="height:100px;"><?php echo readable_text($v->body) ?></td>
+		</tr>
 	</div>
-	
-	<div>
-		<?php echo readable_text($v->body) ?>
-	</div>
-</div>
-<?php endforeach ?>
+	<?php endforeach ?>
+</table>
 
 <hr>
 

@@ -31,13 +31,13 @@ function is_logged_in()
 	return true;
 }
 
-function redirect($controller)
+function redirect($url)
 {
-	switch ($controller) {
-		case 'thread':
+	switch ($url) {
+		case 'user':
 			header('Location: /thread/index');
 			break;
-		case 'user':
+		case 'not_logged_in':
 			header('Location: /user/login');
 			break;
 		default:

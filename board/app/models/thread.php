@@ -6,11 +6,11 @@ class Thread extends AppModel
 	public $title;
 
 	public $validation = array(
-					'title' => array(
-						'length'=>array(
-							'validate_between',1,30,),
-							),
-				);	
+				'title' => array(
+					'length'=>array(
+						'validate_between',1,30,),
+						),
+			);	
 
 	public static function get($id)
 	{
@@ -26,12 +26,15 @@ class Thread extends AppModel
 	public static function getAll()
 	{
 		$threads=array();
-		
+		$table = 'thread';
+		$limit = Thread::countRow($table);
+		$limits = new Pagination();
+		$limit_query = $limits::setLimit($limit);
 		$db = DB::conn();
-		$rows = $db->rows('SELECT * FROM thread ORDER BY created DESC');
+		$rows = $db->rows("SELECT * FROM thread ORDER BY created DESC $limit_query");
 
 		foreach ($rows as $row){
-			$threads[] = new Thread($row);
+			$threads[] = new self($row);
 		}
 		return $threads;
 	}
@@ -39,12 +42,9 @@ class Thread extends AppModel
 	public function getComments()
 	{
 		$comments = array();
-		
+
 		$db = DB::conn();
-		$rows = $db->rows(
-					'SELECT * FROM comment WHERE thread_id = ? ORDER BY created ASC',
-					array($this->id)
-		);
+		$rows = $db->rows("SELECT * FROM comment WHERE thread_id = ? ORDER BY created ASC",array($this->id));
 		
 		foreach ($rows as $row){
 			$comments[] = new Comment($row);
@@ -88,11 +88,17 @@ class Thread extends AppModel
 			"body" => $comment->body,
 			
 		);
-
 		if (!$comment->validate()) {
 			throw new ValidationException('invalid comment');
 		}
 		$db = DB::conn();
 		$db->insert('comment', $params);
+	}
+
+	public static function countRow($table)
+	{
+		$db= DB::conn();
+		$total = $db->value("SELECT count(id) FROM $table");
+		return $total;
 	}
 }

@@ -58,10 +58,8 @@ class User extends AppModel
 				'email' => $this->email
 			);
 		}
-
 		$db = DB::conn();
 		$db->insert('user', $params);
-		
 	}
 
 	public function authenticate($username, $pword)

@@ -2,7 +2,7 @@
 	&larr; Back to thread
 </a>
 <h2><?php eh($thread->title) ?></h2>
-     
+
 <?php if ($comment->hasError()): ?>
 	<div class="alert alert-block">
 	<h4 class="alert-heading">Validation error!</h4>
@@ -20,10 +20,8 @@
 		</div>
 	<?php endif ?>
 	</div>
-    
 <?php endif ?>
-
-                    
+            
 <form class="well" method="POST" action="<?php eh(url('thread/write')) ?>">
 	<input type="hidden" class="span2" name="username" value="<?php eh($_SESSION['username']) ?>">
 	

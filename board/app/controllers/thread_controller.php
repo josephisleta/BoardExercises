@@ -1,19 +1,28 @@
 <?php
 class ThreadController extends AppController
 {
-
 	public function index()
-	{
-		$threads = Thread::getAll();		
-		
+	{	
+		if(is_logged_in() === false) {
+			redirect($url = 'not_logged_in');
+		}
+		$table = 'thread';
+		$total_thread = Thread::countRow($table);
+		$page = new Pagination();
+		$pagination = $page::setControls($total_thread);
+		$threads = Thread::getAll($pagination['maximum']);
+
 		$this->set(get_defined_vars());
 	}
 	
 	public function create()
-	{
+	{	
+		if(is_logged_in() === false) {
+			redirect($url = 'not_logged_in');
+		}
+
 		$thread = new Thread;
 		$comment = new Comment;
-		//$username = $_SESSION['username'];
 		$page = Param::get('page_next','create');
 
 		switch($page){
@@ -39,14 +48,24 @@ class ThreadController extends AppController
 	}	
 	
 	public function view()
-	{
+	{	
+		if(is_logged_in() === false) {
+			redirect($url = 'not_logged_in');
+		}
+
+		$table = 'comment';
+
 		$thread = Thread::get(Param::get('thread_id'));
 		$comments = $thread->getComments();
 
 		$this->set(get_defined_vars());
 	}
 	public function write()
-	{
+	{	
+		if(is_logged_in() === false) {
+			redirect($url = 'not_logged_in');
+		}
+		
 		$thread = Thread::get(Param::get('thread_id'));
 		$comment = new Comment;
 		$page = Param::get('page_next','write');
