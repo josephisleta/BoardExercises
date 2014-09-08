@@ -5,9 +5,9 @@ class Pagination
 	public static $last;
 	public static $limit;
 	public static $pagination = array();
-
+	
 	const MAX_PER_PAGE = 10;
-
+	
 	//	Get the current page
 	public static function setCurrPage($row_length)
 	{
@@ -20,7 +20,7 @@ class Pagination
 		}
 		return self::$pagenum;
 	}
-
+	
 	//	Get the last page
 	public static function setLastPage($row_length)
 	{
@@ -30,16 +30,16 @@ class Pagination
 		}
 		return self::$last;
 	}
-
-	//	Get the limit of items to be displayed per page
+	
+	//	Get the number of items to be displayed per page
 	public static function setLimit($row_length)
 	{
 		$currpage = self::setCurrPage($row_length);
 		self::$limit = 'LIMIT '.($currpage - 1) * self::MAX_PER_PAGE .',' .self::MAX_PER_PAGE;
 		return self::$limit;
 	}
-
-	//	Displays the links
+	
+	//	Display the links
 	public static function setControls($row_length)
 	{
 		$pagenum = self::setCurrPage($row_length);
@@ -74,7 +74,7 @@ class Pagination
 		self::$pagination['last_page'] = $last;
 		self::$pagination['maximum'] = $limit;
 		self::$pagination['control'] = $pageCtrls;
-
+		
 		return self::$pagination;
 	}
 }

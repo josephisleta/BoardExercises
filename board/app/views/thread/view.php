@@ -26,9 +26,9 @@
 	<div style="float:right;">
 		<?php echo $pagination['control'];?>
 	</div>
-
+	
 	<hr>
-
+	
 	<form class="well" method="POST" action="<?php eh(url('thread/write')) ?>">
 		<label>Comment</label>
 		<textarea name="body" style="width: 890px; height: 150px;"><?php eh(Param::get('body')) ?></textarea>

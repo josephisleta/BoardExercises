@@ -1,5 +1,4 @@
 <?php
-
 class Thread extends AppModel
 {
 	public $id;
@@ -7,16 +6,16 @@ class Thread extends AppModel
 
 	public $validation = array(
 				'title' => array(
-					'length'=>array(
+					'length' => array(
 						'validate_between',1,30,),
 						),
-			);	
+			);
 
 	public static function get($id)
 	{
 		$db = DB::conn();
 		$row = $db->row('SELECT * FROM thread WHERE id = ?', array($id));
-		
+
 		if(!$row){
 			throw new RecordNotFoundException('no record found');
 		}
@@ -25,7 +24,7 @@ class Thread extends AppModel
 
 	public static function getAll()
 	{
-		$threads=array();
+		$threads = array();
 		$limit = Thread::countRowThread();
 		$limits = new Pagination();
 		$limit_query = $limits::setLimit($limit);
@@ -49,7 +48,7 @@ class Thread extends AppModel
 		$db = DB::conn();
 		$rows = $db->rows("SELECT * FROM comment WHERE thread_id = ? ORDER BY created ASC $limit_query",array($this->id));
 
-		foreach ($rows as $row){
+		foreach ($rows as $row) {
 			$comments[] = new Comment($row);
 		}
 		return $comments;
@@ -89,7 +88,6 @@ class Thread extends AppModel
 			"thread_id" => $this->id,
 			"username" => $comment->username,
 			"body" => $comment->body,
-
 		);
 		if (!$comment->validate()) {
 			throw new ValidationException('invalid comment');
@@ -100,14 +98,14 @@ class Thread extends AppModel
 
 	public static function countRowThread()
 	{
-		$db= DB::conn();
+		$db = DB::conn();
 		$total = $db->value("SELECT count(id) FROM thread");
 		return $total;
 	}
 
 	public static function countRowComment($id)
 	{
-		$db= DB::conn();
+		$db = DB::conn();
 		$total = $db->value("SELECT count(id) FROM comment WHERE thread_id = ?",array($id));
 		return $total;
 	}

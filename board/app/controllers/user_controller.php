@@ -6,7 +6,7 @@ class UserController extends AppController
 		if(is_logged_in() === true) {
 			redirect($url = 'user');
 		}
-
+		
 		$user = new User;
 		$page = Param::get('page_next','register');
 		switch ($page) {
@@ -18,7 +18,7 @@ class UserController extends AppController
 				$user->confirm_pword = Param::get('confirm_pword');
 				$user->name = Param::get('name');
 				$user->email = Param::get('email');
-
+				
 				try {
 					$user->register($user);
 				} catch (ValidationException $e) {

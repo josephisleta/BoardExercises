@@ -5,9 +5,9 @@ class User extends AppModel
 	const MAX_USERNAME_LENGTH = 20;
 	const MIN_PASSWORD_LENGTH = 6;
 	const MAX_PASSWORD_LENGTH = 20;
-
+	
 	private $is_failed_login = false;
-
+	
 	public $validation = array(
 		'username' => array(
 			'length' => array(
@@ -25,13 +25,13 @@ class User extends AppModel
 				'match_password',
 			),
 		),
-
+		
 		'name' => array (
 			'format' => array(
 				'letters_only',
 			),
 		),
-
+		
 		'email' => array(
 			'format' => array(
 				'email_valid',
@@ -45,9 +45,9 @@ class User extends AppModel
 		$this->validation['confirm_pword']['match'][] = $this->confirm_pword;
 		$this->validation['name']['format'][] = $this->name;
 		$this->validation['email']['format'][] = $this->email;
-
+		
 		$this->validate();
-
+		
 		if($this->hasError()) {
 			throw new ValidationException("invalid inputs");
 		} else {
@@ -61,7 +61,7 @@ class User extends AppModel
 		$db = DB::conn();
 		$db->insert('user', $params);
 	}
-
+	
 	public function authenticate($username, $pword)
 	{
 		$query = "SELECT id, username, name FROM user WHERE username = ? AND pword = ?";
@@ -73,7 +73,7 @@ class User extends AppModel
 		}
 		return $row;
 	}
-
+	
 	public function isFailedLogin()
 	{
 		return $this->is_failed_login;
