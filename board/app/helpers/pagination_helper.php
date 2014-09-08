@@ -5,6 +5,7 @@ class Pagination
 	public static $last;
 	public static $limit;
 	public static $pagination = array();
+
 	const MAX_PER_PAGE = 10;
 
 	//	Get the current page

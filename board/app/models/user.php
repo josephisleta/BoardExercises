@@ -45,7 +45,7 @@ class User extends AppModel
 		$this->validation['confirm_pword']['match'][] = $this->confirm_pword;
 		$this->validation['name']['format'][] = $this->name;
 		$this->validation['email']['format'][] = $this->email;
-		
+
 		$this->validate();
 
 		if($this->hasError()) {

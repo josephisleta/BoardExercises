@@ -37,7 +37,7 @@ class Thread extends AppModel
 		}
 		return $threads;
 	}
-	
+
 	public function getComments()
 	{
 		$comments = array();
@@ -48,7 +48,7 @@ class Thread extends AppModel
 
 		$db = DB::conn();
 		$rows = $db->rows("SELECT * FROM comment WHERE thread_id = ? ORDER BY created ASC $limit_query",array($this->id));
-		
+
 		foreach ($rows as $row){
 			$comments[] = new Comment($row);
 		}
@@ -89,7 +89,7 @@ class Thread extends AppModel
 			"thread_id" => $this->id,
 			"username" => $comment->username,
 			"body" => $comment->body,
-			
+
 		);
 		if (!$comment->validate()) {
 			throw new ValidationException('invalid comment');

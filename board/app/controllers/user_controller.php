@@ -2,11 +2,11 @@
 class UserController extends AppController
 {
 	public function register()
-	{	
+	{
 		if(is_logged_in() === true) {
 			redirect($url = 'user');
 		}
-		
+
 		$user = new User;
 		$page = Param::get('page_next','register');
 		switch ($page) {

@@ -27,14 +27,12 @@
 	<?php endif ?>
 	</div>
 <?php endif ?>
-            
+
 <form class="well" method="POST" action="<?php eh(url('thread/write')) ?>">
-	<input type="hidden" class="span2" name="username" value="<?php eh($_SESSION['username']) ?>">
-	
 	<label>Comment</label>
 	<textarea name="body" style="width: 890px; height: 150px;"><?php eh(Param::get('body')) ?></textarea><br />
 	<br />
-
+	<input type="hidden" name="username" value="<?php eh($_SESSION['username']) ?>">
 	<input type="hidden" name="thread_id" value="<?php eh($thread->id) ?>">
 	<input type="hidden" name="page_next" value="write_end">
 	<button type="submit" class="btn btn-primary">Submit</button>                

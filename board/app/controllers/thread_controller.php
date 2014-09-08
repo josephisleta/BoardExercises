@@ -33,7 +33,7 @@ class ThreadController extends AppController
 				$comment->username = Param::get('username');
 				$comment->body = Param::get('body');
 				try{
-					$thread->create($comment);			
+					$thread->create($comment);
 				} catch (ValidationException $e){
 					$page = 'create';
 				}
@@ -54,11 +54,10 @@ class ThreadController extends AppController
 		}
 		$thread = Thread::get(Param::get('thread_id'));
 
-		$total_thread = Thread::countRowComment(Param::get('thread_id'));
+		$total_comment = Thread::countRowComment(Param::get('thread_id'));
 		$page = new Pagination();
-		$pagination = $page::setControls($total_thread);
+		$pagination = $page::setControls($total_comment);
 		$threads = Thread::getAll($pagination['maximum']);
-
 
 		$comments = $thread->getComments();
 
@@ -80,11 +79,11 @@ class ThreadController extends AppController
 			case 'write_end':
 				$comment->username = Param::get('username');
 				$comment->body = Param::get('body');
-				try{				
+				try{
 					$thread->write($comment);
 				} catch (ValidationException $e){
-					$page = 'write';	
-				}				
+					$page = 'write';
+				}
 				break;
 			default:
 				throw new NotFoundException("{$page} is not found");
