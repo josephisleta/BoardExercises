@@ -6,9 +6,9 @@ function validate_between($check, $min, $max)
     return $min <= $n && $n <= $max;
 }
 
-function match_password($pword, $confirm_pword)
+function match_password($password, $confirm_password)
 {
-    return $pword === $confirm_pword;
+    return $password === $confirm_password;
 }
 
 function letters_only($name)

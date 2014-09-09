@@ -38,10 +38,10 @@
 	<input type="text" class="span2" name="username" value="<?php encode(Param::get('username')) ?>" required>
 	
 	<label>Password</label>
-	<input type="password" class="span2" name="pword" required>
+	<input type="password" class="span2" name="password" required>
 	
 	<label>Confirm Password</label>
-	<input type="password" class="span2" name="confirm_pword" required>
+	<input type="password" class="span2" name="confirm_password" required>
 	
 	<label>Name</label>
 	<input type="text" class="span2" name="name" value="<?php encode(Param::get('name')) ?>" required>

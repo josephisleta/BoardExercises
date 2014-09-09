@@ -17,8 +17,8 @@ class UserController extends AppController
                 break;
             case 'register_end':
                 $user->username = Param::get('username');
-                $user->password = Param::get('pword');
-                $user->confirm_password = Param::get('confirm_pword');
+                $user->password = Param::get('password');
+                $user->confirm_password = Param::get('confirm_password');
                 $user->name = Param::get('name');
                 $user->email = Param::get('email');
                 
@@ -52,7 +52,7 @@ class UserController extends AppController
                 break;
             case 'home':
                 $user->username = Param::get('username');
-                $user->password = Param::get('pword');
+                $user->password = Param::get('password');
                 try {
                     $account = $user->authenticate($user->username, $user->password);
                     $_SESSION['id'] = $account['id'];
