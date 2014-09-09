@@ -5,11 +5,12 @@ class Thread extends AppModel
     public $title;
 
     public $validation = array(
-                'title' => array(
-                    'length' => array(
-                        'validate_between',1,30,),
-                        ),
-            );
+        'title' => array(
+            'length' => array(
+                'validate_between',1,30,
+            ),
+        ),
+    );
 
     /*
     *Get fields from a single thread

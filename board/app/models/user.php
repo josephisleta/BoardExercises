@@ -15,13 +15,13 @@ class User extends AppModel
             ),
         ),
         
-        'pword' => array(
+        'password' => array(
             'length' => array(
                 'validate_between', self::MIN_PASSWORD_LENGTH, self::MAX_PASSWORD_LENGTH,
             ),
         ),
 
-        'confirm_pword' => array(
+        'confirm_password' => array(
             'match' => array(
                 'match_password',
             ),
@@ -46,8 +46,8 @@ class User extends AppModel
     */
     public function register($user)
     {
-        $this->validation['confirm_pword']['match'][] = $this->pword;
-        $this->validation['confirm_pword']['match'][] = $this->confirm_pword;
+        $this->validation['confirm_password']['match'][] = $this->password;
+        $this->validation['confirm_password']['match'][] = $this->confirm_password;
         $this->validation['name']['format'][] = $this->name;
         $this->validation['email']['format'][] = $this->email;
         
@@ -58,7 +58,7 @@ class User extends AppModel
         } else {
             $params = array(
                 'username' => $this->username,
-                'pword' => $this->pword,
+                'pword' => $this->password,
                 'name' => $this->name,
                 'email' => $this->email
             );
@@ -69,13 +69,13 @@ class User extends AppModel
     
     /*
     *Authenticates username and password
-    *@param $username, $pword
+    *@param $username, $password
     */
-    public function authenticate($username, $pword)
+    public function authenticate($username, $password)
     {
         $query = "SELECT id, username, name FROM user WHERE username = ? AND pword = ?";
         $db = DB::conn();
-        $row = $db->row($query, array($username, $pword));
+        $row = $db->row($query, array($username, $password));
         if (!$row) {
             $this->is_failed_login = true;
             throw new UserNotFoundException('user not found');

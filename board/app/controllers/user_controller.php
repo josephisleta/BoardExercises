@@ -17,8 +17,8 @@ class UserController extends AppController
                 break;
             case 'register_end':
                 $user->username = Param::get('username');
-                $user->pword = Param::get('pword');
-                $user->confirm_pword = Param::get('confirm_pword');
+                $user->password = Param::get('pword');
+                $user->confirm_password = Param::get('confirm_pword');
                 $user->name = Param::get('name');
                 $user->email = Param::get('email');
                 
@@ -44,6 +44,7 @@ class UserController extends AppController
         if (is_logged_in()) {
             redirect(url('thread/index'));
         }
+
         $user = new User;
         $page = Param::get('page_next', 'login');
         switch ($page) {
@@ -51,9 +52,9 @@ class UserController extends AppController
                 break;
             case 'home':
                 $user->username = Param::get('username');
-                $user->pword = Param::get('pword');
+                $user->password = Param::get('pword');
                 try {
-                    $account = $user->authenticate($user->username, $user->pword);
+                    $account = $user->authenticate($user->username, $user->password);
                     $_SESSION['id'] = $account['id'];
                     $_SESSION['username'] = $account['username'];
                     $_SESSION['name'] = $account['name'];
