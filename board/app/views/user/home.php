@@ -1,5 +1,5 @@
-<h1>Welcome <?php eh($_SESSION['name'])?>!</h1>
+<h1>Welcome <?php encode($_SESSION['name'])?>!</h1>
 <p class="alert alert-success">
-	You have successfully logged in to your account <b><?php eh($_SESSION['username']) ?></b>.
+	You have successfully logged in to your account <b><?php encode($_SESSION['username']) ?></b>.
 </p>
-<a class="btn btn-primary" href="<?php eh(url('thread/index')) ?>">View threads</a>
+<a class="btn btn-primary" href="<?php encode(url('thread/index')) ?>">View threads</a>

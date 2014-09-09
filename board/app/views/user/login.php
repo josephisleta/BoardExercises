@@ -6,7 +6,7 @@
 	</div>
 <?php endif ?>
 
-<form class="well" method="POST" action="<?php eh(url('user/login'))?>">
+<form class="well" method="POST" action="<?php encode(url('user/login'))?>">
 	<label>Username:</label>
 	<input type="text" class="span2" name="username" required>
 	<label>Password:</label>
@@ -18,5 +18,5 @@
 
 <div>
 	<em>No account yet?</em>
-	<a class="btn btn-danger" href="<?php eh(url('user/register')) ?>">Register</a>
+	<a class="btn btn-danger" href="<?php encode(url('user/register')) ?>">Register</a>
 </div>

@@ -6,15 +6,15 @@
 
 		<?php if (!empty($user->validation_errors['username']['length'])): ?>
 			<div><em>Username</em> must be between
-				<?php eh($user->validation['username']['length'][1]) ?> and
-				<?php eh($user->validation['username']['length'][2]) ?> characters in length.
+				<?php encode($user->validation['username']['length'][1]) ?> and
+				<?php encode($user->validation['username']['length'][2]) ?> characters in length.
 			</div>
 		<?php endif ?>
 		
 		<?php if (!empty($user->validation_errors['pword']['length'])): ?>
 			<div><em>Password</em> must be between
-				<?php eh($user->validation['pword']['length'][1]) ?> and
-				<?php eh($user->validation['pword']['length'][2]) ?> characters in length.
+				<?php encode($user->validation['pword']['length'][1]) ?> and
+				<?php encode($user->validation['pword']['length'][2]) ?> characters in length.
 			</div>
 		<?php endif ?>
 
@@ -33,9 +33,9 @@
 	</div>
 <?php endif ?>
 
-<form class="well" method="post" action="<?php eh(url('user/register')) ?>">
+<form class="well" method="post" action="<?php encode(url('user/register')) ?>">
 	<label>Username</label>
-	<input type="text" class="span2" name="username" value="<?php eh(Param::get('username')) ?>" required>
+	<input type="text" class="span2" name="username" value="<?php encode(Param::get('username')) ?>" required>
 	
 	<label>Password</label>
 	<input type="password" class="span2" name="pword" required>
@@ -44,10 +44,10 @@
 	<input type="password" class="span2" name="confirm_pword" required>
 	
 	<label>Name</label>
-	<input type="text" class="span2" name="name" value="<?php eh(Param::get('name')) ?>" required>
+	<input type="text" class="span2" name="name" value="<?php encode(Param::get('name')) ?>" required>
 	
 	<label>Email</label>
-	<input type="text" class="span2" name="email" value="<?php eh(Param::get('email')) ?>" required>
+	<input type="text" class="span2" name="email" value="<?php encode(Param::get('email')) ?>" required>
 	<br />
 	
 	<input type="hidden" name="page_next" value="register_end">
@@ -56,5 +56,5 @@
 
 <div>
 	<em>Already have an account?</em>
-	<a class="btn btn-danger" href="<?php eh(url('user/login')) ?>">Login</a>
+	<a class="btn btn-danger" href="<?php encode(url('user/login')) ?>">Login</a>
 </div>
