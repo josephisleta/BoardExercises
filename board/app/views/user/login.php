@@ -8,9 +8,9 @@
 
 <form class="well" method="POST" action="<?php eh(url('user/login'))?>">
 	<label>Username:</label>
-	<input type="text" class="span2" name="username">
+	<input type="text" class="span2" name="username" required>
 	<label>Password:</label>
-	<input type="password" class="span2" name="pword">
+	<input type="password" class="span2" name="pword" required>
 	<input type="hidden" name="page_next" value="home">
 	<br />
 	<button type="submit" class="btn btn-primary">Submit</button>

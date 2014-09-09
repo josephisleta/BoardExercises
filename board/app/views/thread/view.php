@@ -31,7 +31,7 @@
 	
 	<form class="well" method="POST" action="<?php eh(url('thread/write')) ?>">
 		<label>Comment</label>
-		<textarea name="body" style="width: 890px; height: 150px;"><?php eh(Param::get('body')) ?></textarea>
+		<textarea name="body" style="width: 890px; height: 150px;" required><?php eh(Param::get('body')) ?></textarea>
 		<br />
 		<input type="hidden" name="username" value="<?php eh($_SESSION['username']) ?>">
 		<input type="hidden" name="thread_id" value="<?php eh($thread->id) ?>">

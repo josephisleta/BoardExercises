@@ -20,6 +20,7 @@ class User extends AppModel
 				'validate_between', self::MIN_PASSWORD_LENGTH, self::MAX_PASSWORD_LENGTH,
 			),
 		),
+		
 		'confirm_pword' => array(
 			'match' => array(
 				'match_password',
@@ -48,7 +49,7 @@ class User extends AppModel
 		
 		$this->validate();
 		
-		if($this->hasError()) {
+		if ($this->hasError()) {
 			throw new ValidationException("invalid inputs");
 		} else {
 			$params = array(

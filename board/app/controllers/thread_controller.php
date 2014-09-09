@@ -3,10 +3,10 @@ class ThreadController extends AppController
 {
 	public function index()
 	{
-		if(is_logged_in() === false) {
+		if (is_logged_in() === false) {
 			redirect($url = 'not_logged_in');
 		}
-		
+
 		$total_thread = Thread::countRowThread();
 		$page = new Pagination();
 		$pagination = $page::setControls($total_thread);
@@ -17,7 +17,7 @@ class ThreadController extends AppController
 	
 	public function create()
 	{
-		if(is_logged_in() === false) {
+		if (is_logged_in() === false) {
 			redirect($url = 'not_logged_in');
 		}
 		
@@ -25,16 +25,16 @@ class ThreadController extends AppController
 		$comment = new Comment;
 		$page = Param::get('page_next','create');
 		
-		switch($page){
+		switch ($page) {
 			case 'create':
 				break;
 			case 'create_end':
 				$thread->title = Param::get('title');
 				$comment->username = Param::get('username');
 				$comment->body = Param::get('body');
-				try{
+				try {
 					$thread->create($comment);
-				} catch (ValidationException $e){
+				} catch (ValidationException $e) {
 					$page = 'create';
 				}
 				break;
@@ -42,31 +42,30 @@ class ThreadController extends AppController
 				throw new NotFoundException("{$page} is not found");
 				break;
 		}
+
 		$this->set(get_defined_vars());
-		
 		$this->render($page);
 	}
 	
 	public function view()
 	{
-		if(is_logged_in() === false) {
+		if (is_logged_in() === false) {
 			redirect($url = 'not_logged_in');
 		}
+
 		$thread = Thread::get(Param::get('thread_id'));
-		
 		$total_comment = Thread::countRowComment(Param::get('thread_id'));
 		$page = new Pagination();
 		$pagination = $page::setControls($total_comment);
 		$threads = Thread::getAll($pagination['maximum']);
 		
 		$comments = $thread->getComments();
-		
 		$this->set(get_defined_vars());
 	}
 	
 	public function write()
 	{
-		if(is_logged_in() === false) {
+		if (is_logged_in() === false) {
 			redirect($url = 'not_logged_in');
 		}
 		
@@ -74,15 +73,15 @@ class ThreadController extends AppController
 		$comment = new Comment;
 		$page = Param::get('page_next','write');
 		
-		switch($page){
+		switch ($page) {
 			case 'write':
 				break;
 			case 'write_end':
 				$comment->username = Param::get('username');
 				$comment->body = Param::get('body');
-				try{
+				try {
 					$thread->write($comment);
-				} catch (ValidationException $e){
+				} catch (ValidationException $e) {
 					$page = 'write';
 				}
 				break;
@@ -90,6 +89,7 @@ class ThreadController extends AppController
 				throw new NotFoundException("{$page} is not found");
 				break;
 		}
+		
 		$this->set(get_defined_vars());
 		$this->render($page);
 	}

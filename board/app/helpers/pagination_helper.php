@@ -12,7 +12,7 @@ class Pagination
 	public static function setCurrPage($row_length)
 	{
 		$last_page = self::setLastPage($row_length);
-		if(isset($_GET['pn'])) {
+		if (isset($_GET['pn'])) {
 			self::$pagenum = preg_replace('#[^0-9]#', '', $_GET['pn']);
 		}
 		if (self::$pagenum > $last_page) {
@@ -25,7 +25,7 @@ class Pagination
 	public static function setLastPage($row_length)
 	{
 		self::$last = ceil($row_length/self::MAX_PER_PAGE);
-		if(self::$last < 1) {
+		if (self::$last < 1) {
 			self::$last = 1;
 		}
 		return self::$last;
@@ -47,21 +47,21 @@ class Pagination
 		$limit = self::setLimit($row_length);
 		$page_url =& $url['pn'];
 		$pageCtrls = '';
-		if($last != 1) {
+		if ($last != 1) {
 			if ($pagenum > 1) {
 				$page_url = $pagenum - 1;
 				$pageCtrls .= '<a href="'. url('', $url) .'">Previous</a> &nbsp; &nbsp; ';
-				for($i = $pagenum-4; $i < $pagenum; $i++) {
-					if($i > 0) {
+				for ($i = $pagenum - 4 ; $i < $pagenum ; $i++) {
+					if ($i > 0) {
 						$pageCtrls .= '<a href="'. url('', $url) .'">'.$i.'</a> &nbsp; ';
 					}
 				}
 			}
 			$pageCtrls .= ''.$pagenum.' &nbsp; ';
-			for($i = $pagenum+1; $i <= $last; $i++) {
+			for ($i = $pagenum + 1 ; $i <= $last ; $i++) {
 				$page_url = $i;
 				$pageCtrls .= '<a href="'.url('', $url).'">'.$i.'</a> &nbsp; ';
-				if($i >= $pagenum+4) {
+				if ($i >= $pagenum + 4) {
 					break;
 				}
 			}
@@ -70,11 +70,14 @@ class Pagination
 				$pageCtrls .= '&nbsp; &nbsp; <a href="'.url('', $url).'">Next</a>';
 			}
 		}
-		self::$pagination['pagenum'] = $pagenum;
-		self::$pagination['last_page'] = $last;
-		self::$pagination['maximum'] = $limit;
-		self::$pagination['control'] = $pageCtrls;
 		
+		self::$pagination = array(
+		    'pagenum' => $pagenum,
+		    'last_page' => $last,
+		    'maximum' => $limit,
+		    'control' => $pageCtrls,
+		);
+
 		return self::$pagination;
 	}
 }

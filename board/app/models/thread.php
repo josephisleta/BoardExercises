@@ -16,7 +16,7 @@ class Thread extends AppModel
 		$db = DB::conn();
 		$row = $db->row('SELECT * FROM thread WHERE id = ?', array($id));
 
-		if(!$row){
+		if (!$row) {
 			throw new RecordNotFoundException('no record found');
 		}
 		return new self($row);
@@ -31,7 +31,7 @@ class Thread extends AppModel
 		$db = DB::conn();
 		$rows = $db->rows("SELECT * FROM thread ORDER BY created DESC $limit_query");
 
-		foreach ($rows as $row){
+		foreach ($rows as $row) {
 			$threads[] = new self($row);
 		}
 		return $threads;
@@ -62,7 +62,7 @@ class Thread extends AppModel
 			"created" => date('Y-m-d H:i:s')
 		);
 		$db = DB::conn();
-		try{
+		try {
 			$db->begin();
 
 			$this->validate();
@@ -76,7 +76,7 @@ class Thread extends AppModel
 			$this->write($comment);
 
 			$db->commit();
-		}catch(ValidationException $e) {
+		} catch (ValidationException $e) {
 			$db->rollback();
 			throw $e;
 		}

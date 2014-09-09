@@ -35,19 +35,19 @@
 
 <form class="well" method="post" action="<?php eh(url('user/register')) ?>">
 	<label>Username</label>
-	<input type="text" class="span2" name="username" value="<?php eh(Param::get('username')) ?>">
+	<input type="text" class="span2" name="username" value="<?php eh(Param::get('username')) ?>" required>
 	
 	<label>Password</label>
-	<input type="password" class="span2" name="pword">
+	<input type="password" class="span2" name="pword" required>
 	
 	<label>Confirm Password</label>
-	<input type="password" class="span2" name="confirm_pword">
+	<input type="password" class="span2" name="confirm_pword" required>
 	
 	<label>Name</label>
-	<input type="text" class="span2" name="name" value="<?php eh(Param::get('name')) ?>">
+	<input type="text" class="span2" name="name" value="<?php eh(Param::get('name')) ?>" required>
 	
 	<label>Email</label>
-	<input type="text" class="span2" name="email" value="<?php eh(Param::get('email')) ?>">
+	<input type="text" class="span2" name="email" value="<?php eh(Param::get('email')) ?>" required>
 	<br />
 	
 	<input type="hidden" name="page_next" value="register_end">

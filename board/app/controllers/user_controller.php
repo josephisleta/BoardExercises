@@ -3,7 +3,7 @@ class UserController extends AppController
 {
 	public function register()
 	{
-		if(is_logged_in() === true) {
+		if (is_logged_in() === true) {
 			redirect($url = 'user');
 		}
 		
@@ -35,7 +35,7 @@ class UserController extends AppController
 
 	public function login()
 	{
-		if(is_logged_in() === true) {
+		if (is_logged_in() === true) {
 			redirect($url = 'user');
 		}
 		$user = new User;
@@ -51,7 +51,7 @@ class UserController extends AppController
 					$_SESSION['id'] = $account['id'];
 					$_SESSION['username'] = $account['username'];
 					$_SESSION['name'] = $account['name'];
-				} catch(UserNotFoundException $e) {
+				} catch (UserNotFoundException $e) {
 					$page = 'login';
 				}
 				break;

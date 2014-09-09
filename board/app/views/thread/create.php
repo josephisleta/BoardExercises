@@ -40,9 +40,9 @@
             
 <form class="well" method="POST" action="<?php eh(url('')) ?>">
 	<label>Title</label>
-	<input type="text" class="span2" name="title" value="<?php eh(Param::get('title')) ?>">
+	<input type="text" class="span2" name="title" value="<?php eh(Param::get('title')) ?>" required>
 	<label>Comment</label>
-	<textarea name="body"><?php eh(Param::get('body')) ?></textarea>
+	<textarea name="body" required><?php eh(Param::get('body')) ?></textarea>
 	<br />
 
 	<input type="hidden" name="username" value="<?php eh($_SESSION['username']) ?>">
