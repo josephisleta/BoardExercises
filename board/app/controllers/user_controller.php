@@ -6,7 +6,7 @@ class UserController extends AppController
 	*/
 	public function register()
 	{
-		if (is_logged_in() === true) {
+		if (is_logged_in()) {
 			redirect($url = 'user');
 		}
 		
@@ -41,7 +41,7 @@ class UserController extends AppController
 	*/
 	public function login()
 	{
-		if (is_logged_in() === true) {
+		if (is_logged_in()) {
 			redirect($url = 'user');
 		}
 		$user = new User;

@@ -3,7 +3,7 @@ class ThreadController extends AppController
 {
 	public function index()
 	{
-		if (is_logged_in() === false) {
+		if (!is_logged_in()) {
 			redirect($url = 'not_logged_in');
 		}
 
@@ -20,7 +20,7 @@ class ThreadController extends AppController
 	*/
 	public function create()
 	{
-		if (is_logged_in() === false) {
+		if (!is_logged_in()) {
 			redirect($url = 'not_logged_in');
 		}
 		
@@ -55,7 +55,7 @@ class ThreadController extends AppController
 	*/
 	public function view()
 	{
-		if (is_logged_in() === false) {
+		if (!is_logged_in()) {
 			redirect($url = 'not_logged_in');
 		}
 
@@ -74,7 +74,7 @@ class ThreadController extends AppController
 	*/
 	public function write()
 	{
-		if (is_logged_in() === false) {
+		if (!is_logged_in()) {
 			redirect($url = 'not_logged_in');
 		}
 		
