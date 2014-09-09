@@ -1,6 +1,9 @@
 <?php
 class UserController extends AppController
-{
+{	
+	/*
+	*Get values in user registration form
+	*/
 	public function register()
 	{
 		if (is_logged_in() === true) {
@@ -33,6 +36,9 @@ class UserController extends AppController
 		$this->render($page);
 	}
 
+	/*
+	*Get and authenticate values entered in login form
+	*/
 	public function login()
 	{
 		if (is_logged_in() === true) {

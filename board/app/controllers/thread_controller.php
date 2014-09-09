@@ -15,6 +15,9 @@ class ThreadController extends AppController
 		$this->set(get_defined_vars());
 	}
 	
+	/*
+	*Creates a new thread
+	*/
 	public function create()
 	{
 		if (is_logged_in() === false) {
@@ -47,6 +50,9 @@ class ThreadController extends AppController
 		$this->render($page);
 	}
 	
+	/*
+	*Displays comments on each thread
+	*/
 	public function view()
 	{
 		if (is_logged_in() === false) {
@@ -62,7 +68,10 @@ class ThreadController extends AppController
 		$comments = $thread->getComments();
 		$this->set(get_defined_vars());
 	}
-	
+
+	/*
+	*Writes comments on a thread
+	*/
 	public function write()
 	{
 		if (is_logged_in() === false) {
@@ -89,7 +98,7 @@ class ThreadController extends AppController
 				throw new NotFoundException("{$page} is not found");
 				break;
 		}
-		
+
 		$this->set(get_defined_vars());
 		$this->render($page);
 	}

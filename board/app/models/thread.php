@@ -11,6 +11,10 @@ class Thread extends AppModel
 						),
 			);
 
+	/*
+	*Get fields from a single thread
+	*@param $id
+	*/
 	public static function get($id)
 	{
 		$db = DB::conn();
@@ -22,6 +26,9 @@ class Thread extends AppModel
 		return new self($row);
 	}
 
+	/*
+	*Get all threads from the database
+	*/
 	public static function getAll()
 	{
 		$threads = array();
@@ -37,6 +44,9 @@ class Thread extends AppModel
 		return $threads;
 	}
 
+	/*
+	*Get all comments from a specific thread
+	*/
 	public function getComments()
 	{
 		$comments = array();
@@ -54,6 +64,11 @@ class Thread extends AppModel
 		return $comments;
 	}
 
+	/*
+	*Creates new thread
+	*Inserts first comment
+	*@param $comment
+	*/
 	public function create(Comment $comment)
 	{
 		$params = array(
@@ -82,6 +97,10 @@ class Thread extends AppModel
 		}
 	}
 
+	/*
+	*Inserts new comment on a thread
+	*@param $comment
+	*/
 	public function write(Comment $comment)
 	{
 		$params = array(

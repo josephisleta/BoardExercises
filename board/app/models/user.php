@@ -20,7 +20,7 @@ class User extends AppModel
 				'validate_between', self::MIN_PASSWORD_LENGTH, self::MAX_PASSWORD_LENGTH,
 			),
 		),
-		
+
 		'confirm_pword' => array(
 			'match' => array(
 				'match_password',
@@ -40,6 +40,10 @@ class User extends AppModel
 		),
 	);
 
+	/*
+	*Creates new user
+	*@param $user
+	*/
 	public function register($user)
 	{
 		$this->validation['confirm_pword']['match'][] = $this->pword;
@@ -63,6 +67,10 @@ class User extends AppModel
 		$db->insert('user', $params);
 	}
 	
+	/*
+	*Authenticates username and password
+	*@param $username, $pword
+	*/
 	public function authenticate($username, $pword)
 	{
 		$query = "SELECT id, username, name FROM user WHERE username = ? AND pword = ?";
