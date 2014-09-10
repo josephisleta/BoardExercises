@@ -13,12 +13,12 @@ class Comment extends AppModel
     /*
     *Creates new thread
     *Inserts first comment
-    *@param $thread, $comment
+    *@param $thread
     */
-    public function create($thread, $comment)
+    public function create($thread)
     {
         $params = array(
-            "username" => $comment->username,
+            "username" => $this->username,
             "title" => $thread->title,
             "created" => date('Y-m-d H:i:s')
         );
@@ -27,14 +27,14 @@ class Comment extends AppModel
             $db->begin();
 
             $thread->validate();
-            $comment->validate();
+            $this->validate();
 
-            if ($thread->hasError() || $comment->hasError()) {
+            if ($thread->hasError() || $this->hasError()) {
                 throw new ValidationException('invalid thread or comment');
             }
             $db->insert('thread', $params);
             $thread->id = $db->lastInsertId();
-            $comment->write($thread, $comment);
+            $this->write($thread);
 
             $db->commit();
         } catch (ValidationException $e) {
@@ -45,16 +45,16 @@ class Comment extends AppModel
 
     /*
     *Inserts new comment on a thread
-    *@param $comment
+    *@param $thread
     */
-    public function write($thread, $comment)
+    public function write($thread)
     {
         $params = array(
             "thread_id" => $thread->id,
-            "username" => $comment->username,
-            "body" => $comment->body,
+            "username" => $this->username,
+            "body" => $this->body,
         );
-        if (!$comment->validate()) {
+        if (!$this->validate()) {
             throw new ValidationException('invalid comment');
         }
         $db = DB::conn();
