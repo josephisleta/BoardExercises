@@ -34,7 +34,7 @@ class Comment extends AppModel
             }
             $db->insert('thread', $params);
             $thread->id = $db->lastInsertId();
-            $thread->write($comment);
+            $comment->write($thread, $comment);
 
             $db->commit();
         } catch (ValidationException $e) {
