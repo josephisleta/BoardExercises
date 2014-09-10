@@ -57,10 +57,9 @@ class ThreadController extends AppController
         }
 
         $thread = Thread::get(Param::get('thread_id'));
-        $limit = Comment::countThreadComments($thread->id);//
+        $limit = Comment::countThreadComments($thread->id);
 
         $pagination = Pagination::getControls($limit);
-        $threads = Thread::getAll($pagination['maximum']);
         
         $comments = $thread->getComments($pagination['maximum']);
         $this->set(get_defined_vars());
