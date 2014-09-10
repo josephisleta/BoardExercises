@@ -34,12 +34,12 @@ class Thread extends AppModel
     *Get all threads from the database
     *@param $limit_query
     */
-    public static function getAll($limit_query)
+    public static function getAll($limit)
     {
         $threads = array();
 
         $db = DB::conn();
-        $rows = $db->rows("SELECT * FROM thread ORDER BY created DESC $limit_query");
+        $rows = $db->rows("SELECT * FROM thread ORDER BY created DESC $limit");
 
         foreach ($rows as $row) {
             $threads[] = new self($row);
@@ -51,12 +51,12 @@ class Thread extends AppModel
     *Get all comments from a specific thread
     *@param $limit_query
     */
-    public function getComments($limit_query)
+    public function getComments($limit)
     {
         $comments = array();
 
         $db = DB::conn();
-        $rows = $db->rows("SELECT * FROM comment WHERE thread_id = ? ORDER BY created ASC $limit_query",array($this->id));
+        $rows = $db->rows("SELECT * FROM comment WHERE thread_id = ? ORDER BY created ASC $limit",array($this->id));
 
         foreach ($rows as $row) {
             $comments[] = new Comment($row);
