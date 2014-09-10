@@ -1,12 +1,12 @@
 <?php
 class Comment extends AppModel
-{
+{   
+    const MIN_COMMENT_LENGTH = 1;
+    const MAX_COMMENT_LENGTH = 200;
+
     public $validation = array(
-        'username' => array(
-            'length' => array('validate_between', 1, 20,),
-        ),
         'body' => array(
-            'length' => array('validate_between',1,200,),
+            'length' => array('validate_between', self::MIN_COMMENT_LENGTH, self::MAX_COMMENT_LENGTH,),
         ),      
     );
 

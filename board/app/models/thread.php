@@ -1,8 +1,8 @@
 <?php
 class Thread extends AppModel
 {
-    const THREAD_MIN_LENGTH = 1;
-    const THREAD_MAX_LENGTH = 30;
+    const MIN_THREAD_LENGTH = 1;
+    const MAX_THREAD_LENGTH = 30;
     
     public $id;
     public $title;
@@ -10,7 +10,7 @@ class Thread extends AppModel
     public $validation = array(
         'title' => array(
             'length' => array(
-                'validate_between', self::THREAD_MIN_LENGTH, self::THREAD_MAX_LENGTH,
+                'validate_between', self::MIN_THREAD_LENGTH, self::MAX_THREAD_LENGTH,
             ),
         ),
     );
@@ -32,7 +32,7 @@ class Thread extends AppModel
 
     /*
     *Get all threads from the database
-    *@param $limit_query
+    *@param $limit
     */
     public static function getAll($limit)
     {
@@ -49,7 +49,7 @@ class Thread extends AppModel
 
     /*
     *Get all comments from a specific thread
-    *@param $limit_query
+    *@param $limit
     */
     public function getComments($limit)
     {
