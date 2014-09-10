@@ -9,9 +9,9 @@ class Pagination
     const MAX_PER_PAGE = 10;
     
     //  Get the current page
-    public static function setCurrentPage($row_length)
+    public static function getCurrentPage($row_length)
     {
-        $last_page = self::setLastPage($row_length);
+        $last_page = self::getLastPage($row_length);
         if (isset($_GET['pn'])) {
             self::$pagenum = preg_replace('#[^0-9]#', '', $_GET['pn']);
         }
@@ -22,7 +22,7 @@ class Pagination
     }
     
     //  Get the last page
-    public static function setLastPage($row_length)
+    public static function getLastPage($row_length)
     {
         self::$last_page = ceil($row_length/self::MAX_PER_PAGE);
         if (self::$last_page < 1) {
@@ -32,19 +32,19 @@ class Pagination
     }
     
     //  Get the number of items to be displayed per page
-    public static function setLimit($row_length)
+    public static function getLimit($row_length)
     {
-        $currpage = self::setCurrentPage($row_length);
+        $currpage = self::getCurrentPage($row_length);
         self::$limit = 'LIMIT '.($currpage - 1) * self::MAX_PER_PAGE .',' .self::MAX_PER_PAGE;
         return self::$limit;
     }
     
     //  Display the links
-    public static function setControls($row_length)
+    public static function getControls($row_length)
     {
-        $pagenum = self::setCurrentPage($row_length);
-        $last_page = self::setLastPage($row_length);
-        $limit = self::setLimit($row_length);
+        $pagenum = self::getCurrentPage($row_length);
+        $last_page = self::getLastPage($row_length);
+        $limit = self::getLimit($row_length);
         $page_url =& $url['pn'];
         $pageControls = '';
         if ($last_page != 1) {

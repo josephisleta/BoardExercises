@@ -2,7 +2,7 @@
 
 function encode($string)
 {
-    if (!($string)) return;
+    if (!$string) return;
     echo htmlspecialchars($string, ENT_QUOTES);
 }
 

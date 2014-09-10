@@ -55,14 +55,14 @@ class User extends AppModel
         
         if ($this->hasError()) {
             throw new ValidationException("invalid inputs");
-        } else {
-            $params = array(
-                'username' => $this->username,
-                'pword' => $this->password,
-                'name' => $this->name,
-                'email' => $this->email
-            );
         }
+        $params = array(
+            'username' => $this->username,
+            'pword' => $this->password,
+            'name' => $this->name,
+            'email' => $this->email
+        );
+        
         $db = DB::conn();
         $db->insert('user', $params);
     }

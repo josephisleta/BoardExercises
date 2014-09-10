@@ -1,13 +1,16 @@
 <?php
 class Thread extends AppModel
 {
+    const THREAD_MIN_LENGTH = 1;
+    const THREAD_MAX_LENGTH = 30;
+    
     public $id;
     public $title;
 
     public $validation = array(
         'title' => array(
             'length' => array(
-                'validate_between',1,30,
+                'validate_between', self::THREAD_MIN_LENGTH, self::THREAD_MAX_LENGTH,
             ),
         ),
     );
@@ -33,9 +36,9 @@ class Thread extends AppModel
     public static function getAll()
     {
         $threads = array();
-        $limit = Thread::countRowThread();
+        $limit = Thread::count();
         $limits = new Pagination();
-        $limit_query = $limits::setLimit($limit);
+        $limit_query = $limits::getLimit($limit);
         $db = DB::conn();
         $rows = $db->rows("SELECT * FROM thread ORDER BY created DESC $limit_query");
 
@@ -54,7 +57,7 @@ class Thread extends AppModel
 
         $limit = Thread::countRowComment($this->id);
         $limits = new Pagination();
-        $limit_query = $limits::setLimit($limit);
+        $limit_query = $limits::getLimit($limit);
 
         $db = DB::conn();
         $rows = $db->rows("SELECT * FROM comment WHERE thread_id = ? ORDER BY created ASC $limit_query",array($this->id));
@@ -116,17 +119,15 @@ class Thread extends AppModel
         $db->insert('comment', $params);
     }
 
-    public static function countRowThread()
+    public static function count()
     {
         $db = DB::conn();
-        $threadCount = $db->value("SELECT count(id) FROM thread");
-        return $threadCount;
+        return $db->value("SELECT count(id) FROM thread");
     }
 
     public static function countRowComment($id)
     {
         $db = DB::conn();
-        $commentCount = $db->value("SELECT count(id) FROM comment WHERE thread_id = ?",array($id));
-        return $commentCount;
+        return $db->value("SELECT count(id) FROM comment WHERE thread_id = ?",array($id));
     }
 }

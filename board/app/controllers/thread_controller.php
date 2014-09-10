@@ -7,9 +7,9 @@ class ThreadController extends AppController
             redirect(url('user/login'));
         }
 
-        $total_thread = Thread::countRowThread();
+        $total_thread = Thread::count();
         $page = new Pagination();
-        $pagination = $page::setControls($total_thread);
+        $pagination = $page::getControls($total_thread);
         $threads = Thread::getAll($pagination['maximum']);
         
         $this->set(get_defined_vars());
@@ -43,7 +43,6 @@ class ThreadController extends AppController
                 break;
             default:
                 throw new NotFoundException("{$page} is not found");
-                break;
         }
 
         $this->set(get_defined_vars());
@@ -62,7 +61,7 @@ class ThreadController extends AppController
         $thread = Thread::get(Param::get('thread_id'));
         $total_comment = Thread::countRowComment(Param::get('thread_id'));
         $page = new Pagination();
-        $pagination = $page::setControls($total_comment);
+        $pagination = $page::getControls($total_comment);
         $threads = Thread::getAll($pagination['maximum']);
         
         $comments = $thread->getComments();
