@@ -6,7 +6,7 @@ function validate_between($check, $min, $max)
     return $min <= $n && $n <= $max;
 }
 
-function match_password($password, $confirm_password)
+function is_match_password($password, $confirm_password)
 {
     return $password === $confirm_password;
 }

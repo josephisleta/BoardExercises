@@ -32,13 +32,12 @@ class Thread extends AppModel
 
     /*
     *Get all threads from the database
+    *@param $limit_query
     */
-    public static function getAll()
+    public static function getAll($limit_query)
     {
         $threads = array();
-        $limit = Thread::count();
-        $limits = new Pagination();
-        $limit_query = $limits::getLimit($limit);
+
         $db = DB::conn();
         $rows = $db->rows("SELECT * FROM thread ORDER BY created DESC $limit_query");
 
@@ -50,14 +49,11 @@ class Thread extends AppModel
 
     /*
     *Get all comments from a specific thread
+    *@param $limit_query
     */
-    public function getComments()
+    public function getComments($limit_query)
     {
         $comments = array();
-
-        $limit = Thread::countRowComment($this->id);
-        $limits = new Pagination();
-        $limit_query = $limits::getLimit($limit);
 
         $db = DB::conn();
         $rows = $db->rows("SELECT * FROM comment WHERE thread_id = ? ORDER BY created ASC $limit_query",array($this->id));
@@ -68,66 +64,9 @@ class Thread extends AppModel
         return $comments;
     }
 
-    /*
-    *Creates new thread
-    *Inserts first comment
-    *@param $comment
-    */
-    public function create(Comment $comment)
-    {
-        $params = array(
-            "username" => $comment->username,
-            "title" => $this->title,
-            "created" => date('Y-m-d H:i:s')
-        );
-        $db = DB::conn();
-        try {
-            $db->begin();
-
-            $this->validate();
-            $comment->validate();
-
-            if ($this->hasError() || $comment->hasError()) {
-                throw new ValidationException('invalid thread or comment');
-            }
-            $db->insert('thread', $params);
-            $this->id = $db->lastInsertId();
-            $this->write($comment);
-
-            $db->commit();
-        } catch (ValidationException $e) {
-            $db->rollback();
-            throw $e;
-        }
-    }
-
-    /*
-    *Inserts new comment on a thread
-    *@param $comment
-    */
-    public function write(Comment $comment)
-    {
-        $params = array(
-            "thread_id" => $this->id,
-            "username" => $comment->username,
-            "body" => $comment->body,
-        );
-        if (!$comment->validate()) {
-            throw new ValidationException('invalid comment');
-        }
-        $db = DB::conn();
-        $db->insert('comment', $params);
-    }
-
     public static function count()
     {
         $db = DB::conn();
         return $db->value("SELECT count(id) FROM thread");
-    }
-
-    public static function countRowComment($id)
-    {
-        $db = DB::conn();
-        return $db->value("SELECT count(id) FROM comment WHERE thread_id = ?",array($id));
     }
 }

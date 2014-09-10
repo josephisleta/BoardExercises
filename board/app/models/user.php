@@ -23,7 +23,7 @@ class User extends AppModel
 
         'confirm_password' => array(
             'match' => array(
-                'match_password',
+                'is_match_password',
             ),
         ),
         

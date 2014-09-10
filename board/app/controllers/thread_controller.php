@@ -8,10 +8,12 @@ class ThreadController extends AppController
         }
 
         $total_thread = Thread::count();
+
         $page = new Pagination();
         $pagination = $page::getControls($total_thread);
+        $limit_query = $page::getLimit($total_thread);
         $threads = Thread::getAll($pagination['maximum']);
-        
+
         $this->set(get_defined_vars());
     }
     
@@ -36,7 +38,7 @@ class ThreadController extends AppController
                 $comment->username = Param::get('username');
                 $comment->body = Param::get('body');
                 try {
-                    $thread->create($comment);
+                    $comment->create($thread, $comment);
                 } catch (ValidationException $e) {
                     $page = 'create';
                 }
@@ -59,12 +61,16 @@ class ThreadController extends AppController
         }
 
         $thread = Thread::get(Param::get('thread_id'));
-        $total_comment = Thread::countRowComment(Param::get('thread_id'));
+
+        $limit = Comment::countThreadComments($thread->id);//
+
         $page = new Pagination();
-        $pagination = $page::getControls($total_comment);
+        $pagination = $page::getControls($limit);
         $threads = Thread::getAll($pagination['maximum']);
+
+        $limit_query = $page::getLimit($limit);//
         
-        $comments = $thread->getComments();
+        $comments = $thread->getComments($limit_query);
         $this->set(get_defined_vars());
     }
 
@@ -88,7 +94,7 @@ class ThreadController extends AppController
                 $comment->username = Param::get('username');
                 $comment->body = Param::get('body');
                 try {
-                    $thread->write($comment);
+                    $comment->write($thread, $comment);
                 } catch (ValidationException $e) {
                     $page = 'write';
                 }
