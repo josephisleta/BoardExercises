@@ -35,7 +35,7 @@ class Pagination
     public static function getLimit($row_length)
     {
         $currpage = self::getCurrentPage($row_length);
-        self::$limit = 'LIMIT '.($currpage - 1) * self::MAX_PER_PAGE .',' .self::MAX_PER_PAGE;
+        self::$limit = ($currpage - 1) * self::MAX_PER_PAGE .',' .self::MAX_PER_PAGE;
         return self::$limit;
     }
     
