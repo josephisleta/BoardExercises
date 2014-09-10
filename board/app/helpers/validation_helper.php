@@ -11,12 +11,12 @@ function is_match_password($password, $confirm_password)
     return $password === $confirm_password;
 }
 
-function letters_only($name)
+function is_letters_only($name)
 {
     return ctype_alpha($name);
 }
 
-function email_valid($email)
+function is_email_valid($email)
 {
     return filter_var($email, FILTER_VALIDATE_EMAIL);
 }

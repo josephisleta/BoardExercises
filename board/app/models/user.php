@@ -29,13 +29,13 @@ class User extends AppModel
         
         'name' => array (
             'format' => array(
-                'letters_only',
+                'is_letters_only',
             ),
         ),
         
         'email' => array(
             'format' => array(
-                'email_valid',
+                'is_email_valid',
             ),
         ),
     );
