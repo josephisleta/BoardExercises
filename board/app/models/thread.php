@@ -10,19 +10,19 @@ class Thread extends AppModel
     public $validation = array(
         'title' => array(
             'length' => array(
-                'validate_between', self::MIN_THREAD_LENGTH, self::MAX_THREAD_LENGTH,
+                'validate_between', self::MIN_THREAD_LENGTH, self::MAX_THREAD_LENGTH
             ),
         ),
     );
 
     /*
     *Get fields from a single thread
-    *@param $id
+    *@param $thread_id
     */
-    public static function get($id)
+    public static function get($thread_id)
     {
         $db = DB::conn();
-        $row = $db->row('SELECT * FROM thread WHERE id = ?', array($id));
+        $row = $db->row('SELECT * FROM thread WHERE id = ?', array($thread_id));
 
         if (!$row) {
             throw new RecordNotFoundException('no record found');
@@ -64,7 +64,7 @@ class Thread extends AppModel
         return $comments;
     }
 
-    public static function count()
+    public static function countThread()
     {
         $db = DB::conn();
         return $db->value("SELECT count(id) FROM thread");

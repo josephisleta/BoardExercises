@@ -4,29 +4,29 @@
 	<div class="alert alert-block">
 		<h4 class="alert-heading">Validation error!</h4>
 
-		<?php if (!empty($user->validation_errors['username']['length'])): ?>
+		<?php if ($user->validation_errors['username']['length']): ?>
 			<div><em>Username</em> must be between
 				<?php encode($user->validation['username']['length'][1]) ?> and
 				<?php encode($user->validation['username']['length'][2]) ?> characters in length.
 			</div>
 		<?php endif ?>
 		
-		<?php if (!empty($user->validation_errors['password']['length'])): ?>
+		<?php if ($user->validation_errors['password']['length']): ?>
 			<div><em>Password</em> must be between
 				<?php encode($user->validation['password']['length'][1]) ?> and
 				<?php encode($user->validation['password']['length'][2]) ?> characters in length.
 			</div>
 		<?php endif ?>
 
-		<?php if (!empty($user->validation_errors['confirm_password']['match'])): ?>
+		<?php if ($user->validation_errors['confirm_password']['match']): ?>
 			<div><em>Passwords</em> do not match.</div>
 		<?php endif ?>
 
-		<?php if (!empty($user->validation_errors['name']['format'])): ?>
+		<?php if ($user->validation_errors['name']['format']): ?>
 			<div><em>Name</em> must contain letters only.</div>
 		<?php endif ?>
 
-		<?php if (!empty($user->validation_errors['email']['format'])): ?>
+		<?php if ($user->validation_errors['email']['format']): ?>
 			<div>Invalid <em>email address</em>.</div>
 		<?php endif ?>
 

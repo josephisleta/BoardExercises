@@ -6,7 +6,7 @@ class Comment extends AppModel
 
     public $validation = array(
         'body' => array(
-            'length' => array('validate_between', self::MIN_COMMENT_LENGTH, self::MAX_COMMENT_LENGTH,),
+            'length' => array('validate_between', self::MIN_COMMENT_LENGTH, self::MAX_COMMENT_LENGTH),
         ),      
     );
 
@@ -19,8 +19,7 @@ class Comment extends AppModel
     {
         $params = array(
             "username" => $this->username,
-            "title" => $thread->title,
-            "created" => date('Y-m-d H:i:s')
+            "title" => $thread->title
         );
         $db = DB::conn();
         try {
@@ -52,7 +51,7 @@ class Comment extends AppModel
         $params = array(
             "thread_id" => $thread->id,
             "username" => $this->username,
-            "body" => $this->body,
+            "body" => $this->body
         );
         if (!$this->validate()) {
             throw new ValidationException('invalid comment');
@@ -61,9 +60,9 @@ class Comment extends AppModel
         $db->insert('comment', $params);
     }
 
-    public static function countThreadComments($id)
+    public static function countThreadComments($thread_id)
     {
         $db = DB::conn();
-        return $db->value("SELECT count(id) FROM comment WHERE thread_id = ?",array($id));
+        return $db->value("SELECT count(id) FROM comment WHERE thread_id = ?",array($thread_id));
     }
 }

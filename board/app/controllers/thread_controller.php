@@ -7,7 +7,7 @@ class ThreadController extends AppController
             redirect(url('user/login'));
         }
 
-        $pagination = Pagination::getControls(Thread::count());
+        $pagination = Pagination::getControls(Thread::countThread());
         $threads = Thread::getAll($pagination['maximum']);
 
         $this->set(get_defined_vars());

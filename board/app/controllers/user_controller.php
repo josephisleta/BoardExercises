@@ -23,7 +23,7 @@ class UserController extends AppController
                 $user->email = Param::get('email');
                 
                 try {
-                    $user->register($user);
+                    $user->register();
                 } catch (ValidationException $e) {
                     $page = 'register';
                 }
@@ -54,7 +54,7 @@ class UserController extends AppController
                 $user->username = Param::get('username');
                 $user->password = Param::get('password');
                 try {
-                    $account = $user->authenticate($user->username, $user->password);
+                    $account = $user->authenticate();
                     $_SESSION['id'] = $account['id'];
                     $_SESSION['username'] = $account['username'];
                     $_SESSION['name'] = $account['name'];

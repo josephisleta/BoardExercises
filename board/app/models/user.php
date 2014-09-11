@@ -11,45 +11,41 @@ class User extends AppModel
     public $validation = array(
         'username' => array(
             'length' => array(
-                'validate_between', self::MIN_USERNAME_LENGTH, self::MAX_USERNAME_LENGTH,
+                'validate_between', self::MIN_USERNAME_LENGTH, self::MAX_USERNAME_LENGTH
             ),
         ),
         
         'password' => array(
             'length' => array(
-                'validate_between', self::MIN_PASSWORD_LENGTH, self::MAX_PASSWORD_LENGTH,
+                'validate_between', self::MIN_PASSWORD_LENGTH, self::MAX_PASSWORD_LENGTH
             ),
         ),
 
         'confirm_password' => array(
             'match' => array(
-                'is_match_password',
+                'is_match_password'
             ),
         ),
         
         'name' => array (
             'format' => array(
-                'is_letters_only',
+                'is_letters_only'
             ),
         ),
         
         'email' => array(
             'format' => array(
-                'is_email_valid',
+                'is_email_valid'
             ),
         ),
     );
 
     /*
     *Creates new user
-    *@param $user
     */
-    public function register($user)
+    public function register()
     {
-        $this->validation['confirm_password']['match'][] = $this->password;
-        $this->validation['confirm_password']['match'][] = $this->confirm_password;
-        $this->validation['name']['format'][] = $this->name;
-        $this->validation['email']['format'][] = $this->email;
+        $this->validation['confirm_password']['match'][1] = $this->password;
         
         $this->validate();
         
@@ -69,13 +65,12 @@ class User extends AppModel
     
     /*
     *Authenticates username and password
-    *@param $username, $password
     */
-    public function authenticate($username, $password)
+    public function authenticate()
     {
         $query = "SELECT id, username, name FROM user WHERE username = ? AND pword = ?";
         $db = DB::conn();
-        $row = $db->row($query, array($username, $password));
+        $row = $db->row($query, array($this->username, $this->password));
         if (!$row) {
             $this->is_failed_login = true;
             throw new UserNotFoundException('user not found');
