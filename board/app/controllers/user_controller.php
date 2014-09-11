@@ -30,7 +30,6 @@ class UserController extends AppController
                 break;
             default:
                 throw new PageNotFoundException("{$page} not found");
-                break;
         }
         $this->set(get_defined_vars());
         $this->render($page);

@@ -17,7 +17,7 @@ class ThreadController extends AppController
     *Creates a new thread
     */
     public function create()
-    {
+    {   
         if (!is_logged_in()) {
             redirect(url('user/login'));
         }
@@ -91,7 +91,6 @@ class ThreadController extends AppController
                 break;
             default:
                 throw new NotFoundException("{$page} is not found");
-                break;
         }
 
         $this->set(get_defined_vars());

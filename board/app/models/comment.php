@@ -7,7 +7,7 @@ class Comment extends AppModel
     public $validation = array(
         'body' => array(
             'length' => array('validate_between', self::MIN_COMMENT_LENGTH, self::MAX_COMMENT_LENGTH),
-        ),      
+        ),
     );
 
     /*
