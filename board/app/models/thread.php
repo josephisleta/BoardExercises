@@ -63,6 +63,38 @@ class Thread extends AppModel
         }
         return $comments;
     }
+    
+    /*
+    *Creates new thread
+    *Inserts first comment
+    *@param $comment
+    */
+    public function createThread($comment)
+    {
+        $params = array(
+            "username" => $comment->username,
+            "title" => $this->title
+        );
+        $db = DB::conn();
+        try {
+            $db->begin();
+
+            $this->validate();
+            $comment->validate();
+
+            if ($this->hasError() || $comment->hasError()) {
+                throw new ValidationException('invalid thread or comment');
+            }
+            $db->insert('thread', $params);
+            $this->id = $db->lastInsertId();
+            $comment->createComment($this);
+
+            $db->commit();
+        } catch (ValidationException $e) {
+            $db->rollback();
+            throw $e;
+        }
+    }
 
     public static function countThread()
     {

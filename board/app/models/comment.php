@@ -11,42 +11,10 @@ class Comment extends AppModel
     );
 
     /*
-    *Creates new thread
-    *Inserts first comment
-    *@param $thread
-    */
-    public function create($thread)
-    {
-        $params = array(
-            "username" => $this->username,
-            "title" => $thread->title
-        );
-        $db = DB::conn();
-        try {
-            $db->begin();
-
-            $thread->validate();
-            $this->validate();
-
-            if ($thread->hasError() || $this->hasError()) {
-                throw new ValidationException('invalid thread or comment');
-            }
-            $db->insert('thread', $params);
-            $thread->id = $db->lastInsertId();
-            $this->write($thread);
-
-            $db->commit();
-        } catch (ValidationException $e) {
-            $db->rollback();
-            throw $e;
-        }
-    }
-
-    /*
     *Inserts new comment on a thread
     *@param $thread
     */
-    public function write($thread)
+    public function createComment($thread)
     {
         $params = array(
             "thread_id" => $thread->id,
@@ -63,6 +31,6 @@ class Comment extends AppModel
     public static function countThreadComments($thread_id)
     {
         $db = DB::conn();
-        return $db->value("SELECT count(id) FROM comment WHERE thread_id = ?",array($thread_id));
+        return $db->value("SELECT count(id) FROM comment WHERE thread_id = ?", array($thread_id));
     }
 }
