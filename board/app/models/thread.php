@@ -4,9 +4,6 @@ class Thread extends AppModel
     const MIN_THREAD_LENGTH = 1;
     const MAX_THREAD_LENGTH = 30;
     
-    public $id;
-    public $title;
-
     public $validation = array(
         'title' => array(
             'length' => array(
