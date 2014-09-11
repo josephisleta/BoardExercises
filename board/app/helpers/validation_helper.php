@@ -23,10 +23,7 @@ function is_email_valid($email)
 
 function is_logged_in()
 {
-    if (!isset($_SESSION['username'])) {
-        return false;
-    }
-    return true;
+    return isset($_SESSION['username']);
 }
 
 function redirect($url)
