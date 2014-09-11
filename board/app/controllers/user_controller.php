@@ -71,9 +71,11 @@ class UserController extends AppController
 
     /*
     *Destroys the session of the user
+    *Redirects to login page
     */
     public function logout()
     {
         session_destroy();
+        redirect(url('user/login'));
     }
 }
