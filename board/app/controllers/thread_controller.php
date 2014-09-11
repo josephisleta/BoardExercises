@@ -34,7 +34,7 @@ class ThreadController extends AppController
                 $comment->username = Param::get('username');
                 $comment->body = Param::get('body');
                 try {
-                    $thread->createThread($comment);
+                    $thread->create($comment);
                 } catch (ValidationException $e) {
                     $page = 'create';
                 }
@@ -84,7 +84,7 @@ class ThreadController extends AppController
                 $comment->username = Param::get('username');
                 $comment->body = Param::get('body');
                 try {
-                    $comment->createComment($thread);
+                    $comment->write($thread);
                 } catch (ValidationException $e) {
                     $page = 'write';
                 }

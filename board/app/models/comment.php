@@ -14,7 +14,7 @@ class Comment extends AppModel
     *Inserts new comment on a thread
     *@param $thread
     */
-    public function createComment($thread)
+    public function write($thread)
     {
         $params = array(
             "thread_id" => $thread->id,

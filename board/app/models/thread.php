@@ -69,7 +69,7 @@ class Thread extends AppModel
     *Inserts first comment
     *@param $comment
     */
-    public function createThread($comment)
+    public function create($comment)
     {
         $params = array(
             "username" => $comment->username,
@@ -87,7 +87,7 @@ class Thread extends AppModel
             }
             $db->insert('thread', $params);
             $this->id = $db->lastInsertId();
-            $comment->createComment($this);
+            $comment->write($this);
 
             $db->commit();
         } catch (ValidationException $e) {
