@@ -1,7 +1,7 @@
 <table style="width: 100%;">
 <tr>
 	<td>
-		<a class='btn btn-primary' href="<?php encode(url('thread/index'))?>">Back to home</a>
+		<a href="<?php encode(url('thread/view',array('thread_id' => $id))) ?>">&larr; Back to thread</a>
 	</td>
 	<td style="text-align:right;">
 		<p><em>You are logged in as :</em>
@@ -12,7 +12,9 @@
 	</td>
 </tr>
 </table>
-<h1>Congratulations!</h1>
+
+<h2><?php encode($title) ?></h2>
+
 <p class="alert alert-success">
-Your account was successfully updated.
+	You successfully renamed this thread.
 </p>

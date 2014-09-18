@@ -13,22 +13,17 @@
 </tr>
 </table>
 
-
 <div style="background-color:#E0FFFF;">
-	<table class="table" style="width: 100%;">
-		<tr >
-			<td style="text-align:left; font-size:36px; padding:20px;"><?php encode($thread->title) ?></td>
-		<td style="text-align:right;">
-		<?php if($_SESSION['username'] === $thread->username): ?>
-		    <a class="btn" href="<?php encode(url('thread/rename', array('thread_id' => $thread->id))) ?>">
-			<i class="icon-pencil"></i></a>
-
-		    <a class="btn btn-danger" href="<?php encode(url('thread/delete', array('thread_id' => $thread->id))) ?>">
-			<i class="icon-trash"></i></a>
-		<?php endif?>
-		</td>
-		</tr>
-
+	<form method="POST" action="<?php encode(url('thread/rename')) ?>">
+		<h4>
+			New Thread Name: <input type="text" class="span2" value="<?php encode($thread->title) ?>" name='title'></input>
+			<input type="hidden" name="thread_id" value="<?php encode($thread->id) ?>">
+			<input type="submit" class="btn btn-danger" value="Save" name='rename'></input>
+			<a class="btn btn-default" href="<?php encode(url('thread/view', array('thread_id' => $thread->id))) ?>">Cancel</a>
+		</h4>
+	</form>
+	
+	<table class="table">
 		<?php foreach ($comments as $k => $v): ?>
 		<div class="comment">
 			<tr style="background-color: #D3D3D3;">
@@ -44,8 +39,6 @@
 	<div style="float:right;">
 		<?php echo $pagination['control'];?>
 	</div>
-
-	
 	<hr>
 	
 	<form class="well" method="POST" action="<?php encode(url('thread/write')) ?>">

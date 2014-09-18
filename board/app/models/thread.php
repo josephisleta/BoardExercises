@@ -104,6 +104,24 @@ class Thread extends AppModel
         }
     }
 
+    /**
+    *Delete thread
+    */
+    public static function deleteThread($thread_id)
+    {
+        $db = DB::conn();
+        $db->query('DELETE FROM thread WHERE id = ?', array($thread_id));
+    }
+
+    /**
+    *Rename thread
+    */
+    public static function renameThread($id, $title)
+    {
+        $db = DB::conn();
+        $db->update('thread', array('title' => $title), array('id' => $id));
+    }
+
     public static function countThread()
     {
         $db = DB::conn();

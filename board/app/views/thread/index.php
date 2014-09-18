@@ -1,14 +1,18 @@
-<div style="float:right;">
-	<p><em>You are logged in as :</em>
-		<?php encode($_SESSION['username'])?>
-		<a class="btn btn-mini" href="<?php encode(url('user/profile')) ?>">Profile</a>
-		<a class="btn btn-mini btn-danger" href="<?php encode(url('user/logout')) ?>">Logout</a>
-	</p>
-</div>
+<table style="width: 100%;">
+<tr>
+	<td>
+		<a class="btn btn-large" href="<?php encode(url('thread/create')) ?>"><em>Create new thread?</em></a>
+	</td>
+	<td style="text-align:right;">
+		<p><em>You are logged in as :</em>
+			<?php encode($_SESSION['username'])?>
+			<a class="btn btn-mini" href="<?php encode(url('user/profile')) ?>">Profile</a>
+			<a class="btn btn-mini btn-danger" href="<?php encode(url('user/logout')) ?>">Logout</a>
+		</p>
+	</td>
+</tr>
+</table>
 
-<div>
-	<a class="btn btn-large" href="<?php encode(url('thread/create')) ?>"><em>Create new thread?</em></a>
-</div>
 <hr>
 
 <div style="height:450px; background-color:#E0FFFF;">

@@ -103,4 +103,46 @@ class ThreadController extends AppController
         $this->set(get_defined_vars());
         $this->render($page);
     }
+
+    /**
+    *Delete thread
+    */
+    public function delete()
+    {
+        $thread = Thread::get(Param::get('thread_id'));
+        $limit = Comment::countThreadComments($thread->id);
+        $pagination = Pagination::getControls($limit);
+
+        $comments = $thread->getComments($pagination['maximum']);
+        
+        if (isset($_POST['delete'])) {
+            Thread::deleteThread($thread->id);
+            $this->render('thread/delete_end');
+        }
+
+        $this->set(get_defined_vars());
+    }
+
+    /**
+    *Rename thread
+    */
+    public function rename()
+    {
+        $thread = Thread::get(Param::get('thread_id'));
+        $limit = Comment::countThreadComments($thread->id);
+        $pagination = Pagination::getControls($limit);
+
+        $comments = $thread->getComments($pagination['maximum']);
+        
+        if (isset($_POST['rename'])) {
+            $id = Param::get('thread_id');
+            $title = Param::get('title');
+            Thread::renameThread($id, $title);
+
+            $this->set(get_defined_vars());
+            $this->render('thread/rename_end');
+        }
+
+        $this->set(get_defined_vars());
+    }
 }
