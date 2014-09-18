@@ -104,7 +104,7 @@ class Thread extends AppModel
         }
     }
 
-    /**
+    /*
     *Delete thread
     */
     public static function deleteThread($thread_id)
@@ -113,7 +113,7 @@ class Thread extends AppModel
         $db->query('DELETE FROM thread WHERE id = ?', array($thread_id));
     }
 
-    /**
+    /*
     *Rename thread
     */
     public static function renameThread($id, $title)

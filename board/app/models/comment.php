@@ -39,6 +39,56 @@ class Comment extends AppModel
         }
     }
 
+    /*
+    *Edit a comment
+    *@param $id
+    */
+    public function edit($id)
+    {
+        if (!$this->validate()) {
+            throw new ValidationException('invalid comment');
+        }
+
+        $params = array(
+            'body' => $this->body,
+            'updated' => date('Y-m-d H:i:s')
+        );
+
+        $where_params = array(
+            'id' => $this->id,
+            'thread_id' => $this->thread_id,
+            'user_id' => $this->user_id
+        );
+
+        $db = DB::conn();
+        $db->update('comment', $params, $where_params);
+    }
+
+    /*
+    *Delete a comment
+    *@param $id
+    */
+    public function delete($id)
+    {
+        $db = DB::conn();
+        $db->query("DELETE FROM comment WHERE id = ?", array($id));
+    }
+
+    /*
+    *Get fields of a single comment
+    *@param $id
+    */
+    public static function get($id)
+    {
+        $query = "SELECT comment.id, comment.user_id, comment.thread_id, user.username, comment.body, comment.created FROM comment
+                  INNER JOIN user ON comment.user_id = user.id WHERE comment.id = ?";
+
+        $db = DB::conn();
+        $row = $db->row($query, array($id));
+        
+        return ($row) ? new self($row) : null;
+    }
+
     public static function countThreadComments($thread_id)
     {
         $db = DB::conn();

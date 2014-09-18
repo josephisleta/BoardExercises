@@ -97,12 +97,12 @@ class UserController extends AppController
                     $_SESSION['id'] = $account['id'];
                     $_SESSION['username'] = $account['username'];
                     $_SESSION['name'] = $account['name'];
-                } catch (ValidationException $e) {
+                } catch (UserNotFoundException $e) {
                     $page = 'profile';
                 }
                 break;
             default:
-                throw new PageNotFoundException("{$page} not found");
+                throw new UserNotFoundException("{$page} not found");
         }
         $this->set(get_defined_vars());
         $this->render($page);

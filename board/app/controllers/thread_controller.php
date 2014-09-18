@@ -104,7 +104,7 @@ class ThreadController extends AppController
         $this->render($page);
     }
 
-    /**
+    /*
     *Delete thread
     */
     public function delete()
@@ -123,7 +123,7 @@ class ThreadController extends AppController
         $this->set(get_defined_vars());
     }
 
-    /**
+    /*
     *Rename thread
     */
     public function rename()
@@ -144,5 +144,47 @@ class ThreadController extends AppController
         }
 
         $this->set(get_defined_vars());
+    }
+
+    /*
+    *Edit comment
+    */
+    public function edit_comment()
+    {
+        $comment = new Comment;
+        $comment = Comment::get(Param::get('comment_id'));
+        $thread = Thread::get(Param::get('thread_id'));
+
+        if (isset($_POST['edit'])) {   
+            $comment->body = Param::get('body');
+            $comment->edit($thread->id);
+        }
+
+        $this->set(get_defined_vars());
+    }
+
+    /*
+    *Delete comment
+    */
+    public function delete_comment()
+    {
+        $comment = new Comment;
+        $comment = Comment::get(Param::get('comment_id'));
+        $thread = Thread::get(Param::get('thread_id'));
+
+        $limit = Comment::countThreadComments($thread->id);
+        $pagination = Pagination::getControls($limit);
+
+        $comments = $thread->getComments($pagination['maximum']);
+        
+        if (isset($_POST['delete'])) {
+            $comment->delete($comment->id);
+            $thread_id = $comment->thread_id;
+            
+            $this->set(get_defined_vars()); 
+            $this->render('thread/delete_comment_end');
+        }
+
+        $this->set(get_defined_vars()); 
     }
 }

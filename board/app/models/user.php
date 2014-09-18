@@ -105,6 +105,7 @@ class User extends AppModel
         if ($this->hasError()) {
             throw new ValidationException("invalid inputs");
         }
+        
         $params = array(
             'username' => $this->username,
             'password' => $this->password,

@@ -14,26 +14,40 @@
 </table>
 
 <div style="background-color:#E0FFFF;">
-	<form method="POST" action="<?php encode(url('thread/rename')) ?>">
-		<h4>
-			New Thread Name: <input type="text" class="span2" value="<?php encode($thread->title) ?>" name='title'></input>
-			<input type="hidden" name="thread_id" value="<?php encode($thread->id) ?>">
-			<input type="submit" class="btn btn-danger" value="Save" name='rename'></input>
-			<a class="btn btn-default" href="<?php encode(url('thread/view', array('thread_id' => $thread->id))) ?>">Cancel</a>
-		</h4>
-	</form>
 	
-	<table class="table">
+	<table class="table" style="width: 100%;">
+		<tr >
+			<form method="POST" action="<?php encode(url('thread/rename')) ?>">
+				<h4 style="text-align:left; font-size:21px; font-weight: bold;">
+					New Thread Name: <input type="text" class="span2" value="<?php encode($thread->title) ?>" name='title'></input>
+					<input type="hidden" name="thread_id" value="<?php encode($thread->id) ?>">
+					<input type="submit" class="btn btn-danger" value="Save" name='rename'></input>
+					<a class="btn btn-default" href="<?php encode(url('thread/view', array('thread_id' => $thread->id))) ?>">Cancel</a>
+				</h4>
+			</form>
+		</tr>
+
 		<?php foreach ($comments as $k => $v): ?>
-		<div class="comment">
-			<tr style="background-color: #D3D3D3;">
-				<td><div class="meta" style="text-align:left; font-size:21px; "><?php encode($v->username) ?></td>
-				<td style="text-align:right; font-size:12px"><?php encode($v->created) ?></div></td>
-			</tr>
-			<tr>
-				<td colspan=2 style="height:100px;"><?php echo readable_text($v->body) ?></td>
-			</tr>
-		</div>
+			<div class="comment">
+				<tr style="background-color: #D3D3D3;">
+					<td>
+						<div class="meta" style="text-align:left; font-size:21px; font-weight: bold;"><?php encode($v->username) ?></div>
+						<div style="text-align:left; font-size:12px"><?php encode($v->created) ?></div>
+					</td>
+					<td style="text-align:right;">
+						<?php if($_SESSION['username'] === $v->username): ?>
+							    <a class="btn btn-mini" href="<?php encode(url('thread/edit_comment', array('thread_id' => $thread->id))) ?>">
+								<i class="icon-pencil"></i></a>
+
+							    <a class="btn btn-mini btn-danger" href="<?php encode(url('thread/delete_comment', array('thread_id' => $thread->id))) ?>">
+								<i class="icon-trash"></i></a>
+						<?php endif?>
+					</td>
+				</tr>
+				<tr>
+					<td colspan=2 style="height:100px;"><?php echo readable_text($v->body) ?></td>
+				</tr>
+			</div>
 		<?php endforeach ?>
 	</table>
 	<div style="float:right;">
