@@ -18,25 +18,14 @@ class Comment extends AppModel
     {
         $params = array(
             "thread_id" => $thread->id,
-            "user_id" => $this->user_id,
+            "username" => $this->username,
             "body" => $this->body
         );
-        $db = DB::conn();
-
-        try {
-            $db->begin();
-
-            if (!$this->validate()) {
-                throw new ValidationException('invalid comment');
-            }
-            $db->insert('comment', $params);
-            $db->update('thread', array('updated' => date('Y-m-d H:i:s')), array('id' => $thread->id));
-
-            $db->commit();
-        } catch (ValidationException $e) {
-            $db->rollback();
-            throw $e;
+        if (!$this->validate()) {
+            throw new ValidationException('invalid comment');
         }
+        $db = DB::conn();
+        $db->insert('comment', $params);
     }
 
     public static function countThreadComments($thread_id)

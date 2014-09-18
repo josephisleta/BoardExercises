@@ -11,29 +11,17 @@
 <hr>
 
 <div style="height:450px; background-color:#E0FFFF;">
-	
-
 	<table class="table">
-		<th style="width:600px;">Topic</th>
-		<th style="width:150px;">Replies</th>
-		<th style="width:150px;">Views</th>
+		<th style="width:600px;">Title</th>
 		<th style="width:150px;">Created by</th>
 		<th style="width:150px;">Date Created</th>
-		<th style="width:150px;">Date Updated</th>
-		<?php for($i=0 ; $i<count($count) ; $i++): ?>
-			<?php $count[$i] ?>
-		<?php endfor ?>
-		
-		<?php for($i=0 ; $i<count($threads) ; $i++): ?>
+		<?php foreach ($threads as $v): ?>
 			<tr>
-				<td><a href="<?php encode(url('thread/view',array('thread_id' => $threads[$i]->id)))?>"><?php encode($threads[$i]->title) ?></a></td>
-				<td><?php encode($count[$i]) ?></td>
-				<td><?php encode($threads[$i]->view) ?></td>
-				<td><?php encode($threads[$i]->username) ?></td>
-				<td><?php encode(date('M d, Y h:mA', strtotime($threads[$i]->created))) ?></td>
-				<td><?php encode(date('M d, Y h:mA', strtotime($threads[$i]->updated))) ?></td>
+				<td><a href="<?php encode(url('thread/view',array('thread_id' => $v->id)))?>"><?php encode($v->title) ?></a></td>
+				<td><?php encode($v->username) ?></td>
+				<td><?php encode($v->created) ?></td>
 			</tr>
-		<?php endfor ?>
+		<?php endforeach ?>
 	</table>
 </div>
 

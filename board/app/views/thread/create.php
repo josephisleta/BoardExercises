@@ -21,6 +21,13 @@
 		</div>
 	<?php endif ?>
 	
+	<?php if (!empty($comment->validation_errors['username']['length'])): ?>
+		<div><em>Your name</em> must be between
+			<?php encode($comment->validation['username']['length'][1]) ?> and
+			<?php encode($comment->validation['username']['length'][2]) ?> characters in length.
+		</div>
+	<?php endif ?>
+	
 	<?php if (!empty($comment->validation_errors['body']['length'])): ?>
 		<div><em>Comment</em> must be between
 			<?php encode($comment->validation['body']['length'][1]) ?> and
@@ -38,6 +45,7 @@
 	<textarea name="body" required><?php encode(Param::get('body')) ?></textarea>
 	<br />
 
+	<input type="hidden" name="username" value="<?php encode($_SESSION['username']) ?>">
 	<input type="hidden" name="page_next" value="create_end">
 	<button type="submit" class="btn btn-primary">Submit</button>
 </form>
