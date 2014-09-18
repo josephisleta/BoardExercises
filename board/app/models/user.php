@@ -77,7 +77,60 @@ class User extends AppModel
         }
         return $row;
     }
+
+    /*
+    *Get fields from a user
+    *@param $user_id
+    */
+    public static function get($user_id)
+    {
+        $db = DB::conn();
+        $row = $db->row("SELECT id, username, name, email FROM user WHERE id = ?", array($user_id));
+
+        if (!$row) {
+            throw new RecordNotFoundException('no record found');
+        }
+        return new self($row);
+    }
     
+    /*
+    *Updates new user information
+    */
+    public function updateProfile()
+    {
+        $this->validation['confirm_password']['match'][1] = $this->password;
+        
+        $this->validate();
+        
+        if ($this->hasError()) {
+            throw new ValidationException("invalid inputs");
+        }
+        $params = array(
+            'username' => $this->username,
+            'password' => $this->password,
+            'name' => $this->name,
+            'email' => $this->email
+        );
+        
+        $db = DB::conn();
+        $db->update('user', $params, array('id' => $_SESSION['id']));
+    }
+
+    /*
+    *Gets new updated information for session
+    *@param $user_id
+    */
+    public function updateSession($user_id)
+    {
+        $db = DB::conn();
+        $row = $db->row("SELECT id, username, name FROM user WHERE id = ?", array($user_id));
+
+        if (!$row) {
+            throw new RecordNotFoundException('no record found');
+        }
+        return $row;
+    }
+
     public function isFailedLogin()
     {
         return $this->is_failed_login;

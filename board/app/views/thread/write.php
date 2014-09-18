@@ -1,6 +1,7 @@
 <div style="float:right;">
 	<p><em>You are logged in as :</em>
 		<?php encode($_SESSION['username'])?>
+		<a class="btn btn-mini" href="<?php encode(url('user/profile')) ?>">Profile</a>
 		<a class="btn btn-mini btn-danger" href="<?php encode(url('user/logout')) ?>">Logout</a>
 	</p>
 </div>

@@ -69,6 +69,46 @@ class UserController extends AppController
     }
 
     /*
+    *Edit user information
+    */
+    public function profile()
+    {
+        if (!is_logged_in()) {
+            redirect(url('user/login'));
+        }
+
+        $user = new User;
+        $user_info = User::get($_SESSION['id']);
+
+        $page = Param::get('page_next','profile');
+        switch ($page) {
+            case 'profile':
+                break;
+            case 'profile_end':
+                $user->username = trim(Param::get('username'));
+                $user->password = Param::get('password');
+                $user->confirm_password = Param::get('confirm_password');
+                $user->name = Param::get('name');
+                $user->email = Param::get('email');
+                
+                try {
+                    $user->updateProfile();
+                    $account = $user->updateSession($_SESSION['id']);
+                    $_SESSION['id'] = $account['id'];
+                    $_SESSION['username'] = $account['username'];
+                    $_SESSION['name'] = $account['name'];
+                } catch (ValidationException $e) {
+                    $page = 'profile';
+                }
+                break;
+            default:
+                throw new PageNotFoundException("{$page} not found");
+        }
+        $this->set(get_defined_vars());
+        $this->render($page);
+    }
+
+    /*
     *Destroys the session of the user
     *Redirects to login page
     */
