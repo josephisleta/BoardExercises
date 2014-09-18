@@ -1,7 +1,14 @@
 <?php
 
-function eh($string)
+function encode($string)
 {
-    if (!isset($string)) return;
+    if (!$string) return;
     echo htmlspecialchars($string, ENT_QUOTES);
+}
+
+function readable_text($s)
+{
+    $s = htmlspecialchars($s, ENT_QUOTES);
+    $s = nl2br($s);
+    return $s;
 }
