@@ -16,7 +16,7 @@ class UserController extends AppController
             case 'register':
                 break;
             case 'register_end':
-                $user->username = Param::get('username');
+                $user->username = trim(Param::get('username'));
                 $user->password = Param::get('password');
                 $user->confirm_password = Param::get('confirm_password');
                 $user->name = Param::get('name');

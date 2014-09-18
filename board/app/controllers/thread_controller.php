@@ -10,6 +10,12 @@ class ThreadController extends AppController
         $pagination = Pagination::getControls(Thread::countThread());
         $threads = Thread::getAll($pagination['maximum']);
 
+        $count = array();
+        foreach ($threads as $v){
+            $thread = Thread::get($v->id);
+            $count[] = Comment::countThreadComments($thread->id);
+        }
+
         $this->set(get_defined_vars());
     }
     
@@ -30,8 +36,8 @@ class ThreadController extends AppController
             case 'create':
                 break;
             case 'create_end':
-                $thread->title = Param::get('title');
-                $comment->username = Param::get('username');
+                $thread->title = trim(Param::get('title'));
+                $comment->user_id = $_SESSION['id'];
                 $comment->body = Param::get('body');
                 try {
                     $thread->create($comment);
@@ -59,7 +65,8 @@ class ThreadController extends AppController
         $thread = Thread::get(Param::get('thread_id'));
         $limit = Comment::countThreadComments($thread->id);
         $pagination = Pagination::getControls($limit);
-        
+        Thread::viewAdd($thread);
+
         $comments = $thread->getComments($pagination['maximum']);
         $this->set(get_defined_vars());
     }
@@ -81,7 +88,7 @@ class ThreadController extends AppController
             case 'write':
                 break;
             case 'write_end':
-                $comment->username = Param::get('username');
+                $comment->user_id = $_SESSION['id'];
                 $comment->body = Param::get('body');
                 try {
                     $comment->write($thread);

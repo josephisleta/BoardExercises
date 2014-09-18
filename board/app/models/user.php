@@ -54,7 +54,7 @@ class User extends AppModel
         }
         $params = array(
             'username' => $this->username,
-            'pword' => $this->password,
+            'password' => $this->password,
             'name' => $this->name,
             'email' => $this->email
         );
@@ -68,7 +68,7 @@ class User extends AppModel
     */
     public function authenticate()
     {
-        $query = "SELECT id, username, name FROM user WHERE username = ? AND pword = ?";
+        $query = "SELECT id, username, name FROM user WHERE username = ? AND password = ?";
         $db = DB::conn();
         $row = $db->row($query, array($this->username, $this->password));
         if (!$row) {
