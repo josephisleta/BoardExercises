@@ -136,4 +136,10 @@ class User extends AppModel
     {
         return $this->is_failed_login;
     }
+
+    public static function countUserPost($user_id)
+    {
+        $db = DB::conn();
+        return $db->value("SELECT count(id) FROM comment WHERE user_id = ?", array($user_id));
+    }
 }

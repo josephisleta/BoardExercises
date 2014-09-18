@@ -68,6 +68,13 @@ class ThreadController extends AppController
         Thread::viewAdd($thread);
 
         $comments = $thread->getComments($pagination['maximum']);
+
+        $count = array();
+        foreach ($comments as $v){
+            $count[] = User::countUserPost($v->user_id);
+        }
+
+
         $this->set(get_defined_vars());
     }
 
@@ -114,7 +121,12 @@ class ThreadController extends AppController
         $pagination = Pagination::getControls($limit);
 
         $comments = $thread->getComments($pagination['maximum']);
-        
+
+        $count = array();
+        foreach ($comments as $v){
+            $count[] = User::countUserPost($v->user_id);
+        }
+
         if (isset($_POST['delete'])) {
             Thread::deleteThread($thread->id);
             $this->render('thread/delete_end');
@@ -133,7 +145,12 @@ class ThreadController extends AppController
         $pagination = Pagination::getControls($limit);
 
         $comments = $thread->getComments($pagination['maximum']);
-        
+
+        $count = array();
+        foreach ($comments as $v){
+            $count[] = User::countUserPost($v->user_id);
+        }
+
         if (isset($_POST['rename'])) {
             $id = Param::get('thread_id');
             $title = Param::get('title');
@@ -176,6 +193,11 @@ class ThreadController extends AppController
         $pagination = Pagination::getControls($limit);
 
         $comments = $thread->getComments($pagination['maximum']);
+
+        $count = array();
+        foreach ($comments as $v){
+            $count[] = User::countUserPost($v->user_id);
+        }
         
         if (isset($_POST['delete'])) {
             $comment->delete($comment->id);

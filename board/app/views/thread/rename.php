@@ -27,28 +27,30 @@
 			</form>
 		</tr>
 
-		<?php foreach ($comments as $k => $v): ?>
+		<?php for($i=0 ; $i<count($comments) ; $i++): ?>
 			<div class="comment">
 				<tr style="background-color: #D3D3D3;">
-					<td>
-						<div class="meta" style="text-align:left; font-size:21px; font-weight: bold;"><?php encode($v->username) ?></div>
-						<div style="text-align:left; font-size:12px"><?php encode($v->created) ?></div>
+					<td rowspan=1 style="text-align:left; font-size:12px; width:120px;">
+						<div class="meta" style="text-align:left; font-size:21px; font-weight: bold;"><?php encode($comments[$i]->username) ?></div>
+						
 					</td>
-					<td style="text-align:right;">
-						<?php if($_SESSION['username'] === $v->username): ?>
-							    <a class="btn btn-mini" href="<?php encode(url('thread/edit_comment', array('thread_id' => $thread->id))) ?>">
+					<td><div style="text-align:left; font-size:10px"><?php encode($comments[$i]->created) ?></div></td>
+					<td colspan=2 style="text-align:right;">
+						<?php if($_SESSION['username'] === $comments[$i]->username): ?>
+							    <a class="btn btn-mini" href="<?php encode(url('thread/edit_comment', array('thread_id'=>$thread->id, 'comment_id'=>$comments[$i]->id))) ?>">
 								<i class="icon-pencil"></i></a>
 
-							    <a class="btn btn-mini btn-danger" href="<?php encode(url('thread/delete_comment', array('thread_id' => $thread->id))) ?>">
+							    <a class="btn btn-mini btn-danger" href="<?php encode(url('thread/delete_comment', array('thread_id'=>$thread->id, 'comment_id'=>$comments[$i]->id))) ?>">
 								<i class="icon-trash"></i></a>
 						<?php endif?>
 					</td>
 				</tr>
 				<tr>
-					<td colspan=2 style="height:100px;"><?php echo readable_text($v->body) ?></td>
+					<td><div style="text-align:left; font-size:12px;">Posts: <?php encode($count[$i]) ?></div></td>
+					<td colspan=2 style="height:100px;"><?php echo readable_text($comments[$i]->body) ?></td>
 				</tr>
 			</div>
-		<?php endforeach ?>
+		<?php endfor ?>
 	</table>
 	<div style="float:right;">
 		<?php echo $pagination['control'];?>
