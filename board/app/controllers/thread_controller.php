@@ -9,9 +9,19 @@ class ThreadController extends AppController
 
         $pagination = Pagination::getControls(Thread::countThread());
         $threads = Thread::getAll($pagination['maximum']);
+        $result = Thread::countThread();
 
+        $keyword = Param::get('keyword');
+        $filter = Param::get('filter');
+
+        if ($keyword) {
+            $threads = Thread::search($keyword, $filter, $pagination['maximum']);
+            $result = count($threads);
+            $pagination = Pagination::getControls($result);
+        }
+        
         $count = array();
-        foreach ($threads as $v){
+        foreach ($threads as $v) {
             $thread = Thread::get($v->id);
             $count[] = Comment::countThreadComments($thread->id);
         }

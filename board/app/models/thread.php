@@ -44,6 +44,7 @@ class Thread extends AppModel
         $db = DB::conn();
         $rows = $db->rows($query);
 
+        $threads = array();
         foreach ($rows as $row) {
             $threads[] = new self($row);
         }
@@ -106,6 +107,7 @@ class Thread extends AppModel
 
     /*
     *Delete thread
+    *@param $thread_id
     */
     public static function deleteThread($thread_id)
     {
@@ -115,11 +117,52 @@ class Thread extends AppModel
 
     /*
     *Rename thread
+    *@param $id, $title
     */
     public static function renameThread($id, $title)
     {
         $db = DB::conn();
         $db->update('thread', array('title' => $title), array('id' => $id));
+    }
+
+    /*
+    *Search threads
+    *@param $keyword, $filter, $limit
+    */
+    public static function search($keyword, $filter, $limit)
+    {
+        $like = "%$keyword%";
+        $params = array($like);
+
+        switch ($filter) {
+            case "title":
+                $where = "WHERE thread.title LIKE ?";
+                break;
+            case "author":
+                $where = "WHERE user.username LIKE ?";
+                break;
+            case "created":
+                $where = "WHERE thread.created LIKE ?";
+                break;
+            default:
+                $where = "WHERE thread.title LIKE ? OR user.username LIKE ? OR thread.created LIKE ?";
+                $params = array($like, $like, $like);
+                break;
+        }
+
+        $query = "SELECT thread.id, thread.title, user.username, thread.created, thread.updated, thread.view
+                  FROM thread INNER JOIN user ON thread.user_id = user.id {$where} 
+                  ORDER BY thread.updated DESC LIMIT {$limit}";
+
+        $db = DB::conn();
+        $rows = $db->rows($query, $params); 
+        
+        $threads = array();
+        foreach ($rows as $row) {
+            $threads[] = new self($row);
+        }
+
+        return $threads;
     }
 
     public static function countThread()
@@ -128,6 +171,10 @@ class Thread extends AppModel
         return $db->value("SELECT count(id) FROM thread");
     }
 
+    /*
+    *Add View Count
+    *@param $thread
+    */
     public static function viewAdd($thread)
     {
         $db = DB::conn();

@@ -1,17 +1,4 @@
-<table style="width: 100%;">
-<tr>
-	<td>
-		<a href="<?php encode(url('thread/index')) ?>">&larr; Back to home</a>
-	</td>
-	<td style="text-align:right;">
-		<p><em>You are logged in as :</em>
-			<?php encode($_SESSION['username'])?>
-			<a class="btn btn-mini" href="<?php encode(url('user/profile')) ?>">Profile</a>
-			<a class="btn btn-mini btn-danger" href="<?php encode(url('user/logout')) ?>">Logout</a>
-		</p>
-	</td>
-</tr>
-</table>
+<a href="<?php encode(url('thread/index')) ?>">&larr; Back to home</a>
 
 <div style="background-color:#E0FFFF;">
 	<table class="table" style="width: 100%;">
@@ -34,7 +21,6 @@
 				<tr style="background-color: #D3D3D3;">
 					<td rowspan=1 style="text-align:left; font-size:12px; width:120px;">
 						<div class="meta" style="text-align:left; font-size:21px; font-weight: bold;"><?php encode($comments[$i]->username) ?></div>
-						
 					</td>
 					<td><div style="text-align:left; font-size:10px"><?php encode($comments[$i]->created) ?></div></td>
 					<td colspan=2 style="text-align:right;">
