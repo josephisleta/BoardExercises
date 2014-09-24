@@ -6,18 +6,16 @@ class ThreadController extends AppController
         if (!is_logged_in()) {
             redirect(url('user/login'));
         }
-
-        $pagination = Pagination::getControls(Thread::countThread());
-        $threads = Thread::getAll($pagination['maximum']);
         $result = Thread::countThread();
-
+        $pagination = Pagination::getControls($result);
+        $threads = Thread::getAll($pagination['maximum']);
+        
         $keyword = Param::get('keyword');
         $filter = Param::get('filter');
 
         if ($keyword) {
             $threads = Thread::search($keyword, $filter, $pagination['maximum']);
             $result = count($threads);
-            $pagination = Pagination::getControls($result);
         }
         
         $count = array();
@@ -83,7 +81,7 @@ class ThreadController extends AppController
         $comments = $thread->getComments($pagination['maximum']);
 
         $count = array();
-        foreach ($comments as $v){
+        foreach ($comments as $v) {
             $count[] = User::countUserPost($v->user_id);
         }
 
@@ -180,13 +178,12 @@ class ThreadController extends AppController
     */
     public function edit_comment()
     {
-        $comment = new Comment;
         $comment = Comment::get(Param::get('comment_id'));
         $thread = Thread::get(Param::get('thread_id'));
 
         if (isset($_POST['edit'])) {   
             $comment->body = Param::get('body');
-            $comment->edit($thread->id);
+            $comment->edit();
         }
 
         $this->set(get_defined_vars());
@@ -197,7 +194,6 @@ class ThreadController extends AppController
     */
     public function delete_comment()
     {
-        $comment = new Comment;
         $comment = Comment::get(Param::get('comment_id'));
         $thread = Thread::get(Param::get('thread_id'));
 
@@ -207,12 +203,12 @@ class ThreadController extends AppController
         $comments = $thread->getComments($pagination['maximum']);
 
         $count = array();
-        foreach ($comments as $v){
+        foreach ($comments as $v) {
             $count[] = User::countUserPost($v->user_id);
         }
         
         if (isset($_POST['delete'])) {
-            $comment->delete($comment->id);
+            $comment->delete();
             $thread_id = $comment->thread_id;
             
             $this->set(get_defined_vars()); 

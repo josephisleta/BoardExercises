@@ -3,7 +3,9 @@
 <div style="background-color:#E0FFFF;">
 	<table class="table" style="width: 100%;">
 		<tr >
-			<td colspan=3 style="text-align:left; font-size:36px; padding:10px; font-weight: bold;"><?php encode($thread->title) ?></td>
+			<td colspan=3 style="text-align:left; font-size:36px; padding:10px; font-weight: bold;">
+				<?php encode($thread->title) ?>
+			</td>
 			
 			<td style="text-align:right;">
 				<?php if (($_SESSION['username'] === $thread->username) || is_admin()): ?>
@@ -32,11 +34,13 @@
 					</td>
 					<td colspan=2 style="text-align:right;">
 						<?php if(($_SESSION['username'] === $comments[$i]->username) || is_admin()): ?>
-							    <a class="btn btn-mini" href="<?php encode(url('thread/edit_comment', array('thread_id'=>$thread->id, 'comment_id'=>$comments[$i]->id))) ?>">
-								<i class="icon-pencil"></i></a>
+							<a class="btn btn-mini" href="<?php encode(url('thread/edit_comment', array('thread_id'=>$thread->id, 'comment_id'=>$comments[$i]->id))) ?>">
+								<i class="icon-pencil"></i>
+							</a>
 
-							    <a class="btn btn-mini btn-danger" href="<?php encode(url('thread/delete_comment', array('thread_id'=>$thread->id, 'comment_id'=>$comments[$i]->id))) ?>">
-								<i class="icon-trash"></i></a>
+							<a class="btn btn-mini btn-danger" href="<?php encode(url('thread/delete_comment', array('thread_id'=>$thread->id, 'comment_id'=>$comments[$i]->id))) ?>">
+								<i class="icon-trash"></i>
+							</a>
 						<?php endif?>
 					</td>
 				</tr>
@@ -71,7 +75,7 @@
 	<form class="well" method="POST" action="<?php encode(url('thread/write')) ?>">
 		<label>Comment</label>
 		<textarea name="body" style="width: 890px; height: 150px;" required><?php encode(Param::get('body')) ?></textarea>
-		<br />
+		<br>
 		<input type="hidden" name="username" value="<?php encode($_SESSION['username']) ?>">
 		<input type="hidden" name="thread_id" value="<?php encode($thread->id) ?>">
 		<input type="hidden" name="page_next" value="write_end">

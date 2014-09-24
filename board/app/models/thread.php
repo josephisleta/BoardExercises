@@ -38,8 +38,9 @@ class Thread extends AppModel
     {
         $threads = array();
 
-        $query = "SELECT thread.id, thread.title, user.username, thread.created, thread.updated, thread.view FROM thread 
-                  INNER JOIN user ON thread.user_id = user.id ORDER BY thread.updated DESC LIMIT {$limit}";
+        $query = "SELECT thread.id, thread.title, user.username, thread.created, thread.updated, thread.view 
+                  FROM thread INNER JOIN user ON thread.user_id = user.id 
+                  ORDER BY thread.updated DESC LIMIT {$limit}";
         
         $db = DB::conn();
         $rows = $db->rows($query);
@@ -130,6 +131,7 @@ class Thread extends AppModel
     */
     public static function search($keyword, $filter, $limit)
     {
+        $threads = array();
         $like = "%$keyword%";
         $params = array($like);
 
@@ -156,11 +158,9 @@ class Thread extends AppModel
         $db = DB::conn();
         $rows = $db->rows($query, $params); 
         
-        $threads = array();
         foreach ($rows as $row) {
             $threads[] = new self($row);
         }
-
         return $threads;
     }
 

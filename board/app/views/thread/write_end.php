@@ -5,5 +5,3 @@
 <p class="alert alert-success">
 	You successfully wrote this comment.
 </p>
-
-

@@ -2,22 +2,20 @@
 
 <h1>Admin Control Panel</h1>
 
-<form method="POST">
-	<div class="alert">
-		<?php if ($action === 'admin'): ?>
-			<h4 class="alert-heading">Are you sure you want to promote this user?</h4>
-			<input type="submit" class="btn btn-danger" value="Yes" name='yes'></input>
-			<a class="btn btn-default" href="<?php encode(url('user/admin')) ?>">No</a>
-		<?php elseif ($action === 'banned'): ?>
-			<h4 class="alert-heading">Are you sure you want to ban this user?</h4>
-			<input type="submit" class="btn btn-danger" value="Yes" name='yes'></input>
-			<a class="btn btn-default" href="<?php encode(url('user/admin')) ?>">No</a>
-		<?php elseif ($action === 'user'): ?>
-			<h4 class="alert-heading">Are you sure you want to this account to be a regular user?</h4>
-			<input type="submit" class="btn btn-danger" value="Yes" name='yes'></input>
-			<a class="btn btn-default" href="<?php encode(url('user/admin')) ?>">No</a>
-		<?php endif ?>
-	</div>
+<form method="POST" class="alert">
+	<?php if ($action === 'admin'): ?>
+		<h4 class="alert-heading">Are you sure you want to promote this user?</h4>
+		<input type="submit" class="btn btn-danger" value="Yes" name='yes'></input>
+		<a class="btn btn-default" href="<?php encode(url('user/admin')) ?>">No</a>
+	<?php elseif ($action === 'banned'): ?>
+		<h4 class="alert-heading">Are you sure you want to ban this user?</h4>
+		<input type="submit" class="btn btn-danger" value="Yes" name='yes'></input>
+		<a class="btn btn-default" href="<?php encode(url('user/admin')) ?>">No</a>
+	<?php elseif ($action === 'user'): ?>
+		<h4 class="alert-heading">Are you sure you want to this account to be a regular user?</h4>
+		<input type="submit" class="btn btn-danger" value="Yes" name='yes'></input>
+		<a class="btn btn-default" href="<?php encode(url('user/admin')) ?>">No</a>
+	<?php endif ?>
 </form>
 
 <div style="height:550px; background-color:#E0FFFF;">

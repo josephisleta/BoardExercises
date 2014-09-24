@@ -41,9 +41,8 @@ class Comment extends AppModel
 
     /*
     *Edit a comment
-    *@param $id
     */
-    public function edit($id)
+    public function edit()
     {
         if (!$this->validate()) {
             throw new ValidationException('invalid comment');
@@ -66,12 +65,11 @@ class Comment extends AppModel
 
     /*
     *Delete a comment
-    *@param $id
     */
-    public function delete($id)
+    public function delete()
     {
         $db = DB::conn();
-        $db->query("DELETE FROM comment WHERE id = ?", array($id));
+        $db->query("DELETE FROM comment WHERE id = ?", array($this->id));
     }
 
     /*
@@ -80,8 +78,8 @@ class Comment extends AppModel
     */
     public static function get($id)
     {
-        $query = "SELECT comment.id, comment.user_id, comment.thread_id, user.username, comment.body, comment.created FROM comment
-                  INNER JOIN user ON comment.user_id = user.id WHERE comment.id = ?";
+        $query = "SELECT comment.id, comment.user_id, comment.thread_id, user.username, comment.body, comment.created 
+                  FROM comment INNER JOIN user ON comment.user_id = user.id WHERE comment.id = ?";
 
         $db = DB::conn();
         $row = $db->row($query, array($id));
@@ -89,6 +87,10 @@ class Comment extends AppModel
         return ($row) ? new self($row) : null;
     }
 
+    /*
+    *Count the number of comments on a thread
+    *@param $thread_id
+    */
     public static function countThreadComments($thread_id)
     {
         $db = DB::conn();

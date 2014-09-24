@@ -30,11 +30,10 @@
 					</td>
 					<td colspan=2 style="text-align:right;">
 						<?php if(($_SESSION['username'] === $comments[$i]->username) || is_admin()): ?>
-							    <a class="btn btn-mini" href="<?php encode(url('thread/edit_comment', array('thread_id'=>$thread->id, 'comment_id'=>$comments[$i]->id))) ?>">
-								<i class="icon-pencil"></i></a>
-
-							    <a class="btn btn-mini btn-danger" href="<?php encode(url('thread/delete_comment', array('thread_id'=>$thread->id, 'comment_id'=>$comments[$i]->id))) ?>">
-								<i class="icon-trash"></i></a>
+							<a class="btn btn-mini" href="<?php encode(url('thread/edit_comment', array('thread_id'=>$thread->id, 'comment_id'=>$comments[$i]->id))) ?>">
+							<i class="icon-pencil"></i></a>
+							<a class="btn btn-mini btn-danger" href="<?php encode(url('thread/delete_comment', array('thread_id'=>$thread->id, 'comment_id'=>$comments[$i]->id))) ?>">
+							<i class="icon-trash"></i></a>
 						<?php endif?>
 					</td>
 				</tr>
@@ -54,7 +53,9 @@
 							Registered: <?php encode(date('Y-m-d', strtotime($comments[$i]->registered))) ?>
 						</div>
 					</td>
-					<td colspan=3 style="height:100px;"><?php echo readable_text($comments[$i]->body) ?></td>
+					<td colspan=3 style="height:100px;">
+						<?php echo readable_text($comments[$i]->body) ?>
+					</td>
 				</tr>
 			</div>
 		<?php endfor ?>
@@ -69,7 +70,7 @@
 	<form class="well" method="POST" action="<?php encode(url('thread/write')) ?>">
 		<label>Comment</label>
 		<textarea name="body" style="width: 890px; height: 150px;" required><?php encode(Param::get('body')) ?></textarea>
-		<br />
+		<br>
 		<input type="hidden" name="username" value="<?php encode($_SESSION['username']) ?>">
 		<input type="hidden" name="thread_id" value="<?php encode($thread->id) ?>">
 		<input type="hidden" name="page_next" value="write_end">

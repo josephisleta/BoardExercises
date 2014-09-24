@@ -153,7 +153,7 @@ class User extends AppModel
     }
 
     /*
-    *Gets new updated information for session
+    *Gets new updated user information for session
     *@param $user_id
     */
     public function updateSession($user_id)
@@ -168,16 +168,16 @@ class User extends AppModel
     }
 
     /*
-    *Makes admin action to promote, ban or unban
+    *Promote, ban or unban a user by the admin
     */
-    public function adminAction($user, $action)
+    public function adminAction($action)
     {
         $params = array(
             'type' => $action,
         );
         
         $db = DB::conn();
-        $db->update('user', $params, array('id' => $user->id));
+        $db->update('user', $params, array('id' => $this->id));
     }
 
     public function isFailedLogin()

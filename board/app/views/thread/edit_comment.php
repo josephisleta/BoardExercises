@@ -6,6 +6,7 @@
 <?php if ($comment->hasError()): ?>
     <div class="alert alert-block">
         <h4 class="alert-heading">Validation Error!</h4>
+        
         <?php if (!empty($comment->validation_errors['body']['length'])): ?>
             <div><em>Comment</em> must be between
                 <?php encode($comment->validation['body']['length'][1]) ?> and

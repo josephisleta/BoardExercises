@@ -16,7 +16,6 @@
 		<?php if ($user->validation_errors['confirm_password']['match']): ?>
 			<div><em>Passwords</em> do not match.</div>
 		<?php endif ?>
-
 	</div>
 <?php endif ?>
 
@@ -27,7 +26,6 @@
 	<label>Confirm Password</label>
 	<input type="password" class="span2" name="confirm_password" required>
 	<br>
-	
 	<input type="hidden" name="page_next" value="profile_end">
 	<button type="submit" class="btn btn-primary">Save</button>
 	<a href="<?php encode(url('user/profile'))?> ">Profile</a>

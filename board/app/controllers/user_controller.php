@@ -11,7 +11,7 @@ class UserController extends AppController
         }
         
         $user = new User;
-        $page = Param::get('page_next','register');
+        $page = Param::get('page_next', 'register');
         switch ($page) {
             case 'register':
                 break;
@@ -85,7 +85,7 @@ class UserController extends AppController
         $user = new User;
         $user_info = User::get($_SESSION['id']);
 
-        $page = Param::get('page_next','profile');
+        $page = Param::get('page_next', 'profile');
         switch ($page) {
             case 'profile':
                 break;
@@ -120,10 +120,11 @@ class UserController extends AppController
         if (!is_logged_in()) {
             redirect(url('user/login'));
         }
+
         $user = new User;
         $user_info = User::get($_SESSION['id']);
 
-        $page = Param::get('page_next','change_password');
+        $page = Param::get('page_next', 'change_password');
         switch ($page) {
             case 'change_password':
                 break;
@@ -145,8 +146,8 @@ class UserController extends AppController
     }
 
     /*
-    *view all user
-    *promote,demote,ban,unban a user
+    *View all user
+    *Promote,demote,ban,unban a user
     */
     public function admin()
     {
@@ -158,13 +159,11 @@ class UserController extends AppController
         $action = Param::get('action');
 
         if (Param::get('id') && (isset($_POST['yes']))) {
-            $user = new User;
             $user = User::get(Param::get('id'));
 
-            $user->adminAction($user, $action);
+            $user->adminAction($action);
             redirect(url('user/admin'));
         }
-
         $this->set(get_defined_vars());
     }
 

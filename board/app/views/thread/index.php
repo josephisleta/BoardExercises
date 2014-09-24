@@ -28,7 +28,7 @@
 
 <div style="height:610px; background-color:#E0FFFF;">
 	<table class="table">
-		<th style="width:500px;">Topic</th>
+		<th style="width:500px;">Topics</th>
 		<th style="width:100px;">Replies</th>
 		<th style="width:100px;">Views</th>
 		<th style="width:200px;">Last Post</th>
@@ -39,14 +39,18 @@
 					<div style="font-size:18px;"><a href="<?php encode(url('thread/view',array('thread_id' => $threads[$i]->id)))?>"><?php encode($threads[$i]->title) ?></a></div>
 					by <?php encode($threads[$i]->username) ?> on <?php encode(date('M d, Y h:ia', strtotime($threads[$i]->created))) ?>
 				</td>
-				<td><?php encode($count[$i]) ?></td>
-				<td><?php encode($threads[$i]->view) ?></td>
+				<td>
+					<?php encode($count[$i]) ?>
+				</td>
+				<td>
+					<?php encode($threads[$i]->view) ?>
+				</td>
 				<td>
 					by <?php encode($last_post[$i]->username) ?><br>
 					on <?php encode(date('M d, Y h:ia', strtotime($last_post[$i]->created))) ?>
 				</td>
 			</tr>
-		<?php endfor ?>
+		<?php endfor?>
 	</table>
 </div>
 

@@ -20,7 +20,6 @@
 		<?php if ($user->validation_errors['email']['format']): ?>
 			<div>Invalid <em>email address</em>.</div>
 		<?php endif ?>
-
 	</div>
 <?php endif ?>
 
@@ -34,7 +33,6 @@
 	<label>Email</label>
 	<input type="text" class="span2" name="email" value="<?php encode($user_info->email) ?>" required>
 	<br />
-	
 	<input type="hidden" name="page_next" value="profile_end">
 	<button type="submit" class="btn btn-primary">Save</button>
 	<a href="<?php encode(url('user/change_password'))?> ">Change Password</a>
