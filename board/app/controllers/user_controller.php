@@ -54,9 +54,14 @@ class UserController extends AppController
                 $user->password = Param::get('password');
                 try {
                     $account = $user->authenticate();
-                    $_SESSION['id'] = $account['id'];
-                    $_SESSION['username'] = $account['username'];
-                    $_SESSION['name'] = $account['name'];
+                    if ($account['type'] === 'banned') {
+                        redirect(url('user/login'));
+                    } else {
+                        $_SESSION['id'] = $account['id'];
+                        $_SESSION['username'] = $account['username'];
+                        $_SESSION['name'] = $account['name'];
+                        $_SESSION['type'] = $account['type'];
+                    }
                 } catch (UserNotFoundException $e) {
                     $page = 'login';
                 }
@@ -97,6 +102,7 @@ class UserController extends AppController
                     $_SESSION['id'] = $account['id'];
                     $_SESSION['username'] = $account['username'];
                     $_SESSION['name'] = $account['name'];
+                    $_SESSION['type'] = $account['type'];
                 } catch (UserNotFoundException $e) {
                     $page = 'profile';
                 }
@@ -106,6 +112,26 @@ class UserController extends AppController
         }
         $this->set(get_defined_vars());
         $this->render($page);
+    }
+
+    public function admin()
+    {
+        if (!is_logged_in() || !is_admin()) {
+            redirect(url('user/login'));
+        }
+
+        $users = User::getAll();
+        $action = Param::get('action');
+
+        if (Param::get('id') && (isset($_POST['yes']))) {
+            $user = new User;
+            $user = User::get(Param::get('id'));
+
+            $user->adminAction($user, $action);
+            redirect(url('user/admin'));
+        }
+
+        $this->set(get_defined_vars());
     }
 
     /*

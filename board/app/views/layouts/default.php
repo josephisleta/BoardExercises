@@ -23,9 +23,13 @@
                 </td>
                 <?php if(is_logged_in()): ?>
                     <td style="text-align:right;">
-                        You are logged in as :
+                        You are logged in as
+                        <?php encode($_SESSION['type']) ?>: 
                         <?php encode($_SESSION['username']) ?>
-                        <a class="btn btn-mini" href="<?php encode(url('user/profile')) ?>">Profile</a>
+                        <a class="btn btn-mini btn-primary" href="<?php encode(url('user/profile')) ?>">Profile</a>
+                        <?php if(is_admin()): ?>
+                          <a class="btn btn-mini btn-primary" href="<?php encode(url('user/admin')) ?>">Control Panel</a>
+                        <?php endif ?>
                         <a class="btn btn-mini btn-danger" href="<?php encode(url('user/logout')) ?>">Logout</a>
                     </td>
                 <?php endif?>

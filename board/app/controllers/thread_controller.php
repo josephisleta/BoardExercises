@@ -21,9 +21,12 @@ class ThreadController extends AppController
         }
         
         $count = array();
+        $last_post = array();
+
         foreach ($threads as $v) {
             $thread = Thread::get($v->id);
             $count[] = Comment::countThreadComments($thread->id);
+            $last_post[] = Thread::getLastPost($v->id);
         }
 
         $this->set(get_defined_vars());
@@ -84,7 +87,6 @@ class ThreadController extends AppController
             $count[] = User::countUserPost($v->user_id);
         }
 
-
         $this->set(get_defined_vars());
     }
 
@@ -133,7 +135,7 @@ class ThreadController extends AppController
         $comments = $thread->getComments($pagination['maximum']);
 
         $count = array();
-        foreach ($comments as $v){
+        foreach ($comments as $v) {
             $count[] = User::countUserPost($v->user_id);
         }
 
@@ -157,7 +159,7 @@ class ThreadController extends AppController
         $comments = $thread->getComments($pagination['maximum']);
 
         $count = array();
-        foreach ($comments as $v){
+        foreach ($comments as $v) {
             $count[] = User::countUserPost($v->user_id);
         }
 

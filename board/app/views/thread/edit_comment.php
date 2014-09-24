@@ -1,6 +1,6 @@
 <a href="<?php encode(url('thread/view', array('thread_id' => $thread->id)))?> ">&larr; Back to thread</a>
 
-<h1>Your Comment:</h1>
+<h1>Comment:</h1>
 <h2 class="well text-error"><?php encode($comment->body) ?></h2>
 
 <?php if ($comment->hasError()): ?>
@@ -17,7 +17,7 @@
 
 <form class="well" method="POST" >
     <label>Edit Comment:</label>
-    <textarea name="body" style="width: 890px; height: 150px;" required><?php encode(Param::get('body')) ?></textarea><br>
+    <textarea name="body" style="width: 890px; height: 150px;" maxlength="200" required><?php encode(Param::get('body')) ?></textarea><br>
     <button type="submit" name="edit" class="btn btn-primary" >Edit</button>
     <a href="<?php encode(url('thread/view', array('thread_id' => $thread->id)))?> ">Done</a>
 </form>

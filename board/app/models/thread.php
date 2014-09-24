@@ -44,7 +44,6 @@ class Thread extends AppModel
         $db = DB::conn();
         $rows = $db->rows($query);
 
-        $threads = array();
         foreach ($rows as $row) {
             $threads[] = new self($row);
         }
@@ -59,7 +58,7 @@ class Thread extends AppModel
     {
         $comments = array();
 
-        $query = "SELECT comment.id, comment.thread_id, user.username, comment.body, comment.created, comment.user_id
+        $query = "SELECT comment.id, comment.thread_id, user.username, comment.body, comment.created, comment.user_id, user.type, user.registered, comment.updated
                   FROM comment INNER JOIN user ON comment.user_id = user.id
                   WHERE thread_id = ? ORDER BY created ASC LIMIT {$limit}";
 
@@ -169,6 +168,25 @@ class Thread extends AppModel
     {
         $db = DB::conn();
         return $db->value("SELECT count(id) FROM thread");
+    }
+
+    /*
+    *Get the last post from a thread
+    *@param $thread_id
+    */
+    public static function getLastPost($thread_id)
+    {
+        $query = "SELECT user.username, comment.created
+                  FROM comment INNER JOIN user ON comment.user_id = user.id 
+                  WHERE comment.thread_id = ? ORDER BY comment.created DESC";
+        
+        $db = DB::conn();
+        $row = $db->row($query, array($thread_id));
+
+        if (!$row) {
+            throw new RecordNotFoundException('no record found');
+        }
+        return new self($row);
     }
 
     /*

@@ -68,7 +68,7 @@ class User extends AppModel
     */
     public function authenticate()
     {
-        $query = "SELECT id, username, name FROM user WHERE username = ? AND password = ?";
+        $query = "SELECT id, username, name, type FROM user WHERE username = ? AND password = ?";
         $db = DB::conn();
         $row = $db->row($query, array($this->username, $this->password));
         if (!$row) {
@@ -93,6 +93,24 @@ class User extends AppModel
         return new self($row);
     }
     
+    /*
+    *Get all user from the database
+    */
+    public static function getAll()
+    {
+        $users = array();
+
+        $query = "SELECT * FROM user ORDER BY registered DESC";
+        
+        $db = DB::conn();
+        $rows = $db->rows($query);
+
+        foreach ($rows as $row) {
+            $users[] = new self($row);
+        }
+        return $users;
+    }
+
     /*
     *Updates new user information
     */
@@ -124,12 +142,26 @@ class User extends AppModel
     public function updateSession($user_id)
     {
         $db = DB::conn();
-        $row = $db->row("SELECT id, username, name FROM user WHERE id = ?", array($user_id));
+        $row = $db->row("SELECT id, username, name, type FROM user WHERE id = ?", array($user_id));
 
         if (!$row) {
             throw new RecordNotFoundException('no record found');
         }
         return $row;
+    }
+
+    /*
+    *Makes admin action to promote, ban or unban
+    */
+    public function adminAction($user, $action)
+    {
+        
+        $params = array(
+            'type' => $action,
+        );
+        
+        $db = DB::conn();
+        $db->update('user', $params, array('id' => $user->id));
     }
 
     public function isFailedLogin()

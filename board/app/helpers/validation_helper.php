@@ -30,3 +30,8 @@ function redirect($url)
 {
     header("Location: $url");
 }
+
+function is_admin()
+{
+    return $_SESSION['type'] === 'admin';
+}
