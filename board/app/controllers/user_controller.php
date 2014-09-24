@@ -82,10 +82,9 @@ class UserController extends AppController
             redirect(url('user/login'));
         }
 
-        $user = new User;
-        $user_info = User::get($_SESSION['id']);
-
+        $user = User::get($_SESSION['id']);
         $page = Param::get('page_next', 'profile');
+
         switch ($page) {
             case 'profile':
                 break;
@@ -96,7 +95,7 @@ class UserController extends AppController
                 
                 try {
                     $user->updateProfile();
-                    $account = $user->updateSession($_SESSION['id']);
+                    $account = $user->updateSession();
                     $_SESSION['id'] = $account['id'];
                     $_SESSION['username'] = $account['username'];
                     $_SESSION['name'] = $account['name'];
@@ -121,10 +120,9 @@ class UserController extends AppController
             redirect(url('user/login'));
         }
 
-        $user = new User;
-        $user_info = User::get($_SESSION['id']);
-
+        $user = User::get($_SESSION['id']);
         $page = Param::get('page_next', 'change_password');
+
         switch ($page) {
             case 'change_password':
                 break;

@@ -1,9 +1,8 @@
 <a href="<?php encode(url('thread/index')) ?>">&larr; Back to home</a>
 
-<div style="background-color:#E0FFFF;">
-
+<div>
 	<table class="table" style="width: 100%;">
-		<tr >
+		<tr>
 			<form method="POST" action="<?php encode(url('thread/rename')) ?>">
 				<h4 style="text-align:left; font-size:21px; font-weight: bold;">
 					New Thread Name: <input type="text" class="span2" value="<?php encode($thread->title) ?>" name='title' pattern=".{6,30}" required></input>
@@ -37,7 +36,7 @@
 						<?php endif?>
 					</td>
 				</tr>
-				<tr>
+				<tr style="background-color:#E0FFFF;">
 					<td>
 						<?php if($comments[$i]->type === 'admin'): ?>
 							<div style="color: #D00000;">

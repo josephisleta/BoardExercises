@@ -1,4 +1,4 @@
-<a class='btn btn-primary' href="<?php encode(url('thread/index'))?>">Back to home</a>
+<a href="<?php encode(url('thread/index')) ?>">&larr; Back to home</a>
 
 <h1>Congratulations!</h1>
 

@@ -25,13 +25,13 @@
 
 <form class="well" method="post" action="<?php encode(url('user/profile')) ?>">
 	<label>Username</label>
-	<input type="text" class="span2" name="username" value="<?php encode($user_info->username) ?>" pattern=.{6,20} required>
+	<input type="text" class="span2" name="username" value="<?php encode($user->username) ?>" pattern=.{6,20} required>
 	
 	<label>Name</label>
-	<input type="text" class="span2" name="name" value="<?php encode($user_info->name) ?>" required>
+	<input type="text" class="span2" name="name" value="<?php encode($user->name) ?>" required>
 	
 	<label>Email</label>
-	<input type="text" class="span2" name="email" value="<?php encode($user_info->email) ?>" required>
+	<input type="text" class="span2" name="email" value="<?php encode($user->email) ?>" required>
 	<br />
 	<input type="hidden" name="page_next" value="profile_end">
 	<button type="submit" class="btn btn-primary">Save</button>

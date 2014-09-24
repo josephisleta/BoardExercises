@@ -6,7 +6,7 @@
     <a class="btn btn-default" href="<?php encode(url('thread/view', array('thread_id' => $thread->id))) ?>">No</a>
 </form>
 
-<div style="background-color:#E0FFFF;">
+<div>
 	<table class="table" style="width: 100%;">
 		<tr>
 			<td colspan=3 style="text-align:left; font-size:36px; padding:10px; font-weight: bold;"><?php encode($thread->title) ?></td>
@@ -35,7 +35,7 @@
 						<?php endif?>
 					</td>
 				</tr>
-				<tr>
+				<tr style="background-color:#E0FFFF;">
 					<td>
 						<?php if($comments[$i]->type === 'admin'): ?>
 							<div style="color: #D00000;">

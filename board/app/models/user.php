@@ -154,12 +154,11 @@ class User extends AppModel
 
     /*
     *Gets new updated user information for session
-    *@param $user_id
     */
-    public function updateSession($user_id)
+    public function updateSession()
     {
         $db = DB::conn();
-        $row = $db->row("SELECT id, username, name, type FROM user WHERE id = ?", array($user_id));
+        $row = $db->row("SELECT id, username, name, type FROM user WHERE id = ?", array($_SESSION['id']));
 
         if (!$row) {
             throw new RecordNotFoundException('no record found');
