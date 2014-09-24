@@ -22,15 +22,14 @@
 
 <div style="height:550px; background-color:#E0FFFF;">
 	<table class="table">
-		<th style="width:150px;">User ID</th>
+		<th style="width:100px;">User ID</th>
 		<th style="width:150px;">Username</th>
 		<th style="width:200px;">Name</th>
 		<th style="width:300px;">Email</th>
-		<th style="width:150px;">Type</th>
-		<th style="width:150px;">Registered</th>
-		<th style="width:150px;">Action</th>
+		<th style="width:100px;">Type</th>
+		<th style="width:200px;">Registered</th>
+		<th style="width:100px;">Action</th>
 		
-
 		<?php foreach ($users as $k): ?>
 			<tr>
 				<td><?php encode($k->id) ?></td>
@@ -38,7 +37,7 @@
 				<td><?php encode($k->name) ?></td>
 				<td><?php encode($k->email) ?></td>
 				<td><?php encode($k->type) ?></td>
-				<td><?php encode($k->registered) ?></td>
+				<td><?php encode(date('M d, Y h:ia', strtotime($k->registered))) ?></td>
 				<td>
 					<?php if (($k->type === 'admin') && !($k->id === $_SESSION['id'])): ?>
 						<a class="btn btn-mini" href="<?php encode(url('user/admin', array('id' => $k->id, 'action' => 'user'))) ?>" >Demote</a>

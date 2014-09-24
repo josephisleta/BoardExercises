@@ -116,8 +116,6 @@ class User extends AppModel
     */
     public function updateProfile()
     {
-        $this->validation['confirm_password']['match'][1] = $this->password;
-        
         $this->validate();
         
         if ($this->hasError()) {
@@ -126,9 +124,28 @@ class User extends AppModel
         
         $params = array(
             'username' => $this->username,
-            'password' => $this->password,
             'name' => $this->name,
             'email' => $this->email
+        );
+        
+        $db = DB::conn();
+        $db->update('user', $params, array('id' => $_SESSION['id']));
+    }
+
+    /*
+    *Change user password
+    */
+    public function updatePassword()
+    {
+        $this->validation['confirm_password']['match'][1] = $this->password;
+        $this->validate();
+        
+        if ($this->hasError()) {
+            throw new ValidationException("invalid inputs");
+        }
+        
+        $params = array(
+            'password' => $this->password,
         );
         
         $db = DB::conn();
@@ -155,7 +172,6 @@ class User extends AppModel
     */
     public function adminAction($user, $action)
     {
-        
         $params = array(
             'type' => $action,
         );
@@ -169,6 +185,9 @@ class User extends AppModel
         return $this->is_failed_login;
     }
 
+    /*
+    *Counts total Posts of the user
+    */
     public static function countUserPost($user_id)
     {
         $db = DB::conn();

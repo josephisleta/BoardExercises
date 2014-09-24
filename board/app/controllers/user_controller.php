@@ -91,8 +91,6 @@ class UserController extends AppController
                 break;
             case 'profile_end':
                 $user->username = trim(Param::get('username'));
-                $user->password = Param::get('password');
-                $user->confirm_password = Param::get('confirm_password');
                 $user->name = Param::get('name');
                 $user->email = Param::get('email');
                 
@@ -103,17 +101,53 @@ class UserController extends AppController
                     $_SESSION['username'] = $account['username'];
                     $_SESSION['name'] = $account['name'];
                     $_SESSION['type'] = $account['type'];
-                } catch (UserNotFoundException $e) {
+                } catch (ValidationException $e) {
                     $page = 'profile';
                 }
                 break;
             default:
-                throw new UserNotFoundException("{$page} not found");
+                throw new PageNotFoundException("{$page} not found");
         }
         $this->set(get_defined_vars());
         $this->render($page);
     }
 
+    /*
+    *Edit user password
+    */
+    public function change_password()
+    {
+        if (!is_logged_in()) {
+            redirect(url('user/login'));
+        }
+        $user = new User;
+        $user_info = User::get($_SESSION['id']);
+
+        $page = Param::get('page_next','change_password');
+        switch ($page) {
+            case 'change_password':
+                break;
+            case 'profile_end':
+                $user->password = Param::get('password');
+                $user->confirm_password = Param::get('confirm_password');
+                
+                try {
+                    $user->updatePassword();
+                } catch (ValidationException $e) {
+                    $page = 'change_password';
+                }
+                break;
+            default:
+                throw new PageNotFoundException("{$page} not found");
+        }
+        $this->set(get_defined_vars());
+        $this->render($page);
+    }
+
+    /*
+    *view all user
+    *promote,demote,ban,unban a user
+    */
     public function admin()
     {
         if (!is_logged_in() || !is_admin()) {
