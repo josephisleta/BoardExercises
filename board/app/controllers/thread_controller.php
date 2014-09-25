@@ -144,7 +144,7 @@ class ThreadController extends AppController
 
         if (isset($_POST['delete'])) {
             $thread->delete();
-            $this->render('thread/delete_end');
+            $this->render('delete_end');
         }
 
         $this->set(get_defined_vars());
@@ -177,9 +177,9 @@ class ThreadController extends AppController
             $thread->title = trim(Param::get('title'));
             try {
                 $thread->rename();
-                $this->render('thread/rename_end');
+                $this->render('rename_end');
             } catch (ValidationException $e) {
-                $this->render('thread/rename');
+                $this->render('rename');
             }
         }
     }
@@ -236,7 +236,7 @@ class ThreadController extends AppController
             $comment->delete();
             $thread_id = $comment->thread_id;
 
-            $this->render('thread/delete_comment_end');
+            $this->render('delete_comment_end');
         }
     }
 }
