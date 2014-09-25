@@ -127,6 +127,10 @@ class ThreadController extends AppController
     */
     public function delete()
     {
+        if (!is_logged_in()) {
+            redirect(url('user/login'));
+        }
+
         $thread = Thread::get(Param::get('thread_id'));
         $limit = Comment::countThreadComments($thread->id);
         $pagination = Pagination::getControls($limit);
@@ -150,7 +154,11 @@ class ThreadController extends AppController
     *Rename thread
     */
     public function rename()
-    {
+    {   
+        if (!is_logged_in()) {
+            redirect(url('user/login'));
+        }
+
         $thread = Thread::get(Param::get('thread_id'));
         $limit = Comment::countThreadComments($thread->id);
         $pagination = Pagination::getControls($limit);
@@ -179,6 +187,10 @@ class ThreadController extends AppController
     */
     public function edit_comment()
     {
+        if (!is_logged_in()) {
+            redirect(url('user/login'));
+        }
+
         $comment = Comment::get(Param::get('comment_id'));
         $thread = Thread::get(Param::get('thread_id'));
 
@@ -195,6 +207,10 @@ class ThreadController extends AppController
     */
     public function delete_comment()
     {
+        if (!is_logged_in()) {
+            redirect(url('user/login'));
+        }
+        
         $comment = Comment::get(Param::get('comment_id'));
         $thread = Thread::get(Param::get('thread_id'));
 
