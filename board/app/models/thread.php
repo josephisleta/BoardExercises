@@ -84,7 +84,9 @@ class Thread extends AppModel
             "title" => $this->title,
             "updated" => date('Y-m-d H:i:s')
         );
+
         $db = DB::conn();
+
         try {
             $db->begin();
 
@@ -94,6 +96,7 @@ class Thread extends AppModel
             if ($this->hasError() || $comment->hasError()) {
                 throw new ValidationException('invalid thread or comment');
             }
+
             $db->insert('thread', $params);
             $this->id = $db->lastInsertId();
             $comment->write($this);
@@ -108,7 +111,7 @@ class Thread extends AppModel
     /*
     *Delete thread
     */
-    public function deleteThread()
+    public function delete()
     {
         $db = DB::conn();
         $db->query('DELETE FROM thread WHERE id = ?', array($this->id));
@@ -117,7 +120,7 @@ class Thread extends AppModel
     /*
     *Rename thread
     */
-    public function renameThread()
+    public function rename()
     {
         $db = DB::conn();
         $db->update('thread', array('title' => $this->title), array('id' => $this->id));
@@ -125,7 +128,7 @@ class Thread extends AppModel
 
     /*
     *Search threads
-    *@param $keyword, $filter, $limit
+    *@params $keyword, $filter, $limit
     */
     public static function search($keyword, $filter, $limit)
     {
@@ -193,7 +196,7 @@ class Thread extends AppModel
     public function viewAdd()
     {
         $db = DB::conn();
-        $view = $this->view;
-        $db->update('thread', array('view' => ($view + 1)), array('id' => $this->id));
+        $view_inc = $this->view + 1;
+        $db->update('thread', array('view' => $view_inc), array('id' => $this->id));
     }
 }

@@ -6,6 +6,7 @@ class ThreadController extends AppController
         if (!is_logged_in()) {
             redirect(url('user/login'));
         }
+        
         $result = Thread::countThread();
         $pagination = Pagination::getControls($result);
         $threads = Thread::getAll($pagination['maximum']);
@@ -138,7 +139,7 @@ class ThreadController extends AppController
         }
 
         if (isset($_POST['delete'])) {
-            $thread->deleteThread();
+            $thread->delete();
             $this->render('thread/delete_end');
         }
 
@@ -164,7 +165,7 @@ class ThreadController extends AppController
         if (isset($_POST['rename'])) {
             $thread->id = Param::get('thread_id');
             $thread->title = Param::get('title');
-            $thread->renameThread();
+            $thread->rename();
 
             $this->set(get_defined_vars());
             $this->render('thread/rename_end');

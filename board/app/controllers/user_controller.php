@@ -31,6 +31,7 @@ class UserController extends AppController
             default:
                 throw new PageNotFoundException("{$page} not found");
         }
+
         $this->set(get_defined_vars());
         $this->render($page);
     }
@@ -69,6 +70,7 @@ class UserController extends AppController
             default:
                 throw new UserNotFoundException("{$page} not found");
         }
+
         $this->set(get_defined_vars());
         $this->render($page);
     }
@@ -107,6 +109,7 @@ class UserController extends AppController
             default:
                 throw new PageNotFoundException("{$page} not found");
         }
+
         $this->set(get_defined_vars());
         $this->render($page);
     }
@@ -139,6 +142,7 @@ class UserController extends AppController
             default:
                 throw new PageNotFoundException("{$page} not found");
         }
+
         $this->set(get_defined_vars());
         $this->render($page);
     }
@@ -156,12 +160,13 @@ class UserController extends AppController
         $users = User::getAll();
         $action = Param::get('action');
 
-        if (Param::get('id') && (isset($_POST['yes']))) {
+        if (isset($_POST['yes'])) {
             $user = User::get(Param::get('id'));
 
             $user->adminAction($action);
             redirect(url('user/admin'));
         }
+
         $this->set(get_defined_vars());
     }
 

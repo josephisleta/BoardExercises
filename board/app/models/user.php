@@ -46,7 +46,6 @@ class User extends AppModel
     public function register()
     {
         $this->validation['confirm_password']['match'][1] = $this->password;
-        
         $this->validate();
         
         if ($this->hasError()) {
@@ -168,6 +167,7 @@ class User extends AppModel
 
     /*
     *Promote, ban or unban a user by the admin
+    *@param $action
     */
     public function adminAction($action)
     {
@@ -186,6 +186,7 @@ class User extends AppModel
 
     /*
     *Counts total Posts of the user
+    *@param $user_id
     */
     public static function countUserPost($user_id)
     {
