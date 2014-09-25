@@ -2,7 +2,7 @@
 
 <div>
 	<table class="table" style="width: 100%;">
-		<tr >
+		<tr>
 			<td colspan=3 style="text-align:left; font-size:36px; padding:10px; font-weight: bold;">
 				<?php encode($thread->title) ?>
 			</td>

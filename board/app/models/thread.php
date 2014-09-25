@@ -157,7 +157,7 @@ class Thread extends AppModel
                   ORDER BY thread.updated DESC LIMIT {$limit}";
 
         $db = DB::conn();
-        $rows = $db->rows($query, $params); 
+        $rows = $db->rows($query, $params);
         
         foreach ($rows as $row) {
             $threads[] = new self($row);
