@@ -1,4 +1,4 @@
-<a href="<?php encode(url('thread/view', array('thread_id' => $thread->id)))?> ">&larr; Back to thread</a>
+<a href="<?php encode(url('thread/index'))?> ">&larr; Back to home</a>
 
 <form method="POST" class="alert alert-danger">
     <h4 class="alert-heading">Are you sure you want to delete this comment?</h4>
@@ -68,7 +68,7 @@
 							</div>
 						<?php endif ?>
 						<div style="text-align:left; font-size:12px;">
-							Posts: <?php encode($count[$i]) ?><br>
+							Posts: <?php encode($count_post[$i]) ?><br>
 							Registered: <?php encode(date('Y-m-d', strtotime($comments[$i]->registered))) ?>
 						</div>
 					</td>

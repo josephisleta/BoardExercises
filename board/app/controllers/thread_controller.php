@@ -137,9 +137,9 @@ class ThreadController extends AppController
 
         $comments = $thread->getComments($pagination['maximum']);
 
-        $count = array();
+        $count_post = array();
         foreach ($comments as $v) {
-            $count[] = User::countPost($v->user_id);
+            $count_post[] = User::countPost($v->user_id);
         }
 
         if (isset($_POST['delete'])) {
@@ -165,9 +165,9 @@ class ThreadController extends AppController
 
         $comments = $thread->getComments($pagination['maximum']);
 
-        $count = array();
+        $count_post = array();
         foreach ($comments as $v) {
-            $count[] = User::countPost($v->user_id);
+            $count_post[] = User::countPost($v->user_id);
         }
 
         $this->set(get_defined_vars());
@@ -195,6 +195,15 @@ class ThreadController extends AppController
 
         $comment = Comment::get(Param::get('comment_id'));
         $thread = Thread::get(Param::get('thread_id'));
+        $limit = Comment::countThreadComments($thread->id);
+        $pagination = Pagination::getControls($limit);
+
+        $comments = $thread->getComments($pagination['maximum']);
+
+        $count_post = array();
+        foreach ($comments as $v) {
+            $count_post[] = User::countPost($v->user_id);
+        }
 
         $this->set(get_defined_vars());
 
@@ -202,6 +211,7 @@ class ThreadController extends AppController
             $comment->body = Param::get('body');
             try {
                 $comment->edit();
+                $this->render('write_end');
             } catch (ValidationException $e) {
                 $this->render('edit_comment');
             }
@@ -225,9 +235,9 @@ class ThreadController extends AppController
 
         $comments = $thread->getComments($pagination['maximum']);
 
-        $count = array();
+        $count_post = array();
         foreach ($comments as $v) {
-            $count[] = User::countPost($v->user_id);
+            $count_post[] = User::countPost($v->user_id);
         }
 
         $this->set(get_defined_vars());
