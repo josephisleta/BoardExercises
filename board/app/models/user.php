@@ -128,7 +128,7 @@ class User extends AppModel
         );
         
         $db = DB::conn();
-        $db->update('user', $params, array('id' => $_SESSION['id']));
+        $db->update('user', $params, array('id' => $this->id));
     }
 
     /*
@@ -148,7 +148,7 @@ class User extends AppModel
         );
         
         $db = DB::conn();
-        $db->update('user', $params, array('id' => $_SESSION['id']));
+        $db->update('user', $params, array('id' => $this->id));
     }
 
     /*
@@ -157,7 +157,7 @@ class User extends AppModel
     public function updateSession()
     {
         $db = DB::conn();
-        $row = $db->row("SELECT id, username, name, type FROM user WHERE id = ?", array($_SESSION['id']));
+        $row = $db->row("SELECT id, username, name, type FROM user WHERE id = ?", array($this->id));
 
         if (!$row) {
             throw new RecordNotFoundException('no record found');
