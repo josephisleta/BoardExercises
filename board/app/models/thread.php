@@ -107,22 +107,20 @@ class Thread extends AppModel
 
     /*
     *Delete thread
-    *@param $thread_id
     */
-    public static function deleteThread($thread_id)
+    public function deleteThread()
     {
         $db = DB::conn();
-        $db->query('DELETE FROM thread WHERE id = ?', array($thread_id));
+        $db->query('DELETE FROM thread WHERE id = ?', array($this->id));
     }
 
     /*
     *Rename thread
-    *@param $id, $title
     */
-    public static function renameThread($id, $title)
+    public function renameThread()
     {
         $db = DB::conn();
-        $db->update('thread', array('title' => $title), array('id' => $id));
+        $db->update('thread', array('title' => $this->title), array('id' => $this->id));
     }
 
     /*
@@ -191,12 +189,11 @@ class Thread extends AppModel
 
     /*
     *Add View Count
-    *@param $thread
     */
-    public static function viewAdd($thread)
+    public function viewAdd()
     {
         $db = DB::conn();
-        $view = $thread->view;
-        $db->update('thread', array('view' => ($view + 1)), array('id' => $thread->id));
+        $view = $this->view;
+        $db->update('thread', array('view' => ($view + 1)), array('id' => $this->id));
     }
 }

@@ -76,7 +76,7 @@ class ThreadController extends AppController
         $thread = Thread::get(Param::get('thread_id'));
         $limit = Comment::countThreadComments($thread->id);
         $pagination = Pagination::getControls($limit);
-        Thread::viewAdd($thread);
+        $thread->viewAdd();
 
         $comments = $thread->getComments($pagination['maximum']);
 
@@ -138,7 +138,7 @@ class ThreadController extends AppController
         }
 
         if (isset($_POST['delete'])) {
-            Thread::deleteThread($thread->id);
+            $thread->deleteThread();
             $this->render('thread/delete_end');
         }
 
@@ -162,9 +162,9 @@ class ThreadController extends AppController
         }
 
         if (isset($_POST['rename'])) {
-            $id = Param::get('thread_id');
-            $title = Param::get('title');
-            Thread::renameThread($id, $title);
+            $thread->id = Param::get('thread_id');
+            $thread->title = Param::get('title');
+            $thread->renameThread();
 
             $this->set(get_defined_vars());
             $this->render('thread/rename_end');
