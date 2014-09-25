@@ -170,16 +170,18 @@ class ThreadController extends AppController
             $count[] = User::countPost($v->user_id);
         }
 
+        $this->set(get_defined_vars());
+
         if (isset($_POST['rename'])) {
             $thread->id = Param::get('thread_id');
             $thread->title = trim(Param::get('title'));
-            $thread->rename();
-
-            $this->set(get_defined_vars());
-            $this->render('thread/rename_end');
+            try {
+                $thread->rename();
+                $this->render('thread/rename_end');
+            } catch (ValidationException $e) {
+                $this->render('thread/rename');
+            }
         }
-
-        $this->set(get_defined_vars());
     }
 
     /*
@@ -194,12 +196,16 @@ class ThreadController extends AppController
         $comment = Comment::get(Param::get('comment_id'));
         $thread = Thread::get(Param::get('thread_id'));
 
+        $this->set(get_defined_vars());
+
         if (isset($_POST['edit'])) {   
             $comment->body = Param::get('body');
-            $comment->edit();
+            try {
+                $comment->edit();
+            } catch (ValidationException $e) {
+                $this->render('edit_comment');
+            }
         }
-
-        $this->set(get_defined_vars());
     }
 
     /*
@@ -210,7 +216,7 @@ class ThreadController extends AppController
         if (!is_logged_in()) {
             redirect(url('user/login'));
         }
-        
+
         $comment = Comment::get(Param::get('comment_id'));
         $thread = Thread::get(Param::get('thread_id'));
 
@@ -223,15 +229,14 @@ class ThreadController extends AppController
         foreach ($comments as $v) {
             $count[] = User::countPost($v->user_id);
         }
-        
+
+        $this->set(get_defined_vars());
+
         if (isset($_POST['delete'])) {
             $comment->delete();
             $thread_id = $comment->thread_id;
-            
-            $this->set(get_defined_vars()); 
+
             $this->render('thread/delete_comment_end');
         }
-
-        $this->set(get_defined_vars());
     }
 }

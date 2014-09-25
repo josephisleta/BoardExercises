@@ -122,6 +122,12 @@ class Thread extends AppModel
     */
     public function rename()
     {
+        $this->validate();
+
+        if ($this->hasError()) {
+            throw new ValidationException('invalid thread name');
+        }
+
         $db = DB::conn();
         $db->update('thread', array('title' => $this->title), array('id' => $this->id));
     }

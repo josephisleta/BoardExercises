@@ -29,7 +29,7 @@ class Comment extends AppModel
             if (!$this->validate()) {
                 throw new ValidationException('invalid comment');
             }
-            
+
             $db->insert('comment', $params);
             $db->update('thread', array('updated' => date('Y-m-d H:i:s')), array('id' => $thread->id));
 
@@ -44,8 +44,10 @@ class Comment extends AppModel
     *Edit a comment
     */
     public function edit()
-    {
-        if (!$this->validate()) {
+    {   
+        $this->validate();
+
+        if ($this->hasError()) {
             throw new ValidationException('invalid comment');
         }
 
