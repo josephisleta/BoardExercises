@@ -165,7 +165,7 @@ class Thread extends AppModel
         return $threads;
     }
 
-    public static function countThread()
+    public static function count()
     {
         $db = DB::conn();
         return $db->value("SELECT count(id) FROM thread");

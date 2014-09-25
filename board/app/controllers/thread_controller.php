@@ -6,8 +6,8 @@ class ThreadController extends AppController
         if (!is_logged_in()) {
             redirect(url('user/login'));
         }
-        
-        $result = Thread::countThread();
+
+        $result = Thread::count();
         $pagination = Pagination::getControls($result);
         $threads = Thread::getAll($pagination['maximum']);
         
@@ -19,12 +19,12 @@ class ThreadController extends AppController
             $result = count($threads);
         }
         
-        $count = array();
+        $count_comment = array();
         $last_post = array();
 
         foreach ($threads as $v) {
             $thread = Thread::get($v->id);
-            $count[] = Comment::countThreadComments($thread->id);
+            $count_comment[] = Comment::countThreadComments($thread->id);
             $last_post[] = Thread::getLastPost($v->id);
         }
 
@@ -81,9 +81,9 @@ class ThreadController extends AppController
 
         $comments = $thread->getComments($pagination['maximum']);
 
-        $count = array();
+        $count_post = array();
         foreach ($comments as $v) {
-            $count[] = User::countUserPost($v->user_id);
+            $count_post[] = User::countPost($v->user_id);
         }
 
         $this->set(get_defined_vars());
@@ -135,7 +135,7 @@ class ThreadController extends AppController
 
         $count = array();
         foreach ($comments as $v) {
-            $count[] = User::countUserPost($v->user_id);
+            $count[] = User::countPost($v->user_id);
         }
 
         if (isset($_POST['delete'])) {
@@ -159,7 +159,7 @@ class ThreadController extends AppController
 
         $count = array();
         foreach ($comments as $v) {
-            $count[] = User::countUserPost($v->user_id);
+            $count[] = User::countPost($v->user_id);
         }
 
         if (isset($_POST['rename'])) {
@@ -205,7 +205,7 @@ class ThreadController extends AppController
 
         $count = array();
         foreach ($comments as $v) {
-            $count[] = User::countUserPost($v->user_id);
+            $count[] = User::countPost($v->user_id);
         }
         
         if (isset($_POST['delete'])) {

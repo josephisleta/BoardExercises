@@ -56,7 +56,7 @@
 							</div>
 						<?php endif ?>
 						<div style="text-align:left; font-size:12px;">
-							Posts: <?php encode($count[$i]) ?><br>
+							Posts: <?php encode($count_post[$i]) ?><br>
 							Registered: <?php encode(date('Y-m-d', strtotime($comments[$i]->registered))) ?>
 						</div>
 					</td>

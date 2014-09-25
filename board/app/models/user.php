@@ -188,7 +188,7 @@ class User extends AppModel
     *Counts total Posts of the user
     *@param $user_id
     */
-    public static function countUserPost($user_id)
+    public static function countPost($user_id)
     {
         $db = DB::conn();
         return $db->value("SELECT count(id) FROM comment WHERE user_id = ?", array($user_id));

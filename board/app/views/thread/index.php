@@ -40,7 +40,7 @@
 					by <?php encode($threads[$i]->username) ?> on <?php encode(date('M d, Y h:ia', strtotime($threads[$i]->created))) ?>
 				</td>
 				<td>
-					<?php encode($count[$i]) ?>
+					<?php encode($count_comment[$i]) ?>
 				</td>
 				<td>
 					<?php encode($threads[$i]->view) ?>
