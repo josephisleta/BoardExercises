@@ -93,7 +93,6 @@ class UserController extends AppController
             case 'profile':
                 break;
             case 'profile_end':
-                $user->id = $_SESSION['id'];
                 $user->username = Param::get('username');
                 $user->name = Param::get('name');
                 $user->email = Param::get('email');
@@ -132,7 +131,6 @@ class UserController extends AppController
             case 'change_password':
                 break;
             case 'profile_end':
-                $user->id = $_SESSION['id'];
                 $user->password = Param::get('password');
                 $user->confirm_password = Param::get('confirm_password');
                 try {

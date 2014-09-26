@@ -173,7 +173,6 @@ class ThreadController extends AppController
         $this->set(get_defined_vars());
 
         if (isset($_POST['rename'])) {
-            $thread->id = Param::get('thread_id');
             $thread->title = trim(Param::get('title'));
             try {
                 $thread->rename();
@@ -244,8 +243,6 @@ class ThreadController extends AppController
 
         if (isset($_POST['delete'])) {
             $comment->delete();
-            $thread_id = $comment->thread_id;
-
             $this->render('delete_comment_end');
         }
     }
