@@ -13,11 +13,17 @@ class User extends AppModel
             'length' => array(
                 'validate_between', self::MIN_USERNAME_LENGTH, self::MAX_USERNAME_LENGTH
             ),
+            'format' => array(
+                'is_alphanumeric'
+            ),
         ),
         
         'password' => array(
             'length' => array(
                 'validate_between', self::MIN_PASSWORD_LENGTH, self::MAX_PASSWORD_LENGTH
+            ),
+            'format' => array(
+                'is_alphanumeric'
             ),
         ),
 

@@ -13,6 +13,11 @@
 			</div>
 		<?php endif ?>
 
+		<?php if ($user->validation_errors['password']['format']): ?>
+			<div><em>Password</em> must contain alphanumeric characters only.
+			</div>
+		<?php endif ?>
+
 		<?php if ($user->validation_errors['confirm_password']['match']): ?>
 			<div><em>Passwords</em> do not match.</div>
 		<?php endif ?>

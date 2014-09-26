@@ -25,7 +25,7 @@
 	<label>Title</label>
 	<input type="text" class="span2" name="title" value="<?php encode(Param::get('title')) ?>" required>
 	<label>Comment</label>
-	<textarea name="body" required><?php encode(Param::get('body')) ?></textarea>
+	<textarea name="body" style="width: 890px; height: 150px;" required><?php encode(Param::get('body')) ?></textarea>
 	<br />
 
 	<input type="hidden" name="page_next" value="create_end">

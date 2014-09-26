@@ -11,12 +11,24 @@
 				<?php encode($user->validation['username']['length'][2]) ?> characters in length.
 			</div>
 		<?php endif ?>
+
+		<?php if ($user->validation_errors['username']['format']): ?>
+			<div>
+				<em>Username</em> must contain alphanumeric characters only.
+			</div>
+		<?php endif ?>
 		
 		<?php if ($user->validation_errors['password']['length']): ?>
 			<div>
 				<em>Password</em> must be between
 				<?php encode($user->validation['password']['length'][1]) ?> and
 				<?php encode($user->validation['password']['length'][2]) ?> characters in length.
+			</div>
+		<?php endif ?>
+
+		<?php if ($user->validation_errors['password']['format']): ?>
+			<div>
+				<em>Password</em> must contain alphanumeric characters only.
 			</div>
 		<?php endif ?>
 

@@ -16,7 +16,7 @@ class UserController extends AppController
             case 'register':
                 break;
             case 'register_end':
-                $user->username = trim(Param::get('username'));
+                $user->username = Param::get('username');
                 $user->password = Param::get('password');
                 $user->confirm_password = Param::get('confirm_password');
                 $user->name = Param::get('name');
@@ -92,7 +92,7 @@ class UserController extends AppController
                 break;
             case 'profile_end':
                 $user->id = $_SESSION['id'];
-                $user->username = trim(Param::get('username'));
+                $user->username = Param::get('username');
                 $user->name = Param::get('name');
                 $user->email = Param::get('email');
                 

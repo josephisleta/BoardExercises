@@ -11,6 +11,11 @@ function is_match_password($password, $confirm_password)
     return $password === $confirm_password;
 }
 
+function is_alphanumeric($string)
+{
+    return ctype_alnum($string);
+}
+
 function is_letters_only($name)
 {
     return ctype_alpha($name);

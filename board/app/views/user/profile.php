@@ -13,6 +13,10 @@
 			</div>
 		<?php endif ?>
 
+		<?php if ($user->validation_errors['username']['format']): ?>
+			<div><em>Username</em> must contain alphanumeric characters only.</div>
+		<?php endif ?>
+
 		<?php if ($user->validation_errors['name']['format']): ?>
 			<div><em>Name</em> must contain letters only.</div>
 		<?php endif ?>
