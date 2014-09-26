@@ -22,10 +22,9 @@ class ThreadController extends AppController
         $count_comment = array();
         $last_post = array();
 
-        foreach ($threads as $v) {
-            $last_post[] = Thread::getLastPost($v->id);
-            $thread = Thread::get($v->id);
+        foreach ($threads as $thread) {
             $count_comment[] = Comment::count($thread->id);
+            $last_post[] = Thread::getLastPost($thread->id);
         }
 
         $this->set(get_defined_vars());
