@@ -69,7 +69,6 @@
 		<label>Comment</label>
 		<textarea name="body" style="width: 890px; height: 150px;" required><?php encode(Param::get('body')) ?></textarea>
 		<br>
-		<input type="hidden" name="username" value="<?php encode($_SESSION['username']) ?>">
 		<input type="hidden" name="thread_id" value="<?php encode($thread->id) ?>">
 		<input type="hidden" name="page_next" value="write_end">
 		<button type="submit" class="btn btn-primary">Submit</button>

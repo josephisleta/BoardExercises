@@ -6,8 +6,10 @@ class Comment extends AppModel
 
     public $validation = array(
         'body' => array(
-            'length' => array('validate_between', self::MIN_COMMENT_LENGTH, self::MAX_COMMENT_LENGTH),
-        ),
+            'length' => array(
+                'validate_between', self::MIN_COMMENT_LENGTH, self::MAX_COMMENT_LENGTH
+            )
+        )
     );
 
     /*
@@ -94,7 +96,7 @@ class Comment extends AppModel
     *Count the number of comments on a thread
     *@param $thread_id
     */
-    public static function countThreadComments($thread_id)
+    public static function count($thread_id)
     {
         $db = DB::conn();
         return $db->value("SELECT count(id) FROM comment WHERE thread_id = ?", array($thread_id));

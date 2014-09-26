@@ -15,7 +15,7 @@ class User extends AppModel
             ),
             'format' => array(
                 'is_alphanumeric'
-            ),
+            )
         ),
         
         'password' => array(
@@ -24,26 +24,26 @@ class User extends AppModel
             ),
             'format' => array(
                 'is_alphanumeric'
-            ),
+            )
         ),
 
         'confirm_password' => array(
             'match' => array(
                 'is_match_password'
-            ),
+            )
         ),
         
-        'name' => array (
+        'name' => array(
             'format' => array(
                 'is_letters_only'
-            ),
+            )
         ),
         
         'email' => array(
             'format' => array(
                 'is_email_valid'
-            ),
-        ),
+            )
+        )
     );
 
     /*

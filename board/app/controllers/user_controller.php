@@ -21,7 +21,6 @@ class UserController extends AppController
                 $user->confirm_password = Param::get('confirm_password');
                 $user->name = Param::get('name');
                 $user->email = Param::get('email');
-                
                 try {
                     $user->register();
                 } catch (ValidationException $e) {
@@ -55,13 +54,16 @@ class UserController extends AppController
                 $user->password = Param::get('password');
                 try {
                     $account = $user->authenticate();
-                    if ($account['type'] === 'banned') {
-                        redirect(url('user/login'));
-                    } else {
-                        $_SESSION['id'] = $account['id'];
-                        $_SESSION['username'] = $account['username'];
-                        $_SESSION['name'] = $account['name'];
-                        $_SESSION['type'] = $account['type'];
+                    switch ($account['type']) {
+                        case 'banned':
+                            redirect(url('user/login'));
+                            break;
+                        default:
+                            $_SESSION['id'] = $account['id'];
+                            $_SESSION['username'] = $account['username'];
+                            $_SESSION['name'] = $account['name'];
+                            $_SESSION['type'] = $account['type'];
+                            break;
                     }
                 } catch (UserNotFoundException $e) {
                     $page = 'login';
@@ -95,7 +97,6 @@ class UserController extends AppController
                 $user->username = Param::get('username');
                 $user->name = Param::get('name');
                 $user->email = Param::get('email');
-                
                 try {
                     $user->updateProfile();
                     $account = $user->updateSession();
@@ -134,7 +135,6 @@ class UserController extends AppController
                 $user->id = $_SESSION['id'];
                 $user->password = Param::get('password');
                 $user->confirm_password = Param::get('confirm_password');
-                
                 try {
                     $user->updatePassword();
                 } catch (ValidationException $e) {
@@ -151,7 +151,7 @@ class UserController extends AppController
 
     /*
     *View all user
-    *Promote,demote,ban,unban a user
+    *Promote, demote, ban, unban a user
     */
     public function admin()
     {

@@ -8,8 +8,8 @@ class Thread extends AppModel
         'title' => array(
             'length' => array(
                 'validate_between', self::MIN_THREAD_LENGTH, self::MAX_THREAD_LENGTH
-            ),
-        ),
+            )
+        )
     );
 
     /*

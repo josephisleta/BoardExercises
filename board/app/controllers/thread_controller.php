@@ -23,9 +23,9 @@ class ThreadController extends AppController
         $last_post = array();
 
         foreach ($threads as $v) {
-            $thread = Thread::get($v->id);
-            $count_comment[] = Comment::countThreadComments($thread->id);
             $last_post[] = Thread::getLastPost($v->id);
+            $thread = Thread::get($v->id);
+            $count_comment[] = Comment::count($thread->id);
         }
 
         $this->set(get_defined_vars());
@@ -35,7 +35,7 @@ class ThreadController extends AppController
     *Creates a new thread
     */
     public function create()
-    {   
+    {
         if (!is_logged_in()) {
             redirect(url('user/login'));
         }
@@ -75,15 +75,15 @@ class ThreadController extends AppController
         }
 
         $thread = Thread::get(Param::get('thread_id'));
-        $limit = Comment::countThreadComments($thread->id);
+        $limit = Comment::count($thread->id);
         $pagination = Pagination::getControls($limit);
         $thread->viewAdd();
 
         $comments = $thread->getComments($pagination['maximum']);
 
         $count_post = array();
-        foreach ($comments as $v) {
-            $count_post[] = User::countPost($v->user_id);
+        foreach ($comments as $comment) {
+            $count_post[] = User::countPost($comment->user_id);
         }
 
         $this->set(get_defined_vars());
@@ -132,14 +132,14 @@ class ThreadController extends AppController
         }
 
         $thread = Thread::get(Param::get('thread_id'));
-        $limit = Comment::countThreadComments($thread->id);
+        $limit = Comment::count($thread->id);
         $pagination = Pagination::getControls($limit);
 
         $comments = $thread->getComments($pagination['maximum']);
 
         $count_post = array();
-        foreach ($comments as $v) {
-            $count_post[] = User::countPost($v->user_id);
+        foreach ($comments as $comment) {
+            $count_post[] = User::countPost($comment->user_id);
         }
 
         if (isset($_POST['delete'])) {
@@ -160,14 +160,14 @@ class ThreadController extends AppController
         }
 
         $thread = Thread::get(Param::get('thread_id'));
-        $limit = Comment::countThreadComments($thread->id);
+        $limit = Comment::count($thread->id);
         $pagination = Pagination::getControls($limit);
 
         $comments = $thread->getComments($pagination['maximum']);
 
         $count_post = array();
-        foreach ($comments as $v) {
-            $count_post[] = User::countPost($v->user_id);
+        foreach ($comments as $comment) {
+            $count_post[] = User::countPost($comment->user_id);
         }
 
         $this->set(get_defined_vars());
@@ -195,7 +195,7 @@ class ThreadController extends AppController
 
         $comment = Comment::get(Param::get('comment_id'));
         $thread = Thread::get(Param::get('thread_id'));
-        $limit = Comment::countThreadComments($thread->id);
+        $limit = Comment::count($thread->id);
         $pagination = Pagination::getControls($limit);
 
         $comments = $thread->getComments($pagination['maximum']);
@@ -230,7 +230,7 @@ class ThreadController extends AppController
         $comment = Comment::get(Param::get('comment_id'));
         $thread = Thread::get(Param::get('thread_id'));
 
-        $limit = Comment::countThreadComments($thread->id);
+        $limit = Comment::count($thread->id);
         $pagination = Pagination::getControls($limit);
 
         $comments = $thread->getComments($pagination['maximum']);
