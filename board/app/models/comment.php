@@ -83,13 +83,15 @@ class Comment extends AppModel
     */
     public static function get($id)
     {
-        $query = "SELECT comment.id, comment.user_id, comment.thread_id, user.username, comment.body, comment.created 
-                  FROM comment INNER JOIN user ON comment.user_id = user.id WHERE comment.id = ?";
+        $query = "SELECT * FROM comment WHERE id = ?";
 
         $db = DB::conn();
         $row = $db->row($query, array($id));
         
-        return ($row) ? new self($row) : null;
+        if (!$row) {
+            throw new RecordNotFoundException('no record found');
+        }
+        return new self($row);
     }
 
     /*

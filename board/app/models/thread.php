@@ -18,8 +18,9 @@ class Thread extends AppModel
     */
     public static function get($thread_id)
     {
-        $query = "SELECT thread.id, thread.title, thread.created, thread.view, user.username FROM thread
-                  INNER JOIN user ON thread.user_id = user.id WHERE thread.id = ?";
+        $user = "(SELECT username from user where user.id = thread.user_id)";
+
+        $query = "SELECT id, title, created, view , $user AS username FROM thread WHERE id = ?";
 
         $db = DB::conn();
         $row = $db->row($query, array($thread_id));
@@ -38,12 +39,12 @@ class Thread extends AppModel
     {
         $threads = array();
 
-        $query = "SELECT thread.id, thread.title, user.username, thread.created, thread.updated, thread.view 
-                  FROM thread INNER JOIN user ON thread.user_id = user.id 
-                  ORDER BY thread.updated DESC LIMIT {$limit}";
-        
         $db = DB::conn();
-        $rows = $db->rows($query);
+
+        $user = "(SELECT username from user where user.id = thread.user_id)";
+
+        $rows = $db->rows("SELECT id, title, created, view , $user AS username FROM thread 
+                           ORDER BY updated DESC LIMIT {$limit}");
 
         foreach ($rows as $row) {
             $threads[] = new self($row);
@@ -59,12 +60,19 @@ class Thread extends AppModel
     {
         $comments = array();
 
-        $query = "SELECT comment.id, comment.thread_id, user.username, comment.body, comment.created, comment.user_id, user.type, user.registered, comment.updated
-                  FROM comment INNER JOIN user ON comment.user_id = user.id
-                  WHERE thread_id = ? ORDER BY created ASC LIMIT {$limit}";
+        $user_name = "(SELECT username from user where user.id = comment.user_id)";
+        $user_type = "(SELECT type from user where user.id = comment.user_id)";
+        $user_registered = "(SELECT registered from user where user.id = comment.user_id)";
+        
+        $query = "SELECT id, thread_id, body, created, user_id, updated, $user_name AS username, $user_type AS type, $user_registered AS registered 
+                  FROM comment WHERE thread_id = ?
+                  ORDER BY created ASC LIMIT {$limit}";
 
-        $db = DB::conn();
+        $db = DB::conn();    
         $rows = $db->rows($query, array($this->id));
+
+
+        //$rows = $db->rows($query, array($this->id));
 
         foreach ($rows as $row) {
             $comments[] = new Comment($row);
@@ -144,23 +152,21 @@ class Thread extends AppModel
 
         switch ($filter) {
             case "title":
-                $where = "WHERE thread.title LIKE ?";
-                break;
-            case "author":
-                $where = "WHERE user.username LIKE ?";
+                $where = "WHERE title LIKE ?";
                 break;
             case "created":
-                $where = "WHERE thread.created LIKE ?";
+                $where = "WHERE created LIKE ?";
                 break;
             default:
-                $where = "WHERE thread.title LIKE ? OR user.username LIKE ? OR thread.created LIKE ?";
-                $params = array($like, $like, $like);
+                $where = "WHERE title LIKE ? OR created LIKE ?";
+                $params = array($like, $like);
                 break;
         }
 
-        $query = "SELECT thread.id, thread.title, user.username, thread.created, thread.updated, thread.view
-                  FROM thread INNER JOIN user ON thread.user_id = user.id {$where} 
-                  ORDER BY thread.updated DESC LIMIT {$limit}";
+        $user = "(SELECT username from user where user.id = thread.user_id)";
+        
+        $query = "SELECT id, title, created, updated, view, $user AS username
+                  FROM thread {$where} ORDER BY updated DESC LIMIT {$limit}";
 
         $db = DB::conn();
         $rows = $db->rows($query, $params);
@@ -183,10 +189,12 @@ class Thread extends AppModel
     */
     public static function getLastPost($thread_id)
     {
-        $query = "SELECT user.username, comment.created
-                  FROM comment INNER JOIN user ON comment.user_id = user.id 
-                  WHERE comment.thread_id = ? ORDER BY comment.created DESC";
+        $user = "(SELECT username from user where user.id = comment.user_id)";
         
+        $query = "SELECT created, $user AS username
+                  FROM comment WHERE thread_id = ?
+                  ORDER BY created DESC";
+
         $db = DB::conn();
         $row = $db->row($query, array($thread_id));
 

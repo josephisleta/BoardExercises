@@ -160,7 +160,7 @@ class UserController extends AppController
         $users = User::getAll();
         $action = Param::get('action');
 
-        if (isset($_POST['yes'])) {
+        if (Param::get('yes')) {
             $user = User::get(Param::get('id'));
 
             $user->adminAction($action);

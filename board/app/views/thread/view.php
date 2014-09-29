@@ -8,7 +8,7 @@
 			</td>
 			
 			<td style="text-align:right;">
-				<?php if (($_SESSION['username'] === $thread->username) || is_admin()): ?>
+				<?php if (($_SESSION['id'] === $thread->id) || is_admin()): ?>
 				    <a class="btn" href="<?php encode(url('thread/rename', array('thread_id' => $thread->id))) ?>">
 					<i class="icon-pencil"></i></a>
 

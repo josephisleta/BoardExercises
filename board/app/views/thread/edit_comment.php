@@ -16,7 +16,7 @@
 <form class="well" method="POST" >
     <label>Edit Comment:</label>
     <textarea name="body" style="width: 890px; height: 150px;" pattern=".{1,200}" required><?php encode($comment->body) ?></textarea><br>
-    <button type="submit" name="edit" class="btn btn-primary" >Save</button>
+    <button type="submit" value="save" name="edit" class="btn btn-primary" >Save</button>
     <a href="<?php encode(url('thread/view', array('thread_id' => $thread->id)))?> ">Cancel</a>
 </form>
 

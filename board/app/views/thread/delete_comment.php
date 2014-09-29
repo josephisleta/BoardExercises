@@ -8,7 +8,6 @@
 
 <h4 class="well muted">
 	<table>
-		<?php echo $comment->username ?><br>
 		<?php echo $comment->created ?><br>
 		<?php echo $comment->body ?>
 	</table>

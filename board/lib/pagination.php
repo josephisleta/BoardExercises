@@ -7,6 +7,7 @@ class Pagination
     public static $pagination = array();
     
     const MAX_PER_PAGE = 10;
+    const MAX_PAGE_LINKS = 4;
     
     //  Get the current page
     public static function getCurrentPage($row_length)
@@ -47,11 +48,12 @@ class Pagination
         $limit = self::getLimit($row_length);
         $page_url =& $url['pn'];
         $pageControls = '';
+
         if ($last_page != 1) {
             if ($pagenum > 1) {
                 $page_url = $pagenum - 1;
                 $pageControls .= '<a href="'. url('', $url) .'">Previous</a> &nbsp; &nbsp; ';
-                for ($i = $pagenum - 4 ; $i < $pagenum ; $i++) {
+                for ($i = $pagenum - self::MAX_PAGE_LINKS ; $i < $pagenum ; $i++) {
                     if ($i > 0) {
                         $pageControls .= '<a href="'. url('', $url) .'">'.$i.'</a> &nbsp; ';
                     }
@@ -61,7 +63,7 @@ class Pagination
             for ($i = $pagenum + 1 ; $i <= $last_page ; $i++) {
                 $page_url = $i;
                 $pageControls .= '<a href="'.url('', $url).'">'.$i.'</a> &nbsp; ';
-                if ($i >= $pagenum + 4) {
+                if ($i >= $pagenum + self::MAX_PAGE_LINKS) {
                     break;
                 }
             }
@@ -70,7 +72,7 @@ class Pagination
                 $pageControls .= '&nbsp; &nbsp; <a href="'.url('', $url).'">Next</a>';
             }
         }
-        
+
         self::$pagination = array(
             'pagenum' => $pagenum,
             'last_page' => $last_page,

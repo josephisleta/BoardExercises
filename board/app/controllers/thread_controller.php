@@ -141,7 +141,7 @@ class ThreadController extends AppController
             $count_post[] = User::countPost($comment->user_id);
         }
 
-        if (isset($_POST['delete'])) {
+        if (Param::get('delete')) {
             $thread->delete();
             $this->render('delete_end');
         }
@@ -171,7 +171,7 @@ class ThreadController extends AppController
 
         $this->set(get_defined_vars());
 
-        if (isset($_POST['rename'])) {
+        if (Param::get('rename')) {
             $thread->title = trim(Param::get('title'));
             try {
                 $thread->rename();
@@ -205,7 +205,7 @@ class ThreadController extends AppController
 
         $this->set(get_defined_vars());
 
-        if (isset($_POST['edit'])) {   
+        if (Param::get('edit')) {
             $comment->body = Param::get('body');
             try {
                 $comment->edit();
@@ -240,7 +240,7 @@ class ThreadController extends AppController
 
         $this->set(get_defined_vars());
 
-        if (isset($_POST['delete'])) {
+        if (Param::get('delete')) {
             $comment->delete();
             $this->render('delete_comment_end');
         }

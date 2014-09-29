@@ -5,12 +5,11 @@
 		</td>
 		<td style="float: right;">
 			<form class="form-search" method="GET">
-				<input type="text" name="keyword" class="input-medium">
+				<input type="text" name="keyword" class="input-medium" placeholder="Search">
 				<select name="filter" class="input-medium">
 					<option value="" selected disabled>Search by</option>
 					<option value="all">All</option>
 					<option value="title">Title</option>
-					<option value="author">Author</option>
 					<option value="created">Date Created</option>
 				</select>
 				<button type="submit" class="btn">Search</button>
