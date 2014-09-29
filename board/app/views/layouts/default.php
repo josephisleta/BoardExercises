@@ -19,9 +19,12 @@
         <div class="container">
             <table style="width: 100%;">
                 <td>
-                    <a class="brand" href="<?php encode(url('thread/index')) ?>">Discussion Forum</a>
+                    <a class="brand" style="color:black;" href="<?php encode(url('thread/index')) ?>">Discussion Forum</a>
                 </td>
                 <?php if(is_logged_in()): ?>
+                    <td>
+                      Welcome <?php encode($_SESSION['name']) ?>!
+                    </td>
                     <td style="text-align:right;">
                         You are logged in as
                         <?php encode($_SESSION['type']) ?>: 
