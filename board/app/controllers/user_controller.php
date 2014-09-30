@@ -98,7 +98,7 @@ class UserController extends AppController
                 $user->email = Param::get('email');
                 try {
                     $user->updateProfile();
-                    $account = $user->updateSession();
+                    $account = $user->getSession();
                     $_SESSION['id'] = $account['id'];
                     $_SESSION['username'] = $account['username'];
                     $_SESSION['name'] = $account['name'];

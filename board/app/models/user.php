@@ -156,7 +156,7 @@ class User extends AppModel
     /*
     *Gets new updated user information for session
     */
-    public function updateSession()
+    public function getSession()
     {
         $db = DB::conn();
         $row = $db->row("SELECT id, username, name, type FROM user WHERE id = ?", array($this->id));
