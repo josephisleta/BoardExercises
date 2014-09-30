@@ -39,10 +39,11 @@ class Thread extends AppModel
         $threads = array();
 
         $user = "(SELECT username from user where user.id = thread.user_id)";
+        $query = "SELECT id, title, created, view , $user AS username FROM thread 
+                  ORDER BY updated DESC LIMIT {$limit}";
 
         $db = DB::conn();
-        $rows = $db->rows("SELECT id, title, created, view , $user AS username FROM thread 
-                           ORDER BY updated DESC LIMIT {$limit}");
+        $rows = $db->rows($query);
 
         foreach ($rows as $row) {
             $threads[] = new self($row);

@@ -34,11 +34,11 @@
 					</td>
 					<td colspan=2 style="text-align:right;">
 						<?php if(($_SESSION['username'] === $comments[$i]->username) || is_admin()): ?>
-							<a class="btn btn-mini" href="<?php encode(url('thread/edit_comment', array('thread_id'=>$thread->id, 'comment_id'=>$comments[$i]->id))) ?>">
+							<a class="btn btn-mini" href="<?php encode(url('comment/edit', array('thread_id'=>$thread->id, 'comment_id'=>$comments[$i]->id))) ?>">
 								<i class="icon-pencil"></i>
 							</a>
 
-							<a class="btn btn-mini btn-danger" href="<?php encode(url('thread/delete_comment', array('thread_id'=>$thread->id, 'comment_id'=>$comments[$i]->id))) ?>">
+							<a class="btn btn-mini btn-danger" href="<?php encode(url('comment/delete', array('thread_id'=>$thread->id, 'comment_id'=>$comments[$i]->id))) ?>">
 								<i class="icon-trash"></i>
 							</a>
 						<?php endif?>
@@ -72,7 +72,7 @@
 	
 	<hr>
 	
-	<form class="well" method="POST" action="<?php encode(url('thread/write')) ?>">
+	<form class="well" method="POST" action="<?php encode(url('comment/write')) ?>">
 		<label>Comment</label>
 		<textarea name="body" style="width: 890px; height: 150px;" required><?php encode(Param::get('body')) ?></textarea>
 		<br>

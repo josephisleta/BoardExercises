@@ -149,12 +149,8 @@ class User extends AppModel
             throw new ValidationException("invalid inputs");
         }
         
-        $params = array(
-            'password' => $this->password,
-        );
-        
         $db = DB::conn();
-        $db->update('user', $params, array('id' => $this->id));
+        $db->update('user', array('password' => $this->password), array('id' => $this->id));
     }
 
     /*
@@ -177,12 +173,8 @@ class User extends AppModel
     */
     public function adminAction($action)
     {
-        $params = array(
-            'type' => $action,
-        );
-        
         $db = DB::conn();
-        $db->update('user', $params, array('id' => $this->id));
+        $db->update('user', array('type' => $action), array('id' => $this->id));
     }
 
     public function isFailedLogin()

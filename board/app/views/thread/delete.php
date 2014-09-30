@@ -28,9 +28,9 @@
 					</td>
 					<td colspan=2 style="text-align:right;">
 						<?php if(($_SESSION['username'] === $comments[$i]->username) || is_admin()): ?>
-							    <a class="btn btn-mini" href="<?php encode(url('thread/edit_comment', array('thread_id'=>$thread->id, 'comment_id'=>$comments[$i]->id))) ?>">
+							    <a class="btn btn-mini" href="<?php encode(url('comment/edit', array('thread_id'=>$thread->id, 'comment_id'=>$comments[$i]->id))) ?>">
 								<i class="icon-pencil"></i></a>
-							    <a class="btn btn-mini btn-danger" href="<?php encode(url('thread/delete_comment', array('thread_id'=>$thread->id, 'comment_id'=>$comments[$i]->id))) ?>">
+							    <a class="btn btn-mini btn-danger" href="<?php encode(url('comment/delete', array('thread_id'=>$thread->id, 'comment_id'=>$comments[$i]->id))) ?>">
 								<i class="icon-trash"></i></a>
 						<?php endif?>
 					</td>
