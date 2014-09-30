@@ -1,35 +1,21 @@
-<<<<<<< HEAD
-<div style="float:right;">
-	<p><em>You are logged in as :</em>
-		<?php encode($_SESSION['username'])?>
-		<a class="btn btn-mini btn-danger" href="<?php encode(url('user/logout')) ?>">Logout</a>
-	</p>
-</div>
+<a href="<?php encode(url('thread/index'))?> ">&larr; Back to home</a>
 
-<a href="<?php encode(url('thread/index')) ?>">
-	&larr; Back to home
-</a>
-<div style="background-color:#E0FFFF;">
-	<h1><?php encode($thread->title) ?></h1>
-	<table class="table">
-		<?php foreach ($comments as $k => $v): ?>
-		<div class="comment">
-			<tr style="background-color: #D3D3D3;">
-				<td><div class="meta" style="text-align:left; font-size:21px; "><?php encode($v->username) ?></td>
-				<td style="text-align:right; font-size:12px"><?php encode($v->created) ?></div></td>
-			</tr>
-			<tr>
-				<td colspan=2 style="height:100px;"><?php echo readable_text($v->body) ?></td>
-			</tr>
-		</div>
-		<?php endforeach ?>
+<form method="POST" class="alert alert-danger">
+    <h4 class="alert-heading">Are you sure you want to delete this comment?</h4>
+    <input type="submit" class="btn btn-danger" value="Yes" name='delete'></input>
+    <a class="btn btn-default" href="<?php encode(url('thread/view', array('thread_id' => $thread->id))) ?>">No</a>
+</form>
+
+<h4 class="well muted">
+	<table>
+		<?php echo $comment->created ?><br>
+		<?php echo $comment->body ?>
 	</table>
-=======
-<a href="<?php encode(url('thread/index')) ?>">&larr; Back to home</a>
+</h4>
 
 <div>
 	<table class="table" style="width: 100%;">
-		<tr>
+		<tr >
 			<td colspan=3 style="text-align:left; font-size:36px; padding:10px; font-weight: bold;">
 				<?php encode($thread->title) ?>
 			</td>
@@ -37,10 +23,11 @@
 			<td style="text-align:right;">
 				<?php if (($_SESSION['username'] === $thread->username) || is_admin()): ?>
 				    <a class="btn" href="<?php encode(url('thread/rename', array('thread_id' => $thread->id))) ?>">
-					<i class="icon-pencil"></i></a>
-
+						<i class="icon-pencil"></i>
+					</a>
 				    <a class="btn btn-danger" href="<?php encode(url('thread/delete', array('thread_id' => $thread->id))) ?>">
-					<i class="icon-trash"></i></a>
+						<i class="icon-trash"></i>
+					</a>
 				<?php endif?>
 			</td>
 		</tr>
@@ -62,12 +49,9 @@
 					<td colspan=2 style="text-align:right;">
 						<?php if(($_SESSION['username'] === $comments[$i]->username) || is_admin()): ?>
 							<a class="btn btn-mini" href="<?php encode(url('comment/edit', array('thread_id'=>$thread->id, 'comment_id'=>$comments[$i]->id))) ?>">
-								<i class="icon-pencil"></i>
-							</a>
-
+							<i class="icon-pencil"></i></a>
 							<a class="btn btn-mini btn-danger" href="<?php encode(url('comment/delete', array('thread_id'=>$thread->id, 'comment_id'=>$comments[$i]->id))) ?>">
-								<i class="icon-trash"></i>
-							</a>
+							<i class="icon-trash"></i></a>
 						<?php endif?>
 					</td>
 				</tr>
@@ -87,33 +71,15 @@
 							Registered: <?php encode(date('Y-m-d', strtotime($comments[$i]->registered))) ?>
 						</div>
 					</td>
-					<td colspan=3 style="height:100px;"><?php echo readable_text($comments[$i]->body) ?></td>
+					<td colspan=3 style="height:100px;">
+						<?php echo readable_text($comments[$i]->body) ?>
+					</td>
 				</tr>
 			</div>
 		<?php endfor ?>
 	</table>
 
->>>>>>> dev_1.1_BAK
 	<div style="float:right;">
 		<?php echo $pagination['control'];?>
 	</div>
-	
-	<hr>
-	
-<<<<<<< HEAD
-	<form class="well" method="POST" action="<?php encode(url('thread/write')) ?>">
-		<label>Comment</label>
-		<textarea name="body" style="width: 890px; height: 150px;" required><?php encode(Param::get('body')) ?></textarea>
-		<br />
-		<input type="hidden" name="username" value="<?php encode($_SESSION['username']) ?>">
-=======
-	<form class="well" method="POST" action="<?php encode(url('comment/write')) ?>">
-		<label>Comment</label>
-		<textarea name="body" style="width: 890px; height: 150px;" required><?php encode(Param::get('body')) ?></textarea>
-		<br>
->>>>>>> dev_1.1_BAK
-		<input type="hidden" name="thread_id" value="<?php encode($thread->id) ?>">
-		<input type="hidden" name="page_next" value="write_end">
-		<button type="submit" class="btn btn-primary">Submit</button>
-	</form>
 </div>
