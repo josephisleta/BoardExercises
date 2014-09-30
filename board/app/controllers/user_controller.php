@@ -11,7 +11,11 @@ class UserController extends AppController
         }
         
         $user = new User;
+<<<<<<< HEAD
         $page = Param::get('page_next','register');
+=======
+        $page = Param::get('page_next', 'register');
+>>>>>>> dev_1.1_BAK
         switch ($page) {
             case 'register':
                 break;
@@ -21,7 +25,10 @@ class UserController extends AppController
                 $user->confirm_password = Param::get('confirm_password');
                 $user->name = Param::get('name');
                 $user->email = Param::get('email');
+<<<<<<< HEAD
                 
+=======
+>>>>>>> dev_1.1_BAK
                 try {
                     $user->register();
                 } catch (ValidationException $e) {
@@ -31,6 +38,10 @@ class UserController extends AppController
             default:
                 throw new PageNotFoundException("{$page} not found");
         }
+<<<<<<< HEAD
+=======
+
+>>>>>>> dev_1.1_BAK
         $this->set(get_defined_vars());
         $this->render($page);
     }
@@ -54,9 +65,23 @@ class UserController extends AppController
                 $user->password = Param::get('password');
                 try {
                     $account = $user->authenticate();
+<<<<<<< HEAD
                     $_SESSION['id'] = $account['id'];
                     $_SESSION['username'] = $account['username'];
                     $_SESSION['name'] = $account['name'];
+=======
+                    switch ($account['type']) {
+                        case 'banned':
+                            redirect(url('user/login'));
+                            break;
+                        default:
+                            $_SESSION['id'] = $account['id'];
+                            $_SESSION['username'] = $account['username'];
+                            $_SESSION['name'] = $account['name'];
+                            $_SESSION['type'] = $account['type'];
+                            break;
+                    }
+>>>>>>> dev_1.1_BAK
                 } catch (UserNotFoundException $e) {
                     $page = 'login';
                 }
@@ -64,11 +89,111 @@ class UserController extends AppController
             default:
                 throw new UserNotFoundException("{$page} not found");
         }
+<<<<<<< HEAD
+=======
+
         $this->set(get_defined_vars());
         $this->render($page);
     }
 
     /*
+    *Edit user information
+    */
+    public function profile()
+    {
+        if (!is_logged_in()) {
+            redirect(url('user/login'));
+        }
+
+        $user = User::get($_SESSION['id']);
+        $page = Param::get('page_next', 'profile');
+
+        switch ($page) {
+            case 'profile':
+                break;
+            case 'profile_end':
+                $user->username = Param::get('username');
+                $user->name = Param::get('name');
+                $user->email = Param::get('email');
+                try {
+                    $user->updateProfile();
+                    $account = $user->get($_SESSION['id']);
+                    $_SESSION['id'] = $account->id;
+                    $_SESSION['username'] = $account->username;
+                    $_SESSION['name'] = $account->name;
+                    $_SESSION['type'] = $account->type;
+                } catch (ValidationException $e) {
+                    $page = 'profile';
+                }
+                break;
+            default:
+                throw new PageNotFoundException("{$page} not found");
+        }
+
+>>>>>>> dev_1.1_BAK
+        $this->set(get_defined_vars());
+        $this->render($page);
+    }
+
+    /*
+<<<<<<< HEAD
+=======
+    *Edit user password
+    */
+    public function change_password()
+    {
+        if (!is_logged_in()) {
+            redirect(url('user/login'));
+        }
+
+        $user = User::get($_SESSION['id']);
+        $page = Param::get('page_next', 'change_password');
+
+        switch ($page) {
+            case 'change_password':
+                break;
+            case 'profile_end':
+                $user->password = Param::get('password');
+                $user->confirm_password = Param::get('confirm_password');
+                try {
+                    $user->updatePassword();
+                } catch (ValidationException $e) {
+                    $page = 'change_password';
+                }
+                break;
+            default:
+                throw new PageNotFoundException("{$page} not found");
+        }
+
+        $this->set(get_defined_vars());
+        $this->render($page);
+    }
+
+    /*
+    *View all users
+    *Promote, demote, ban, unban a user
+    */
+    public function admin()
+    {
+        if (!is_logged_in() || !is_admin()) {
+            redirect(url('user/login'));
+        }
+
+        $users = User::getAll();
+        $type = Param::get('type');
+
+        if (Param::get('yes')) {
+            $user = User::get(Param::get('id'));
+
+            $user->changeType($type);
+            redirect(url('user/admin'));
+        }
+
+        $this->set(get_defined_vars());
+    }
+
+    /*
+>>>>>>> dev_1.1_BAK
     *Destroys the session of the user
     *Redirects to login page
     */

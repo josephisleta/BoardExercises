@@ -1,15 +1,24 @@
 <?php
 class Thread extends AppModel
 {
+<<<<<<< HEAD
     const MIN_THREAD_LENGTH = 1;
+=======
+    const MIN_THREAD_LENGTH = 6;
+>>>>>>> dev_1.1_BAK
     const MAX_THREAD_LENGTH = 30;
     
     public $validation = array(
         'title' => array(
             'length' => array(
                 'validate_between', self::MIN_THREAD_LENGTH, self::MAX_THREAD_LENGTH
+<<<<<<< HEAD
             ),
         ),
+=======
+            )
+        )
+>>>>>>> dev_1.1_BAK
     );
 
     /*
@@ -18,8 +27,16 @@ class Thread extends AppModel
     */
     public static function get($thread_id)
     {
+<<<<<<< HEAD
         $db = DB::conn();
         $row = $db->row('SELECT * FROM thread WHERE id = ?', array($thread_id));
+=======
+        $user = "(SELECT username from user where user.id = thread.user_id)";
+        $query = "SELECT id, title, created, view , $user AS username FROM thread WHERE id = ?";
+
+        $db = DB::conn();
+        $row = $db->row($query, array($thread_id));
+>>>>>>> dev_1.1_BAK
 
         if (!$row) {
             throw new RecordNotFoundException('no record found');
@@ -35,8 +52,17 @@ class Thread extends AppModel
     {
         $threads = array();
 
+<<<<<<< HEAD
         $db = DB::conn();
         $rows = $db->rows("SELECT * FROM thread ORDER BY created DESC LIMIT $limit");
+=======
+        $user = "(SELECT username from user where user.id = thread.user_id)";
+        $query = "SELECT id, title, created, view , $user AS username FROM thread 
+                  ORDER BY updated DESC LIMIT {$limit}";
+
+        $db = DB::conn();
+        $rows = $db->rows($query);
+>>>>>>> dev_1.1_BAK
 
         foreach ($rows as $row) {
             $threads[] = new self($row);
@@ -52,8 +78,21 @@ class Thread extends AppModel
     {
         $comments = array();
 
+<<<<<<< HEAD
         $db = DB::conn();
         $rows = $db->search('comment', 'thread_id = ?', array($this->id), 'created ASC', $limit);
+=======
+        $user_name = "(SELECT username from user where user.id = comment.user_id)";
+        $user_type = "(SELECT type from user where user.id = comment.user_id)";
+        $user_registered = "(SELECT registered from user where user.id = comment.user_id)";
+        $query = "SELECT id, thread_id, body, created, user_id, updated, 
+                  $user_name AS username, $user_type AS type, $user_registered AS registered 
+                  FROM comment WHERE thread_id = ?
+                  ORDER BY created ASC LIMIT {$limit}";
+
+        $db = DB::conn();    
+        $rows = $db->rows($query, array($this->id));
+>>>>>>> dev_1.1_BAK
 
         foreach ($rows as $row) {
             $comments[] = new Comment($row);
@@ -69,10 +108,20 @@ class Thread extends AppModel
     public function create($comment)
     {
         $params = array(
+<<<<<<< HEAD
             "username" => $comment->username,
             "title" => $this->title
         );
         $db = DB::conn();
+=======
+            "user_id" => $comment->user_id,
+            "title" => $this->title,
+            "updated" => date('Y-m-d H:i:s')
+        );
+
+        $db = DB::conn();
+
+>>>>>>> dev_1.1_BAK
         try {
             $db->begin();
 
@@ -82,6 +131,10 @@ class Thread extends AppModel
             if ($this->hasError() || $comment->hasError()) {
                 throw new ValidationException('invalid thread or comment');
             }
+<<<<<<< HEAD
+=======
+
+>>>>>>> dev_1.1_BAK
             $db->insert('thread', $params);
             $this->id = $db->lastInsertId();
             $comment->write($this);
@@ -93,9 +146,107 @@ class Thread extends AppModel
         }
     }
 
+<<<<<<< HEAD
     public static function countThread()
+=======
+    /*
+    *Delete thread
+    */
+    public function delete()
+    {
+        $db = DB::conn();
+        $db->query(
+            'DELETE FROM thread WHERE id = ?', 
+            array($this->id)
+        );
+    }
+
+    /*
+    *Rename thread
+    */
+    public function rename()
+    {
+        if (!$this->validate()) {
+            throw new ValidationException('invalid thread name');
+        }
+
+        $db = DB::conn();
+        $db->update('thread', array('title' => $this->title), array('id' => $this->id));
+    }
+
+    /*
+    *Search threads
+    *@params $keyword, $filter, $limit
+    */
+    public static function search($keyword, $filter, $limit)
+    {
+        $threads = array();
+        $like = "%$keyword%";
+        $params = array($like);
+
+        switch ($filter) {
+            case "title":
+                $where = "WHERE title LIKE ?";
+                break;
+            case "created":
+                $where = "WHERE created LIKE ?";
+                break;
+            default:
+                $where = "WHERE title LIKE ? OR created LIKE ?";
+                $params = array($like, $like);
+                break;
+        }
+
+        $user = "(SELECT username from user where user.id = thread.user_id)";
+        $query = "SELECT id, title, created, updated, view, $user AS username
+                  FROM thread {$where} ORDER BY updated DESC LIMIT {$limit}";
+
+        $db = DB::conn();
+        $rows = $db->rows($query, $params);
+        
+        foreach ($rows as $row) {
+            $threads[] = new self($row);
+        }
+        return $threads;
+    }
+
+    public static function count()
+>>>>>>> dev_1.1_BAK
     {
         $db = DB::conn();
         return $db->value("SELECT count(id) FROM thread");
     }
+<<<<<<< HEAD
+=======
+
+    /*
+    *Get the last post from a thread
+    *@param $thread_id
+    */
+    public static function getLastPost($thread_id)
+    {
+        $user = "(SELECT username from user where user.id = comment.user_id)";
+        $query = "SELECT created, $user AS username
+                  FROM comment WHERE thread_id = ?
+                  ORDER BY created DESC";
+
+        $db = DB::conn();
+        $row = $db->row($query, array($thread_id));
+
+        if (!$row) {
+            throw new RecordNotFoundException('no record found');
+        }
+        return new self($row);
+    }
+
+    /*
+    *Add View Count
+    */
+    public function viewAdd()
+    {
+        $db = DB::conn();
+        $view_inc = $this->view + 1;
+        $db->update('thread', array('view' => $view_inc), array('id' => $this->id));
+    }
+>>>>>>> dev_1.1_BAK
 }
