@@ -16,8 +16,8 @@ class Pagination
     public static function getCurrentPage($row_length)
     {
         $last_page = self::getLastPage($row_length);
-        if (isset($_GET['pn'])) {
-            self::$pagenum = preg_replace('#[^0-9]#', '', $_GET['pn']);
+        if (isset($_GET['page'])) {
+            self::$pagenum = preg_replace('#[^0-9]#', '', $_GET['page']);
         }
         if (self::$pagenum > $last_page) {
             self::$pagenum = $last_page;
@@ -58,7 +58,7 @@ class Pagination
         $pagenum = self::getCurrentPage($row_length);
         $last_page = self::getLastPage($row_length);
         $limit = self::getLimit($row_length);
-        $page_url =& $url['pn'];
+        $page_url =& $url['page'];
         $pageControls = '';
 
         if ($pagenum > 1) {
@@ -71,7 +71,11 @@ class Pagination
         $pageControls .= ''.$pagenum.' &nbsp; ';
 
         for ($i = $pagenum + 1 ; $i <= $last_page ; $i++) {
-            $pageControls .= self::getLeftLink($pagenum, &$page_url, &$url, $i);
+            $pageControls .= self::getLeftLink(&$page_url, &$url, $i);
+
+            if ($i >= $pagenum + self::MAX_PAGE_LINKS) {
+                break;
+            }
         }
 
         $pageControls .= self::getNextLink($pagenum, &$page_url, &$url, $last_page);
@@ -100,13 +104,10 @@ class Pagination
         }
     }
 
-    public static function getLeftLink($pagenum, $page_url, $url, $i)
+    public static function getLeftLink($page_url, $url, $i)
     {
         $page_url = $i;
         return '<a href="'.url('', $url).'">'.$i.'</a> &nbsp; ';
-        if ($i >= $pagenum + self::MAX_PAGE_LINKS) {
-            break;
-        }
     }
 
     public static function getNextLink($pagenum, $page_url, $url, $last_page)

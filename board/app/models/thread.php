@@ -62,7 +62,8 @@ class Thread extends AppModel
         $user_name = "(SELECT username from user where user.id = comment.user_id)";
         $user_type = "(SELECT type from user where user.id = comment.user_id)";
         $user_registered = "(SELECT registered from user where user.id = comment.user_id)";
-        $query = "SELECT id, thread_id, body, created, user_id, updated, $user_name AS username, $user_type AS type, $user_registered AS registered 
+        $query = "SELECT id, thread_id, body, created, user_id, updated, 
+                  $user_name AS username, $user_type AS type, $user_registered AS registered 
                   FROM comment WHERE thread_id = ?
                   ORDER BY created ASC LIMIT {$limit}";
 
