@@ -11,11 +11,7 @@ class UserController extends AppController
         }
         
         $user = new User;
-<<<<<<< HEAD
-        $page = Param::get('page_next','register');
-=======
         $page = Param::get('page_next', 'register');
->>>>>>> dev_1.1_BAK
         switch ($page) {
             case 'register':
                 break;
@@ -25,10 +21,6 @@ class UserController extends AppController
                 $user->confirm_password = Param::get('confirm_password');
                 $user->name = Param::get('name');
                 $user->email = Param::get('email');
-<<<<<<< HEAD
-                
-=======
->>>>>>> dev_1.1_BAK
                 try {
                     $user->register();
                 } catch (ValidationException $e) {
@@ -38,10 +30,7 @@ class UserController extends AppController
             default:
                 throw new PageNotFoundException("{$page} not found");
         }
-<<<<<<< HEAD
-=======
 
->>>>>>> dev_1.1_BAK
         $this->set(get_defined_vars());
         $this->render($page);
     }
@@ -65,11 +54,6 @@ class UserController extends AppController
                 $user->password = Param::get('password');
                 try {
                     $account = $user->authenticate();
-<<<<<<< HEAD
-                    $_SESSION['id'] = $account['id'];
-                    $_SESSION['username'] = $account['username'];
-                    $_SESSION['name'] = $account['name'];
-=======
                     switch ($account['type']) {
                         case 'banned':
                             redirect(url('user/login'));
@@ -81,7 +65,6 @@ class UserController extends AppController
                             $_SESSION['type'] = $account['type'];
                             break;
                     }
->>>>>>> dev_1.1_BAK
                 } catch (UserNotFoundException $e) {
                     $page = 'login';
                 }
@@ -89,8 +72,6 @@ class UserController extends AppController
             default:
                 throw new UserNotFoundException("{$page} not found");
         }
-<<<<<<< HEAD
-=======
 
         $this->set(get_defined_vars());
         $this->render($page);
@@ -130,14 +111,11 @@ class UserController extends AppController
                 throw new PageNotFoundException("{$page} not found");
         }
 
->>>>>>> dev_1.1_BAK
         $this->set(get_defined_vars());
         $this->render($page);
     }
 
     /*
-<<<<<<< HEAD
-=======
     *Edit user password
     */
     public function change_password()
@@ -193,7 +171,6 @@ class UserController extends AppController
     }
 
     /*
->>>>>>> dev_1.1_BAK
     *Destroys the session of the user
     *Redirects to login page
     */

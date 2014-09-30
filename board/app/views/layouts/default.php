@@ -2,11 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-<<<<<<< HEAD
-    <title>DietCake <?php encode($title) ?></title>
-=======
     <title>Discussion Forum</title>
->>>>>>> dev_1.1_BAK
 
     <link href="/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <style>
@@ -21,9 +17,6 @@
     <div class="navbar navbar-fixed-top">
       <div class="navbar-inner">
         <div class="container">
-<<<<<<< HEAD
-          <a class="brand" href="#">DietCake Board Exercise</a>
-=======
             <table style="width: 100%;">
                 <td>
                     <a class="brand" style="color:black;" href="<?php encode(url('thread/index')) ?>">Discussion Forum</a>
@@ -44,7 +37,6 @@
                     </td>
                 <?php endif?>
             </table>
->>>>>>> dev_1.1_BAK
         </div>
       </div>
     </div>

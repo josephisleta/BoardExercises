@@ -7,10 +7,6 @@ class ThreadController extends AppController
             redirect(url('user/login'));
         }
 
-<<<<<<< HEAD
-        $pagination = Pagination::getControls(Thread::countThread());
-        $threads = Thread::getAll($pagination['maximum']);
-=======
         $result = Thread::count();
         $pagination = Pagination::getControls($result);
         $threads = Thread::getAll($pagination['maximum']);
@@ -30,7 +26,6 @@ class ThreadController extends AppController
             $count_comment[] = Comment::count($thread->id);
             $last_post[] = Thread::getLastPost($thread->id);
         }
->>>>>>> dev_1.1_BAK
 
         $this->set(get_defined_vars());
     }
@@ -39,11 +34,7 @@ class ThreadController extends AppController
     *Creates a new thread
     */
     public function create()
-<<<<<<< HEAD
-    {   
-=======
     {
->>>>>>> dev_1.1_BAK
         if (!is_logged_in()) {
             redirect(url('user/login'));
         }
@@ -56,13 +47,8 @@ class ThreadController extends AppController
             case 'create':
                 break;
             case 'create_end':
-<<<<<<< HEAD
-                $thread->title = Param::get('title');
-                $comment->username = Param::get('username');
-=======
                 $thread->title = trim(Param::get('title'));
                 $comment->user_id = $_SESSION['id'];
->>>>>>> dev_1.1_BAK
                 $comment->body = Param::get('body');
                 try {
                     $thread->create($comment);
@@ -88,12 +74,6 @@ class ThreadController extends AppController
         }
 
         $thread = Thread::get(Param::get('thread_id'));
-<<<<<<< HEAD
-        $limit = Comment::countThreadComments($thread->id);
-        $pagination = Pagination::getControls($limit);
-        
-        $comments = $thread->getComments($pagination['maximum']);
-=======
         $limit = Comment::count($thread->id);
         $pagination = Pagination::getControls($limit);
         $thread->viewAdd();
@@ -105,49 +85,17 @@ class ThreadController extends AppController
             $count_post[] = User::countPost($comment->user_id);
         }
 
->>>>>>> dev_1.1_BAK
         $this->set(get_defined_vars());
     }
 
     /*
-<<<<<<< HEAD
-    *Writes comments on a thread
-    */
-    public function write()
-=======
     *Delete thread
     */
     public function delete()
->>>>>>> dev_1.1_BAK
     {
         if (!is_logged_in()) {
             redirect(url('user/login'));
         }
-<<<<<<< HEAD
-        
-        $thread = Thread::get(Param::get('thread_id'));
-        $comment = new Comment;
-        $page = Param::get('page_next','write');
-        
-        switch ($page) {
-            case 'write':
-                break;
-            case 'write_end':
-                $comment->username = Param::get('username');
-                $comment->body = Param::get('body');
-                try {
-                    $comment->write($thread);
-                } catch (ValidationException $e) {
-                    $page = 'write';
-                }
-                break;
-            default:
-                throw new NotFoundException("{$page} is not found");
-        }
-
-        $this->set(get_defined_vars());
-        $this->render($page);
-=======
 
         $thread = Thread::get(Param::get('thread_id'));
         $limit = Comment::count($thread->id);
@@ -199,6 +147,5 @@ class ThreadController extends AppController
                 $this->render('rename');
             }
         }
->>>>>>> dev_1.1_BAK
     }
 }

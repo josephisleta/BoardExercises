@@ -1,9 +1,6 @@
 <?php
 class CommentController extends AppController
 {
-<<<<<<< HEAD
-    
-=======
     /*
     *Writes comments on a thread
     */
@@ -100,5 +97,4 @@ class CommentController extends AppController
             $this->render('delete_end');
         }
     }
->>>>>>> dev_1.1_BAK
 }

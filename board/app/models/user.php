@@ -13,38 +13,23 @@ class User extends AppModel
             'length' => array(
                 'validate_between', self::MIN_USERNAME_LENGTH, self::MAX_USERNAME_LENGTH
             ),
-<<<<<<< HEAD
-=======
             'format' => array(
                 'is_alphanumeric'
             )
->>>>>>> dev_1.1_BAK
         ),
         
         'password' => array(
             'length' => array(
                 'validate_between', self::MIN_PASSWORD_LENGTH, self::MAX_PASSWORD_LENGTH
             ),
-<<<<<<< HEAD
-=======
             'format' => array(
                 'is_alphanumeric'
             )
->>>>>>> dev_1.1_BAK
         ),
 
         'confirm_password' => array(
             'match' => array(
                 'is_match_password'
-<<<<<<< HEAD
-            ),
-        ),
-        
-        'name' => array (
-            'format' => array(
-                'is_letters_only'
-            ),
-=======
             )
         ),
         
@@ -52,19 +37,13 @@ class User extends AppModel
             'format' => array(
                 'is_letters_only'
             )
->>>>>>> dev_1.1_BAK
         ),
         
         'email' => array(
             'format' => array(
                 'is_email_valid'
-<<<<<<< HEAD
-            ),
-        ),
-=======
             )
         )
->>>>>>> dev_1.1_BAK
     );
 
     /*
@@ -74,22 +53,12 @@ class User extends AppModel
     {
         $this->validation['confirm_password']['match'][1] = $this->password;
         
-<<<<<<< HEAD
-        $this->validate();
-        
-        if ($this->hasError()) {
-=======
         if (!$this->validate()) {
->>>>>>> dev_1.1_BAK
             throw new ValidationException("invalid inputs");
         }
         $params = array(
             'username' => $this->username,
-<<<<<<< HEAD
-            'pword' => $this->password,
-=======
             'password' => $this->password,
->>>>>>> dev_1.1_BAK
             'name' => $this->name,
             'email' => $this->email
         );
@@ -103,11 +72,7 @@ class User extends AppModel
     */
     public function authenticate()
     {
-<<<<<<< HEAD
-        $query = "SELECT id, username, name FROM user WHERE username = ? AND pword = ?";
-=======
         $query = "SELECT id, username, name, type FROM user WHERE username = ? AND password = ?";
->>>>>>> dev_1.1_BAK
         $db = DB::conn();
         $row = $db->row($query, array($this->username, $this->password));
         if (!$row) {
@@ -116,9 +81,6 @@ class User extends AppModel
         }
         return $row;
     }
-<<<<<<< HEAD
-    
-=======
 
     /*
     *Get fields from a user
@@ -200,13 +162,10 @@ class User extends AppModel
         $db->update('user', array('type' => $type), array('id' => $this->id));
     }
 
->>>>>>> dev_1.1_BAK
     public function isFailedLogin()
     {
         return $this->is_failed_login;
     }
-<<<<<<< HEAD
-=======
 
     /*
     *Counts total Posts of the user
@@ -220,5 +179,4 @@ class User extends AppModel
             array($user_id)
         );
     }
->>>>>>> dev_1.1_BAK
 }
