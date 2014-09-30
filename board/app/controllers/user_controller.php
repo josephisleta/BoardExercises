@@ -148,7 +148,7 @@ class UserController extends AppController
     }
 
     /*
-    *View all user
+    *View all users
     *Promote, demote, ban, unban a user
     */
     public function admin()
@@ -158,12 +158,12 @@ class UserController extends AppController
         }
 
         $users = User::getAll();
-        $action = Param::get('action');
+        $type = Param::get('type');
 
         if (Param::get('yes')) {
             $user = User::get(Param::get('id'));
 
-            $user->adminAction($action);
+            $user->changeType($type);
             redirect(url('user/admin'));
         }
 

@@ -143,7 +143,7 @@ class User extends AppModel
     public function updatePassword()
     {
         $this->validation['confirm_password']['match'][1] = $this->password;
-                
+
         if (!$this->validate()) {
             throw new ValidationException("invalid inputs");
         }
@@ -153,13 +153,13 @@ class User extends AppModel
     }
 
     /*
-    *Promote, ban or unban a user by the admin
-    *@param $action
+    *Change type of the user
+    *@param $type
     */
-    public function adminAction($action)
+    public function changeType($type)
     {
         $db = DB::conn();
-        $db->update('user', array('type' => $action), array('id' => $this->id));
+        $db->update('user', array('type' => $type), array('id' => $this->id));
     }
 
     public function isFailedLogin()
