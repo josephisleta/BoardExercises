@@ -90,7 +90,7 @@ class User extends AppModel
     public static function get($user_id)
     {
         $db = DB::conn();
-        $row = $db->row("SELECT id, username, name, email FROM user WHERE id = ?", array($user_id));
+        $row = $db->row("SELECT * FROM user WHERE id = ?", array($user_id));
 
         if (!$row) {
             throw new RecordNotFoundException('no record found');
