@@ -74,7 +74,10 @@ class Comment extends AppModel
     public function delete()
     {
         $db = DB::conn();
-        $db->query("DELETE FROM comment WHERE id = ?", array($this->id));
+        $db->query(
+            "DELETE FROM comment WHERE id = ?",
+            array($this->id)
+        );
     }
 
     /*
@@ -101,6 +104,9 @@ class Comment extends AppModel
     public static function count($thread_id)
     {
         $db = DB::conn();
-        return $db->value("SELECT count(id) FROM comment WHERE thread_id = ?", array($thread_id));
+        return $db->value(
+            "SELECT count(id) FROM comment WHERE thread_id = ?", 
+            array($thread_id)
+        );
     }
 }

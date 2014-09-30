@@ -90,7 +90,10 @@ class User extends AppModel
     public static function get($user_id)
     {
         $db = DB::conn();
-        $row = $db->row("SELECT * FROM user WHERE id = ?", array($user_id));
+        $row = $db->row(
+            "SELECT * FROM user WHERE id = ?", 
+            array($user_id)
+        );
 
         if (!$row) {
             throw new RecordNotFoundException('no record found');
@@ -175,6 +178,9 @@ class User extends AppModel
     public static function countPost($user_id)
     {
         $db = DB::conn();
-        return $db->value("SELECT count(id) FROM comment WHERE user_id = ?", array($user_id));
+        return $db->value(
+            "SELECT count(id) FROM comment WHERE user_id = ?", 
+            array($user_id)
+        );
     }
 }

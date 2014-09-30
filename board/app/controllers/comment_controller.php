@@ -1,7 +1,7 @@
 <?php
 class CommentController extends AppController
 {
-	/*
+	/* 
     *Writes comments on a thread
     */
     public function write()
