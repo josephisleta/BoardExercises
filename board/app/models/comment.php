@@ -47,9 +47,7 @@ class Comment extends AppModel
     */
     public function edit()
     {   
-        $this->validate();
-
-        if ($this->hasError()) {
+        if (!$this->validate()) {
             throw new ValidationException('invalid comment');
         }
 

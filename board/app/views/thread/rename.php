@@ -3,7 +3,7 @@
 <?php if ($thread->hasError()): ?>
 	<div class="alert alert-block">
 		<h4 class="alert-heading">Validation error!</h4>
-		<?php if (!empty($thread->validation_errors['title']['length'])): ?>
+		<?php if ($thread->validation_errors['title']['length']): ?>
 			<div><em>Title</em> must be between
 				<?php encode($thread->validation['title']['length'][1]) ?> and
 				<?php encode($thread->validation['title']['length'][2]) ?> characters in length.

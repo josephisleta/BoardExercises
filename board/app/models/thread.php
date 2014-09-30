@@ -129,9 +129,7 @@ class Thread extends AppModel
     */
     public function rename()
     {
-        $this->validate();
-
-        if ($this->hasError()) {
+        if (!$this->validate()) {
             throw new ValidationException('invalid thread name');
         }
 

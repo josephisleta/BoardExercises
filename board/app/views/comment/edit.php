@@ -4,7 +4,7 @@
     <div class="alert alert-block">
         <h4 class="alert-heading">Validation Error!</h4>
         
-        <?php if (!empty($comment->validation_errors['body']['length'])): ?>
+        <?php if ($comment->validation_errors['body']['length']): ?>
             <div><em>Comment</em> must be between
                 <?php encode($comment->validation['body']['length'][1]) ?> and
                 <?php encode($comment->validation['body']['length'][2]) ?> characters in length.

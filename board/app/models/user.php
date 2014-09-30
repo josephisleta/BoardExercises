@@ -52,9 +52,8 @@ class User extends AppModel
     public function register()
     {
         $this->validation['confirm_password']['match'][1] = $this->password;
-        $this->validate();
         
-        if ($this->hasError()) {
+        if (!$this->validate()) {
             throw new ValidationException("invalid inputs");
         }
         $params = array(
@@ -123,10 +122,8 @@ class User extends AppModel
     *Updates new user information
     */
     public function updateProfile()
-    {
-        $this->validate();
-        
-        if ($this->hasError()) {
+    { 
+        if (!$this->validate()) {
             throw new ValidationException("invalid inputs");
         }
         
@@ -146,9 +143,8 @@ class User extends AppModel
     public function updatePassword()
     {
         $this->validation['confirm_password']['match'][1] = $this->password;
-        $this->validate();
-        
-        if ($this->hasError()) {
+                
+        if (!$this->validate()) {
             throw new ValidationException("invalid inputs");
         }
         
