@@ -154,20 +154,6 @@ class User extends AppModel
     }
 
     /*
-    *Gets new updated user information for session
-    */
-    public function getSession()
-    {
-        $db = DB::conn();
-        $row = $db->row("SELECT id, username, name, type FROM user WHERE id = ?", array($this->id));
-
-        if (!$row) {
-            throw new RecordNotFoundException('no record found');
-        }
-        return $row;
-    }
-
-    /*
     *Promote, ban or unban a user by the admin
     *@param $action
     */

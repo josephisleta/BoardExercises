@@ -98,11 +98,11 @@ class UserController extends AppController
                 $user->email = Param::get('email');
                 try {
                     $user->updateProfile();
-                    $account = $user->getSession();
-                    $_SESSION['id'] = $account['id'];
-                    $_SESSION['username'] = $account['username'];
-                    $_SESSION['name'] = $account['name'];
-                    $_SESSION['type'] = $account['type'];
+                    $account = $user->get($_SESSION['id']);
+                    $_SESSION['id'] = $account->id;
+                    $_SESSION['username'] = $account->username;
+                    $_SESSION['name'] = $account->name;
+                    $_SESSION['type'] = $account->type;
                 } catch (ValidationException $e) {
                     $page = 'profile';
                 }
