@@ -84,10 +84,11 @@ class Comment extends AppModel
     */
     public static function get($id)
     {
-        $query = "SELECT * FROM comment WHERE id = ?";
-
         $db = DB::conn();
-        $row = $db->row($query, array($id));
+        $row = $db->row(
+            'SELECT * FROM comment WHERE id = ?', 
+            array($id)
+        );
         
         if (!$row) {
             throw new RecordNotFoundException('no record found');
