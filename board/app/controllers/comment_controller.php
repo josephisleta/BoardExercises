@@ -45,6 +45,7 @@ class CommentController extends AppController
 
         $comment = Comment::get(Param::get('comment_id'));
         $thread = Thread::get(Param::get('thread_id'));
+        
         $limit = Comment::count($thread->id);
         $pagination = Pagination::getControls($limit);
 

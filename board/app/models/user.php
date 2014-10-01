@@ -107,10 +107,8 @@ class User extends AppModel
     {
         $users = array();
 
-        $query = "SELECT * FROM user ORDER BY registered DESC";
-        
         $db = DB::conn();
-        $rows = $db->rows($query);
+        $rows = $db->rows('SELECT * FROM user ORDER BY registered DESC');
 
         foreach ($rows as $row) {
             $users[] = new self($row);
