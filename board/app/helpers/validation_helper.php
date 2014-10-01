@@ -11,6 +11,11 @@ function is_match_password($password, $confirm_password)
     return $password === $confirm_password;
 }
 
+function is_alphanumeric($string)
+{
+    return ctype_alnum($string);
+}
+
 function is_letters_only($name)
 {
     return ctype_alpha($name);
@@ -29,4 +34,9 @@ function is_logged_in()
 function redirect($url)
 {
     header("Location: $url");
+}
+
+function is_admin()
+{
+    return $_SESSION['type'] === 'admin';
 }
