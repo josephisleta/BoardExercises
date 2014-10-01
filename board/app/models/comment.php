@@ -94,7 +94,7 @@ class Comment extends AppModel
             throw new RecordNotFoundException('no record found');
         }
         return new self($row);
-    }
+    }   
 
     /*
     *Count the number of comments on a thread

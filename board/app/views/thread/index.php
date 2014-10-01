@@ -5,13 +5,36 @@
 		</td>
 		<td style="float: right;">
 			<form class="form-search" method="GET">
-				<input type="text" name="keyword" class="input-medium" placeholder="Search">
-				<select name="filter" class="input-medium">
-					<option value="" selected disabled>Search by</option>
-					<option value="all">All</option>
-					<option value="title">Title</option>
-					<option value="created">Date Created</option>
-				</select>
+				<input type="text" name="keyword" class="input-medium" placeholder="Search" value="<?php encode(Param::get('keyword')) ?>" >
+				<?php if(Param::get('filter') === 'title'): ?>
+					<select name="filter" class="input-medium">
+						<option value="" disabled>Search by</option>
+						<option value="all">All</option>
+						<option value="title" selected>Title</option>
+						<option value="created">Date Created</option>
+					</select>
+				<?php elseif(Param::get('filter') === 'all'): ?>
+					<select name="filter" class="input-medium">
+						<option value="" disabled>Search by</option>
+						<option value="all" selected>All</option>
+						<option value="title">Title</option>
+						<option value="created">Date Created</option>
+					</select>
+				<?php elseif(Param::get('filter') === 'created'): ?>
+					<select name="filter" class="input-medium">
+						<option value="" disabled>Search by</option>
+						<option value="all">All</option>
+						<option value="title">Title</option>
+						<option value="created" selected>Date Created</option>
+					</select>
+				<?php else: ?>
+					<select name="filter" class="input-medium">
+						<option value="" selected disabled>Search by</option>
+						<option value="all">All</option>
+						<option value="title">Title</option>
+						<option value="created">Date Created</option>
+					</select>
+				<?php endif ?>
 				<button type="submit" class="btn">Search</button>
 			</form>
 		</td>
