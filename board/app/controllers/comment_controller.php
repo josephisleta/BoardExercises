@@ -1,15 +1,19 @@
 <?php
 class CommentController extends AppController
-{
+{   
+    public function __construct($name)
+    {
+        parent::__construct($name);
+        if (!is_logged_in()) {
+            redirect(url('user/login'));
+        }
+    }
+
     /*
     *Writes comments on a thread
     */
     public function write()
     {
-        if (!is_logged_in()) {
-            redirect(url('user/login'));
-        }
-        
         $thread = Thread::get(Param::get('thread_id'));
         $comment = new Comment;
         $page = Param::get('page_next','write');
@@ -39,10 +43,6 @@ class CommentController extends AppController
     */
     public function edit()
     {
-        if (!is_logged_in()) {
-            redirect(url('user/login'));
-        }
-
         $comment = Comment::get(Param::get('comment_id'));
         $thread = Thread::get(Param::get('thread_id'));
         
@@ -74,10 +74,6 @@ class CommentController extends AppController
     */
     public function delete()
     {
-        if (!is_logged_in()) {
-            redirect(url('user/login'));
-        }
-
         $comment = Comment::get(Param::get('comment_id'));
         $thread = Thread::get(Param::get('thread_id'));
 

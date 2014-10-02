@@ -1,12 +1,16 @@
 <?php
 class ThreadController extends AppController
 {
-    public function index()
+    public function __construct($name)
     {
+        parent::__construct($name);
         if (!is_logged_in()) {
             redirect(url('user/login'));
         }
+    }
 
+    public function index()
+    {
         $result = Thread::count();
         $pagination = Pagination::getControls($result);
         $threads = Thread::getAll($pagination['maximum']);
@@ -35,10 +39,6 @@ class ThreadController extends AppController
     */
     public function create()
     {
-        if (!is_logged_in()) {
-            redirect(url('user/login'));
-        }
-        
         $thread = new Thread;
         $comment = new Comment;
         $page = Param::get('page_next','create');
@@ -69,10 +69,6 @@ class ThreadController extends AppController
     */
     public function view()
     {
-        if (!is_logged_in()) {
-            redirect(url('user/login'));
-        }
-
         $thread = Thread::get(Param::get('thread_id'));
         $limit = Comment::count($thread->id);
         $pagination = Pagination::getControls($limit);
@@ -93,10 +89,6 @@ class ThreadController extends AppController
     */
     public function delete()
     {
-        if (!is_logged_in()) {
-            redirect(url('user/login'));
-        }
-
         $thread = Thread::get(Param::get('thread_id'));
         $limit = Comment::count($thread->id);
         $pagination = Pagination::getControls($limit);
@@ -121,10 +113,6 @@ class ThreadController extends AppController
     */
     public function rename()
     {   
-        if (!is_logged_in()) {
-            redirect(url('user/login'));
-        }
-
         $thread = Thread::get(Param::get('thread_id'));
         $limit = Comment::count($thread->id);
         $pagination = Pagination::getControls($limit);
